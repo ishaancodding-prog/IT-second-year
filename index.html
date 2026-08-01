@@ -2,35 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IT Second Year Timetable & Venue Allocations</title>
+    <title>IT Second Year - Timetable & Flashcards</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         th, td {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 10px;
+            padding: 12px;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #2c3e50;
+            color: white;
         }
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        h2 {
-            margin-top: 30px;
+        /* Flashcard Styling */
+        .flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .flashcard {
+            width: 300px;
+            height: 180px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            user-select: none;
+        }
+        .flashcard:hover {
+            background-color: #2980b9;
+        }
+        .flashcard-buttons {
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #34495e;
         }
     </style>
 </head>
 <body>
-    <h1>IT - Second Year Timetable & Venues</h1>
+    <h1>IT - Second Year Hub</h1>
+
+    <!-- Interactive Flashcards Section -->
+    <div class="flashcard-container">
+        <h2>Study Flashcards</h2>
+        <p>Click the card to flip between the Subject Code and the Full Name.</p>
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+            <span id="card-text">Loading...</span>
+        </div>
+        <div class="flashcard-buttons">
+            <button onclick="nextCard()">Next Card</button>
+        </div>
+    </div>
 
     <h2>Main Timetable</h2>
     <table>
@@ -43,126 +107,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Monday</td>
-                <td>11:00 - 12:00</td>
-                <td>Data Structures and Algorithms (IT-202)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Monday</td>
-                <td>12:00 - 13:00</td>
-                <td>Effective Technical Communication</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>10:00 - 11:00</td>
-                <td>Foundations of Information Technology</td>
-                <td>IT-202</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>11:00 - 13:00</td>
-                <td>Data Structures and Algorithms (Practical) (IT-202)</td>
-                <td>IT-302</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>14:00 - 15:00</td>
-                <td>Digital Electronics (Tutorial/Practical) (IT-201)</td>
-                <td>IT-202</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>15:00 - 16:00</td>
-                <td>Probability and Statistics (Tutorial) (IT-305)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>10:00 - 11:00</td>
-                <td>Digital Electronics (IT-201)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>11:00 - 12:00</td>
-                <td>Formal Languages and Automata Theory (IT-203)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>12:00 - 13:00</td>
-                <td>Comp. Engg. Dept.</td>
-                <td>IT-202</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>14:00 - 15:00</td>
-                <td>Probability and Statistics (IT-305)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>10:00 - 11:00</td>
-                <td>Data Structures and Algorithms (IT-202)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>11:00 - 12:00</td>
-                <td>Digital Electronics (IT-201)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>12:00 - 13:00</td>
-                <td>Formal Languages and Automata Theory (IT-203)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>14:00 - 17:00</td>
-                <td>Foundation of Information Technology (Practical) (IT-204)</td>
-                <td>IT-204 / IT-206</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>10:00 - 11:00</td>
-                <td>Formal Languages and Automata Theory (IT-203)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>11:00 - 12:00</td>
-                <td>Digital Electronics (IT-201)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>12:00 - 13:00</td>
-                <td>Probability and Statistics (IT-305)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>14:00 - 16:00</td>
-                <td>Digital Electronics (Practical) - IT-201</td>
-                <td>IT-201</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>11:00 - 12:00</td>
-                <td>Theory (IT-202)</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>12:00 - 13:00</td>
-                <td>Probability and Statistics (IT-305)</td>
-                <td>-</td>
-            </tr>
+            <tr><td>Monday</td><td>11:00 - 12:00</td><td>Data Structures and Algorithms (IT-202)</td><td>-</td></tr>
+            <tr><td>Monday</td><td>12:00 - 13:00</td><td>Effective Technical Communication</td><td>-</td></tr>
+            <tr><td>Tuesday</td><td>10:00 - 11:00</td><td>Foundations of Information Technology</td><td>IT-202</td></tr>
+            <tr><td>Tuesday</td><td>11:00 - 13:00</td><td>Data Structures and Algorithms (Practical) (IT-202)</td><td>IT-302</td></tr>
+            <tr><td>Tuesday</td><td>14:00 - 15:00</td><td>Digital Electronics (Tutorial/Practical) (IT-201)</td><td>IT-202</td></tr>
+            <tr><td>Tuesday</td><td>15:00 - 16:00</td><td>Probability and Statistics (Tutorial) (IT-305)</td><td>-</td></tr>
+            <tr><td>Wednesday</td><td>10:00 - 11:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
+            <tr><td>Wednesday</td><td>11:00 - 12:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
+            <tr><td>Wednesday</td><td>12:00 - 13:00</td><td>Comp. Engg. Dept.</td><td>IT-202</td></tr>
+            <tr><td>Wednesday</td><td>14:00 - 15:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
+            <tr><td>Thursday</td><td>10:00 - 11:00</td><td>Data Structures and Algorithms (IT-202)</td><td>-</td></tr>
+            <tr><td>Thursday</td><td>11:00 - 12:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
+            <tr><td>Thursday</td><td>12:00 - 13:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
+            <tr><td>Thursday</td><td>14:00 - 17:00</td><td>Foundation of Information Technology (Practical) (IT-204)</td><td>IT-204 / IT-206</td></tr>
+            <tr><td>Friday</td><td>10:00 - 11:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
+            <tr><td>Friday</td><td>11:00 - 12:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
+            <tr><td>Friday</td><td>12:00 - 13:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
+            <tr><td>Friday</td><td>14:00 - 16:00</td><td>Digital Electronics (Practical) - IT-201</td><td>IT-201</td></tr>
+            <tr><td>Saturday</td><td>11:00 - 12:00</td><td>Theory (IT-202)</td><td>-</td></tr>
+            <tr><td>Saturday</td><td>12:00 - 13:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
         </tbody>
     </table>
 
@@ -177,42 +141,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tuesday</td>
-                <td>14:00 - 15:00</td>
-                <td>Probability and Statistics (Tutorial)</td>
-                <td>IT1</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>15:00 - 16:00</td>
-                <td>Probability and Statistics (Tutorial)</td>
-                <td>IT2</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>15:00 - 17:00</td>
-                <td>Data Structures and Algorithms (Practical)</td>
-                <td>IT1</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>14:00 - 17:00</td>
-                <td>Data Structures and Algorithms (Practical)</td>
-                <td>IT2</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>15:00 - 17:00</td>
-                <td>Digital Electronics (Practical)</td>
-                <td>IT1</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>14:00 - 18:00</td>
-                <td>NSS/NCC</td>
-                <td>IT I & IT II</td>
-            </tr>
+            <tr><td>Tuesday</td><td>14:00 - 15:00</td><td>Probability and Statistics (Tutorial)</td><td>IT1</td></tr>
+            <tr><td>Tuesday</td><td>15:00 - 16:00</td><td>Probability and Statistics (Tutorial)</td><td>IT2</td></tr>
+            <tr><td>Wednesday</td><td>15:00 - 17:00</td><td>Data Structures and Algorithms (Practical)</td><td>IT1</td></tr>
+            <tr><td>Thursday</td><td>14:00 - 17:00</td><td>Data Structures and Algorithms (Practical)</td><td>IT2</td></tr>
+            <tr><td>Friday</td><td>15:00 - 17:00</td><td>Digital Electronics (Practical)</td><td>IT1</td></tr>
+            <tr><td>Saturday</td><td>14:00 - 18:00</td><td>NSS/NCC</td><td>IT I & IT II</td></tr>
         </tbody>
     </table>
 
@@ -225,35 +159,52 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>IT-201</td>
-                <td>Digital Electronics theory, tutorials, and practicals</td>
-            </tr>
-            <tr>
-                <td>IT-202</td>
-                <td>Data Structures and Algorithms, Foundations of IT, Formal Languages & Automata Theory</td>
-            </tr>
-            <tr>
-                <td>IT-204 / IT-206</td>
-                <td>Foundation of Information Technology (Practical)</td>
-            </tr>
-            <tr>
-                <td>IT-302</td>
-                <td>Data Structures and Algorithms (Practical)</td>
-            </tr>
-            <tr>
-                <td>IT-305</td>
-                <td>Probability and Statistics lectures and tutorials</td>
-            </tr>
-            <tr>
-                <td>Comp. Engg. Dept.</td>
-                <td>Departmental classes / sessions</td>
-            </tr>
-            <tr>
-                <td>Complex Theory</td>
-                <td>NSS/NCC sessions</td>
-            </tr>
+            <tr><td>IT-201</td><td>Digital Electronics theory, tutorials, and practicals</td></tr>
+            <tr><td>IT-202</td><td>Data Structures and Algorithms, Foundations of IT, Formal Languages & Automata Theory</td></tr>
+            <tr><td>IT-204 / IT-206</td><td>Foundation of Information Technology (Practical)</td></tr>
+            <tr><td>IT-302</td><td>Data Structures and Algorithms (Practical)</td></tr>
+            <tr><td>IT-305</td><td>Probability and Statistics lectures and tutorials</td></tr>
+            <tr><td>Comp. Engg. Dept.</td><td>Departmental classes / sessions</td></tr>
+            <tr><td>Complex Theory</td><td>NSS/NCC sessions</td></tr>
         </tbody>
     </table>
+
+    <script>
+        const flashcards = [
+            { front: "IT-202", back: "Data Structures and Algorithms / General Lecture Room" },
+            { front: "IT-201", back: "Digital Electronics" },
+            { front: "IT-203", back: "Formal Languages and Automata Theory" },
+            { front: "IT-305", back: "Probability and Statistics" },
+            { front: "IT-204 / IT-206", back: "Foundation of IT (Practical)" },
+            { front: "IT-302", back: "Data Structures and Algorithms (Practical)" }
+        ];
+
+        let currentIndex = 0;
+        let showingFront = true;
+
+        const cardText = document.getElementById("card-text");
+
+        function updateCard() {
+            if (showingFront) {
+                cardText.innerText = flashcards[currentIndex].front;
+            } else {
+                cardText.innerText = flashcards[currentIndex].back;
+            }
+        }
+
+        function flipCard() {
+            showingFront = !showingFront;
+            updateCard();
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            showingFront = true;
+            updateCard();
+        }
+
+        // Initialize first card
+        updateCard();
+    </script>
 </body>
 </html>
