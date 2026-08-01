@@ -46,8 +46,9 @@
         .flashcard {
             width: 320px;
             height: 200px;
-            background-color: #3498db;
-            color: white;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #ccc;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -56,26 +57,34 @@
             border-radius: 10px;
             cursor: pointer;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
             user-select: none;
         }
-        .flashcard:hover {
-            background-color: #2980b9;
+        .flashcard.flipped {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
         .flashcard-day {
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.1);
             padding: 4px 8px;
             border-radius: 4px;
             margin-bottom: 10px;
+        }
+        .flashcard.flipped .flashcard-day {
+            background: rgba(255, 255, 255, 0.2);
         }
         .flashcard-time {
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .flashcard.flipped .flashcard-time {
             color: #f1c40f;
         }
         .flashcard-subject {
@@ -107,7 +116,7 @@
     <!-- Interactive Flashcards Section -->
     <div class="flashcard-container">
         <h2>Daily Schedule Flashcards</h2>
-        <p>Click the card to toggle between the Time/Day and the Subject Details.</p>
+        <p>Click the card to toggle between the Time/Day (White Face) and the Subject Details (Black Back).</p>
         <div class="flashcard" id="flashcard" onclick="flipCard()">
             <div class="flashcard-day" id="card-day">Loading...</div>
             <div class="flashcard-time" id="card-time">Loading...</div>
@@ -219,6 +228,7 @@
         let currentIndex = 0;
         let showingDetails = false;
 
+        const cardElement = document.getElementById("flashcard");
         const cardDay = document.getElementById("card-day");
         const cardTime = document.getElementById("card-time");
         const cardText = document.getElementById("card-text");
@@ -226,9 +236,12 @@
         function updateCard() {
             cardDay.innerText = flashcards[currentIndex].day;
             cardTime.innerText = flashcards[currentIndex].time;
+            
             if (!showingDetails) {
+                cardElement.classList.remove("flipped");
                 cardText.innerText = "Click to reveal Subject";
             } else {
+                cardElement.classList.add("flipped");
                 cardText.innerText = flashcards[currentIndex].subject + " (" + flashcards[currentIndex].venue + ")";
             }
         }
