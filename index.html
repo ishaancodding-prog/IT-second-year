@@ -3,79 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Table of Information Technology Students 2nd Year</title>
+    <title>ClassSync - Student Schedule Portal</title>
+    <!-- Link External CSS -->
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Prominent Main Title -->
-        <header class="main-header">
-            <h1>Time Table of Information Technology Students 2nd Year</h1>
-            <p>Comprehensive weekly lecture, tutorial, and practical schedule</p>
-        </header>
 
-        <!-- Student Verification & Batch Selection Panel -->
-        <section class="verification-card">
-            <h2><i class="fa-solid fa-id-card"></i> Student Batch Verification</h2>
-            <p class="verification-desc">Enter your Student ID and select your section to personalize your timetable view.</p>
-            <form id="verification-form" onsubmit="handleVerification(event)">
-                <div class="form-grid">
-                    <div class="input-group">
-                        <label for="student-id">Student ID</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-regular fa-user"></i>
-                            <input type="text" id="student-id" placeholder="e.g. 20265012" required>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label for="section-select">Select Section / Batch</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-solid fa-users-rectangle"></i>
-                            <select id="section-select" required>
-                                <option value="" disabled selected>Select your section...</option>
-                                <option value="IT-1">#IT-1 (Batch 1)</option>
-                                <option value="IT-2">#IT-2 (Batch 2)</option>
-                            </select>
-                        </div>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="brand-logo">CS</div>
+                <span class="brand-title">ClassSync</span>
+            </div>
+            <div id="user-badge" class="user-badge hidden">
+                <!-- Dynamic User Badge injected via JavaScript -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- STEP 1: Login / Input View -->
+        <section id="login-view" class="card login-card">
+            <div class="card-header">
+                <h1>Welcome, Student!</h1>
+                <p>Enter your details below to view your personalized schedule.</p>
+            </div>
+
+            <form id="schedule-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="student-id">Student ID</label>
+                    <input type="text" id="student-id" required placeholder="e.g., 20261054" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label>Select Section</label>
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="section" value="IT-1" required>
+                            <span>IT-1</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="section" value="IT-2" required>
+                            <span>IT-2</span>
+                        </label>
                     </div>
                 </div>
-                <button type="submit" class="apply-btn">
-                    <span>Apply & View Schedule</span> <i class="fa-solid fa-arrow-right"></i>
-                </button>
+
+                <button type="submit" class="btn btn-primary">View Schedule</button>
             </form>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>Your section automatically filters your practical batches and tutorial timings.</p>
+            </div>
         </section>
 
-        <!-- Dynamic User Status Banner (Hidden initially, shown after submit) -->
-        <div id="user-status-banner" class="status-banner" style="display: none;">
-            <div class="status-text">
-                Showing schedule for <strong id="display-student-id">--</strong> in section <strong id="display-section">--</strong>
+        <!-- STEP 2: Schedule Dashboard View (Hidden by Default) -->
+        <section id="dashboard-view" class="dashboard-view hidden">
+            
+            <!-- Dashboard Controls Header -->
+            <div class="dashboard-header card">
+                <div>
+                    <h2 id="display-section-title">Schedule for IT-2</h2>
+                    <p>Showing personalized practical & lecture allocations</p>
+                </div>
+                <button onclick="resetPortal()" class="btn btn-secondary">Switch Section / ID</button>
             </div>
-            <button class="reset-btn" onclick="resetVerification()">Change Details</button>
-        </div>
 
-        <!-- Controls / Day Filter Bar -->
-        <div class="filter-card">
-            <div class="filter-label"><i class="fa-solid fa-filter"></i> Filter by Day:</div>
-            <div class="day-filter-btns" id="day-filters">
-                <button class="filter-btn active" onclick="filterByDay('All', event)">All Days</button>
-                <button class="filter-btn" onclick="filterByDay('Monday', event)">Monday</button>
-                <button class="filter-btn" onclick="filterByDay('Tuesday', event)">Tuesday</button>
-                <button class="filter-btn" onclick="filterByDay('Wednesday', event)">Wednesday</button>
-                <button class="filter-btn" onclick="filterByDay('Thursday', event)">Thursday</button>
-                <button class="filter-btn" onclick="filterByDay('Friday', event)">Friday</button>
-                <button class="filter-btn" onclick="filterByDay('Saturday', event)">Saturday</button>
+            <!-- Day Tabs -->
+            <div class="day-tabs" id="day-tabs">
+                <!-- Dynamically generated day buttons -->
             </div>
-        </div>
 
-        <!-- Timetable Cards Container -->
-        <div class="timetable-grid" id="timetable-output">
-            <!-- Populated dynamically via JS -->
-        </div>
-    </div>
+            <!-- Schedule Card Container -->
+            <div class="card schedule-container">
+                <div class="schedule-sub-header">
+                    <span id="active-day-label">Monday</span>
+                    <span class="room-badge">Room IT-202 Base</span>
+                </div>
+                <div id="schedule-list" class="schedule-list">
+                    <!-- Schedule Items Injected Here -->
+                </div>
+            </div>
 
-    <script src="app.js"></script>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>ClassSync Student Portal &copy; 2026</p>
+    </footer>
+
+    <!-- Link External JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
