@@ -3,102 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassSync - Student Schedule Portal</title>
-    <!-- Link External CSS -->
+    <title>University Timetable | Class Schedule Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Background Animated Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-container">
-            <div class="brand">
-                <div class="brand-logo">CS</div>
-                <span class="brand-title">ClassSync</span>
+    <!-- APP WRAPPER -->
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="glass-sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>ClassSync</span>
             </div>
-            <div id="user-badge" class="user-badge hidden">
-                <!-- Dynamic User Badge injected via JavaScript -->
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="switchSection('today', event)"><i class="fa-solid fa-sun"></i> Today's Agenda</a>
+                <a href="#" class="nav-item" onclick="switchSection('timetable', event)"><i class="fa-solid fa-table"></i> Full Timetable</a>
+                <a href="#" class="nav-item" onclick="switchSection('subjects', event)"><i class="fa-solid fa-book-open"></i> Subjects & Venues</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="live-clock" id="live-clock">--:--:--</div>
             </div>
-        </div>
-    </header>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        
-        <!-- STEP 1: Login / Input View -->
-        <section id="login-view" class="card login-card">
-            <div class="card-header">
-                <h1>Welcome, Student!</h1>
-                <p>Enter your details below to view your personalized schedule.</p>
-            </div>
-
-            <form id="schedule-form" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="student-id">Student ID</label>
-                    <input type="text" id="student-id" required placeholder="e.g., 20261054" autocomplete="off">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="glass-header">
+                <div class="header-title">
+                    <h2 id="section-title">Today's Agenda</h2>
+                    <p id="header-subtitle">Your scheduled classes for today</p>
                 </div>
+                <div class="user-profile-badge">
+                    <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
+                    <span>IT Department</span>
+                </div>
+            </header>
 
-                <div class="form-group">
-                    <label>Select Section</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="section" value="IT-1" required>
-                            <span>IT-1</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="section" value="IT-2" required>
-                            <span>IT-2</span>
-                        </label>
+            <div class="content-body">
+                <!-- SECTION: TODAY'S AGENDA -->
+                <section id="sec-today" class="content-section active">
+                    <div class="glass-card">
+                        <div class="today-header-banner">
+                            <h3 id="current-day-heading">Schedule for Today</h3>
+                            <span class="badge" id="today-date-badge">Loading...</span>
+                        </div>
+                        <div class="schedule-list" id="today-schedule-list">
+                            <!-- Populated dynamically via JS -->
+                        </div>
                     </div>
-                </div>
+                </section>
 
-                <button type="submit" class="btn btn-primary">View Schedule</button>
-            </form>
+                <!-- SECTION: FULL TIMETABLE -->
+                <section id="sec-timetable" class="content-section">
+                    <div class="glass-card">
+                        <div class="filter-bar">
+                            <h3>Weekly Master Timetable</h3>
+                            <select id="day-filter" onchange="filterTimetableByDay()">
+                                <option value="all">All Days</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="glass-table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Time</th>
+                                        <th>Subject</th>
+                                        <th>Venue / Room</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="master-table-body">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
 
-            <div class="tip-box">
-                <span class="tip-icon">💡</span>
-                <p>Your section automatically filters your practical batches and tutorial timings.</p>
+                <!-- SECTION: SUBJECTS & VENUES -->
+                <section id="sec-subjects" class="content-section">
+                    <div class="glass-card">
+                        <h3>Venue Reference Guide</h3>
+                        <p>Common rooms and locations used across your weekly timetable.</p>
+                        <div class="venue-grid" id="venue-grid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
+        </main>
+    </div>
 
-        <!-- STEP 2: Schedule Dashboard View (Hidden by Default) -->
-        <section id="dashboard-view" class="dashboard-view hidden">
-            
-            <!-- Dashboard Controls Header -->
-            <div class="dashboard-header card">
-                <div>
-                    <h2 id="display-section-title">Schedule for IT-2</h2>
-                    <p>Showing personalized practical & lecture allocations</p>
-                </div>
-                <button onclick="resetPortal()" class="btn btn-secondary">Switch Section / ID</button>
-            </div>
-
-            <!-- Day Tabs -->
-            <div class="day-tabs" id="day-tabs">
-                <!-- Dynamically generated day buttons -->
-            </div>
-
-            <!-- Schedule Card Container -->
-            <div class="card schedule-container">
-                <div class="schedule-sub-header">
-                    <span id="active-day-label">Monday</span>
-                    <span class="room-badge">Room IT-202 Base</span>
-                </div>
-                <div id="schedule-list" class="schedule-list">
-                    <!-- Schedule Items Injected Here -->
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-        <p>ClassSync Student Portal &copy; 2026</p>
-    </footer>
-
-    <!-- Link External JavaScript -->
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
