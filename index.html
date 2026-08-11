@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Timetable | Class Schedule Dashboard</title>
+    <title>Student Class Lookup System | IT Timetable</title>
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,96 +17,75 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <!-- APP WRAPPER -->
+    <!-- MAIN APP CONTAINER -->
     <div class="app-wrapper">
-        <!-- Sidebar Navigation -->
-        <aside class="glass-sidebar">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span>ClassSync</span>
+        <!-- Header Banner -->
+        <header class="glass-header">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h1>Student Class Lookup</h1>
             </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" onclick="switchSection('today', event)"><i class="fa-solid fa-sun"></i> Today's Agenda</a>
-                <a href="#" class="nav-item" onclick="switchSection('timetable', event)"><i class="fa-solid fa-table"></i> Full Timetable</a>
-                <a href="#" class="nav-item" onclick="switchSection('subjects', event)"><i class="fa-solid fa-book-open"></i> Subjects & Venues</a>
-            </nav>
-            <div class="sidebar-footer">
-                <div class="live-clock" id="live-clock">--:--:--</div>
-            </div>
-        </aside>
+            <p class="subtitle">Enter your credentials below to instantly access your customized batch schedule.</p>
+        </header>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <header class="glass-header">
-                <div class="header-title">
-                    <h2 id="section-title">Today's Agenda</h2>
-                    <p id="header-subtitle">Your scheduled classes for today</p>
-                </div>
-                <div class="user-profile-badge">
-                    <div class="avatar"><i class="fa-solid fa-user-graduate"></i></div>
-                    <span>IT Department</span>
-                </div>
-            </header>
-
-            <div class="content-body">
-                <!-- SECTION: TODAY'S AGENDA -->
-                <section id="sec-today" class="content-section active">
-                    <div class="glass-card">
-                        <div class="today-header-banner">
-                            <h3 id="current-day-heading">Schedule for Today</h3>
-                            <span class="badge" id="today-date-badge">Loading...</span>
-                        </div>
-                        <div class="schedule-list" id="today-schedule-list">
-                            <!-- Populated dynamically via JS -->
+        <!-- Lookup Form Card -->
+        <section class="glass-card lookup-card">
+            <h2><i class="fa-solid fa-id-card"></i> Student Verification</h2>
+            <form id="lookup-form" onsubmit="handleLookup(event)">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="student-id">Student ID</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="student-id" placeholder="e.g. 20265012" required>
                         </div>
                     </div>
-                </section>
-
-                <!-- SECTION: FULL TIMETABLE -->
-                <section id="sec-timetable" class="content-section">
-                    <div class="glass-card">
-                        <div class="filter-bar">
-                            <h3>Weekly Master Timetable</h3>
-                            <select id="day-filter" onchange="filterTimetableByDay()">
-                                <option value="all">All Days</option>
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
-                                <option value="Saturday">Saturday</option>
+                    <div class="input-group">
+                        <label for="section-select">Select Section / Batch</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-users-rectangle"></i>
+                            <select id="section-select" required>
+                                <option value="" disabled selected>Choose your batch...</option>
+                                <option value="IT-1">#IT-1 (Batch 1)</option>
+                                <option value="IT-2">#IT-2 (Batch 2)</option>
                             </select>
                         </div>
-                        <div class="table-responsive">
-                            <table class="glass-table">
-                                <thead>
-                                    <tr>
-                                        <th>Day</th>
-                                        <th>Time</th>
-                                        <th>Subject</th>
-                                        <th>Venue / Room</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="master-table-body">
-                                    <!-- Populated dynamically -->
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
-                </section>
+                </div>
+                <button type="submit" class="glass-btn primary-btn">
+                    <span>View My Schedule</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </section>
 
-                <!-- SECTION: SUBJECTS & VENUES -->
-                <section id="sec-subjects" class="content-section">
-                    <div class="glass-card">
-                        <h3>Venue Reference Guide</h3>
-                        <p>Common rooms and locations used across your weekly timetable.</p>
-                        <div class="venue-grid" id="venue-grid">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </section>
+        <!-- Results Display Container (Initially Hidden) -->
+        <section id="results-container" class="results-container" style="display: none;">
+            <div class="glass-card result-summary-card">
+                <div class="summary-info">
+                    <h3 id="result-title">Schedule for Section</h3>
+                    <p id="result-student-tag">Student: --</p>
+                </div>
+                <button class="glass-btn secondary-btn" onclick="resetLookup()">
+                    <i class="fa-solid fa-rotate-left"></i> Change Details
+                </button>
             </div>
-        </main>
+
+            <!-- Day Tabs Filter -->
+            <div class="day-tabs" id="day-tabs">
+                <button class="day-tab active" onclick="filterSchedule('All', event)">All Days</button>
+                <button class="day-tab" onclick="filterSchedule('Monday', event)">Monday</button>
+                <button class="day-tab" onclick="filterSchedule('Tuesday', event)">Tuesday</button>
+                <button class="day-tab" onclick="filterSchedule('Wednesday', event)">Wednesday</button>
+                <button class="day-tab" onclick="filterSchedule('Thursday', event)">Thursday</button>
+                <button class="day-tab" onclick="filterSchedule('Friday', event)">Friday</button>
+                <button class="day-tab" onclick="filterSchedule('Saturday', event)">Saturday</button>
+            </div>
+
+            <!-- Schedule List Grid -->
+            <div class="schedule-grid" id="schedule-grid-output">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
     </div>
 
     <script src="app.js"></script>
