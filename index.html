@@ -3,89 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Class Lookup System | IT Timetable</title>
+    <title>Time Table | IT 2nd Year</title>
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Background Animated Orbs -->
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
-    <!-- MAIN APP CONTAINER -->
-    <div class="app-wrapper">
-        <!-- Header Banner -->
-        <header class="glass-header">
-            <div class="brand">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h1>Student Class Lookup</h1>
-            </div>
-            <p class="subtitle">Enter your credentials below to instantly access your customized batch schedule.</p>
+    <div class="app-container">
+        <!-- Prominent Main Title -->
+        <header class="main-header">
+            <h1>Time Table of Information Technology Students 2nd Year</h1>
+            <p>Comprehensive weekly lecture, tutorial, and practical schedule</p>
         </header>
 
-        <!-- Lookup Form Card -->
-        <section class="glass-card lookup-card">
-            <h2><i class="fa-solid fa-id-card"></i> Student Verification</h2>
-            <form id="lookup-form" onsubmit="handleLookup(event)">
-                <div class="form-grid">
-                    <div class="input-group">
-                        <label for="student-id">Student ID</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-regular fa-user"></i>
-                            <input type="text" id="student-id" placeholder="e.g. 20265012" required>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label for="section-select">Select Section / Batch</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-solid fa-users-rectangle"></i>
-                            <select id="section-select" required>
-                                <option value="" disabled selected>Choose your batch...</option>
-                                <option value="IT-1">#IT-1 (Batch 1)</option>
-                                <option value="IT-2">#IT-2 (Batch 2)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="glass-btn primary-btn">
-                    <span>View My Schedule</span> <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
-        </section>
-
-        <!-- Results Display Container (Initially Hidden) -->
-        <section id="results-container" class="results-container" style="display: none;">
-            <div class="glass-card result-summary-card">
-                <div class="summary-info">
-                    <h3 id="result-title">Schedule for Section</h3>
-                    <p id="result-student-tag">Student: --</p>
-                </div>
-                <button class="glass-btn secondary-btn" onclick="resetLookup()">
-                    <i class="fa-solid fa-rotate-left"></i> Change Details
-                </button>
+        <!-- Controls / Day Filter Bar -->
+        <div class="filter-card">
+            <div class="filter-label"><i class="fa-solid fa-filter"></i> Filter by Day:</div>
+            <div class="day-filter-btns" id="day-filters">
+                <button class="filter-btn active" onclick="filterByDay('All', event)">All Days</button>
+                <button class="filter-btn" onclick="filterByDay('Monday', event)">Monday</button>
+                <button class="filter-btn" onclick="filterByDay('Tuesday', event)">Tuesday</button>
+                <button class="filter-btn" onclick="filterByDay('Wednesday', event)">Wednesday</button>
+                <button class="filter-btn" onclick="filterByDay('Thursday', event)">Thursday</button>
+                <button class="filter-btn" onclick="filterByDay('Friday', event)">Friday</button>
+                <button class="filter-btn" onclick="filterByDay('Saturday', event)">Saturday</button>
             </div>
+        </div>
 
-            <!-- Day Tabs Filter -->
-            <div class="day-tabs" id="day-tabs">
-                <button class="day-tab active" onclick="filterSchedule('All', event)">All Days</button>
-                <button class="day-tab" onclick="filterSchedule('Monday', event)">Monday</button>
-                <button class="day-tab" onclick="filterSchedule('Tuesday', event)">Tuesday</button>
-                <button class="day-tab" onclick="filterSchedule('Wednesday', event)">Wednesday</button>
-                <button class="day-tab" onclick="filterSchedule('Thursday', event)">Thursday</button>
-                <button class="day-tab" onclick="filterSchedule('Friday', event)">Friday</button>
-                <button class="day-tab" onclick="filterSchedule('Saturday', event)">Saturday</button>
-            </div>
-
-            <!-- Schedule List Grid -->
-            <div class="schedule-grid" id="schedule-grid-output">
-                <!-- Populated dynamically via JS -->
-            </div>
-        </section>
+        <!-- Timetable Cards Container -->
+        <div class="timetable-grid" id="timetable-output">
+            <!-- Populated dynamically via JS -->
+        </div>
     </div>
 
     <script src="app.js"></script>
