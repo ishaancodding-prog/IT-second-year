@@ -1,121 +1,144 @@
-const timetableData = {
-    "Monday": [
-        { time: "11:00 - 12:00", subject: "Data Structures and Algorithms", room: "IT-202" },
-        { time: "12:00 - 13:00", subject: "Effective Technical Communication", room: "IT-202" },
-        { time: "15:00 - 16:00", subject: "Foundations of Information Technology", room: "IT-202" }
-    ],
-    "Tuesday": [
-        { time: "10:00 - 11:00", subject: "Data Structures and Algorithms", room: "IT-202" },
-        { time: "11:00 - 13:00", subject: "Digital Electronics (Tutorial/Practical - IT2)", room: "Comp Engg. Dept.", section: "IT-2" },
-        { time: "11:00 - 13:00", subject: "Digital Electronics (Tutorial/Practical - IT1)", room: "Comp Engg. Dept.", section: "IT-1" },
-        { time: "14:00 - 15:00", subject: "Probability and Statistics (Tutorial - IT1)", room: "IT-305", section: "IT-1" },
-        { time: "15:00 - 16:00", subject: "Probability and Statistics (Tutorial - IT2)", room: "IT-305", section: "IT-2" },
-        { time: "16:00 - 17:00", subject: "Formal Languages and Automata Theory", room: "IT-202" }
-    ],
-    "Wednesday": [
-        { time: "09:00 - 10:00", subject: "Foundations of Information Technology", room: "IT-202" },
-        { time: "10:00 - 11:00", subject: "Probability and Statistics", room: "IT-202" },
-        { time: "11:00 - 12:00", subject: "Digital Electronics", room: "IT-202" },
-        { time: "12:00 - 13:00", subject: "Foundations of Information Technology", room: "IT-202" },
-        { time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical - IT1)", room: "IT-203", section: "IT-1" },
-        { time: "15:00 - 17:00", subject: "Foundations of Information Technology (Practical - IT2)", room: "IT-204", section: "IT-2" }
-    ],
-    "Thursday": [
-        { time: "10:00 - 11:00", subject: "Data Structures and Algorithms", room: "IT-202" },
-        { time: "11:00 - 12:00", subject: "Effective Technical Communication", room: "IT-202" },
-        { time: "12:00 - 13:00", subject: "Digital Electronics", room: "IT-202" },
-        { time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical - IT2)", room: "IT-203", section: "IT-2" },
-        { time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical - IT1)", room: "IT-203", section: "IT-1" }
-    ],
-    "Friday": [
-        { time: "10:00 - 11:00", subject: "Probability and Statistics", room: "IT-202" },
-        { time: "11:00 - 12:00", subject: "Effective Technical Communication", room: "IT-202" },
-        { time: "12:00 - 13:00", subject: "Digital Electronics", room: "IT-202" },
-        { time: "15:00 - 17:00", subject: "Digital Electronics (Practical - IT1)", room: "Comp Engg. Dept.", section: "IT-1" },
-        { time: "15:00 - 17:00", subject: "Digital Electronics (Practical - IT2)", room: "Comp Engg. Dept.", section: "IT-2" }
-    ],
-    "Saturday": [
-        { time: "09:00 - 11:00", subject: "Foundations of Information Technology (Practical - IT1)", room: "IT-204", section: "IT-1" },
-        { time: "09:00 - 11:00", subject: "Foundations of Information Technology (Practical - IT2)", room: "IT-204", section: "IT-2" },
-        { time: "11:00 - 12:00", subject: "Formal Languages and Automata Theory", room: "IT-202" },
-        { time: "12:00 - 13:00", subject: "Probability and Statistics", room: "IT-202" },
-        { time: "14:00 - 18:00", subject: "NSS/NCC (IT1 & IT2)", room: "IT Complex" }
-    ]
+// Complete Timetable Dataset
+const timetableData = [
+    { day: "Monday", time: "11:00 - 12:00", subject: "Data Structures and Algorithms", room: "IT-202" },
+    { day: "Monday", time: "12:00 - 13:00", subject: "Effective Technical Communication", room: "IT-202" },
+    { day: "Monday", time: "15:00 - 16:00", subject: "Foundations of Information Technology", room: "IT-202" },
+    
+    { day: "Tuesday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", room: "IT-202" },
+    { day: "Tuesday", time: "11:00 - 13:00", subject: "Digital Electronics (Tutorial/Practical - IT2)", room: "Comp Engg. Dept." },
+    { day: "Tuesday", time: "14:00 - 15:00", subject: "Probability and Statistics (Tutorial - IT1)", room: "IT-305" },
+    { day: "Tuesday", time: "15:00 - 16:00", subject: "Probability and Statistics (Tutorial - IT2)", room: "IT-305" },
+    { day: "Tuesday", time: "16:00 - 17:00", subject: "Formal Languages and Automata Theory", room: "IT-202" },
+    
+    { day: "Wednesday", time: "09:00 - 10:00", subject: "Foundations of Information Technology", room: "IT-202" },
+    { day: "Wednesday", time: "10:00 - 11:00", subject: "Probability and Statistics", room: "IT-202" },
+    { day: "Wednesday", time: "11:00 - 12:00", subject: "Digital Electronics", room: "IT-202" },
+    { day: "Wednesday", time: "12:00 - 13:00", subject: "Foundations of Information Technology", room: "IT-202" },
+    { day: "Wednesday", time: "15:00 - 17:00", subject: "Data Structures (Prac - IT1) / FIT (Prac - IT2)", room: "IT-203 / IT-204" },
+    
+    { day: "Thursday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", room: "IT-202" },
+    { day: "Thursday", time: "11:00 - 12:00", subject: "Effective Technical Communication", room: "IT-202" },
+    { day: "Thursday", time: "12:00 - 13:00", subject: "Digital Electronics", room: "IT-202" },
+    { day: "Thursday", time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical - IT2)", room: "IT-203" },
+    
+    { day: "Friday", time: "10:00 - 11:00", subject: "Probability and Statistics", room: "IT-202" },
+    { day: "Friday", time: "11:00 - 12:00", subject: "Effective Technical Communication", room: "IT-202" },
+    { day: "Friday", time: "12:00 - 13:00", subject: "Digital Electronics", room: "IT-202" },
+    { day: "Friday", time: "15:00 - 17:00", subject: "Digital Electronics (Practical - IT1)", room: "Comp Engg. Dept." },
+    
+    { day: "Saturday", time: "09:00 - 11:00", subject: "Foundations of Information Technology (Practical - IT1)", room: "IT-204" },
+    { day: "Saturday", time: "11:00 - 12:00", subject: "Formal Languages and Automata Theory", room: "IT-202" },
+    { day: "Saturday", time: "12:00 - 13:00", subject: "Probability and Statistics", room: "IT-202" },
+    { day: "Saturday", time: "14:00 - 18:00", subject: "NSS/NCC (IT1 & IT2)", room: "IT Complex" }
+];
+
+const venueDescriptions = {
+    "IT-202": "Main lecture hall for primary theory classes.",
+    "IT-203": "Data Structures & Algorithms Practical Lab.",
+    "IT-204": "Foundations of IT Practical Lab.",
+    "IT-305": "Probability & Statistics Tutorial Room.",
+    "Comp Engg. Dept.": "Digital Electronics laboratory and tutorial wing.",
+    "IT Complex": "Central complex for large group activities like NSS/NCC."
 };
 
-let currentUser = { id: "", section: "" };
-let activeDay = "Monday";
+// Initialize App
+document.addEventListener('DOMContentLoaded', () => {
+    startClock();
+    renderTodaySchedule();
+    renderMasterTable(timetableData);
+    renderVenues();
+});
 
-function handleLogin(event) {
+// Real-Time Clock
+function startClock() {
+    const clockEl = document.getElementById('live-clock');
+    setInterval(() => {
+        const now = new Date();
+        clockEl.innerText = now.toLocaleTimeString();
+    }, 1000);
+}
+
+// Navigation Handler
+function switchSection(sectionId, event) {
     event.preventDefault();
-    currentUser.id = document.getElementById('student-id').value;
-    currentUser.section = document.querySelector('input[name="section"]:checked').value;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    event.currentTarget.classList.add('active');
 
-    // Update Header User Badge
-    const badge = document.getElementById('user-badge');
-    badge.innerText = `ID: ${currentUser.id} | ${currentUser.section}`;
-    badge.classList.remove('hidden');
+    document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+    document.getElementById(`sec-${sectionId}`).classList.add('active');
 
-    // Switch Views
-    document.getElementById('login-view').classList.add('hidden');
-    document.getElementById('dashboard-view').classList.remove('hidden');
-    document.getElementById('display-section-title').innerText = `Schedule for Section ${currentUser.section}`;
+    const headers = {
+        today: ["Today's Agenda", "Your scheduled classes for today"],
+        timetable: ["Full Timetable", "Complete weekly schedule overview"],
+        subjects: ["Venues & Rooms", "Locations and building directory"]
+    };
 
-    renderDays();
-    renderSchedule(activeDay);
+    document.getElementById('section-title').innerText = headers[sectionId][0];
+    document.getElementById('header-subtitle').innerText = headers[sectionId][1];
 }
 
-function resetPortal() {
-    document.getElementById('dashboard-view').classList.add('hidden');
-    document.getElementById('login-view').classList.remove('hidden');
-    document.getElementById('user-badge').classList.add('hidden');
-    document.getElementById('schedule-form').reset();
-}
+// Render Today's Schedule (Auto-detects current day)
+function renderTodaySchedule() {
+    const listEl = document.getElementById('today-schedule-list');
+    const badgeEl = document.getElementById('today-date-badge');
+    const headingEl = document.getElementById('current-day-heading');
 
-function renderDays() {
-    const container = document.getElementById('day-tabs');
-    container.innerHTML = '';
-    Object.keys(timetableData).forEach(day => {
-        const isSelected = day === activeDay;
-        const btn = document.createElement('button');
-        btn.className = `day-tab-btn ${isSelected ? 'active' : ''}`;
-        btn.innerText = day;
-        btn.onclick = () => {
-            activeDay = day;
-            renderDays();
-            renderSchedule(day);
-        };
-        container.appendChild(btn);
-    });
-}
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const todayName = days[new Date().getDay()];
+    
+    badgeEl.innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+    headingEl.innerText = `Classes for ${todayName}`;
 
-function renderSchedule(day) {
-    document.getElementById('active-day-label').innerText = day;
-    const listContainer = document.getElementById('schedule-list');
-    listContainer.innerHTML = '';
+    const todaysClasses = timetableData.filter(item => item.day === todayName);
 
-    const dayClasses = timetableData[day].filter(item => {
-        if (!item.section) return true;
-        return item.section === currentUser.section;
-    });
-
-    if (dayClasses.length === 0) {
-        listContainer.innerHTML = `<div class="empty-state">No classes scheduled for this day.</div>`;
+    if (todaysClasses.length === 0) {
+        listEl.innerHTML = `<div class="no-classes"><i class="fa-solid fa-mug-hot" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>No classes scheduled for today! Enjoy your free time.</div>`;
         return;
     }
 
-    dayClasses.forEach(cls => {
-        const row = document.createElement('div');
-        row.className = "schedule-item";
-        row.innerHTML = `
+    listEl.innerHTML = todaysClasses.map(item => `
+        <div class="schedule-item">
             <div>
-                <span class="class-time">${cls.time}</span>
-                <h4 class="class-name">${cls.subject}</h4>
+                <div class="schedule-subject">${item.subject}</div>
+                <div class="schedule-room"><i class="fa-solid fa-location-dot"></i> ${item.room}</div>
             </div>
-            <div class="class-room">
-                📍 ${cls.room}
-            </div>
-        `;
-        listContainer.appendChild(row);
-    });
+            <div class="schedule-time"><i class="fa-regular fa-clock"></i> ${item.time}</div>
+        </div>
+    `).join('');
+}
+
+// Render Master Timetable Table
+function renderMasterTable(data) {
+    const tbody = document.getElementById('master-table-body');
+    tbody.innerHTML = data.map(item => `
+        <tr>
+            <td><strong>${item.day}</strong></td>
+            <td><code>${item.time}</code></td>
+            <td>${item.subject}</td>
+            <td><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> ${item.room}</td>
+        </tr>
+    `).join('');
+}
+
+// Filter Timetable by Day Dropdown
+function filterTimetableByDay() {
+    const selectedDay = document.getElementById('day-filter').value;
+    if (selectedDay === 'all') {
+        renderMasterTable(timetableData);
+    } else {
+        const filtered = timetableData.filter(item => item.day === selectedDay);
+        renderMasterTable(filtered);
+    }
+}
+
+// Render Venue Cards
+function renderVenues() {
+    const gridEl = document.getElementById('venue-grid');
+    gridEl.innerHTML = Object.entries(venueDescriptions).map(([venue, desc]) => `
+        <div class="venue-card">
+            <i class="fa-solid fa-building-columns"></i>
+            <h4>${venue}</h4>
+            <p>${desc}</p>
+        </div>
+    `).join('');
 }
