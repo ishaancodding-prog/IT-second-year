@@ -3,91 +3,481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Class Lookup System | IT Timetable</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CampusSchedule Hub - Student Class Lookup</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --badge-bg: #e0e7ff;
+            --badge-text: #3730a3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 2rem;
+        }
+
+        /* Login Screen */
+        #login-screen h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        #login-screen p {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .tip-box {
+            margin-top: 1.5rem;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Dashboard Screen */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .user-badge {
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .day-tabs {
+            display: flex;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            padding: 0.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .day-tab {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .day-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Schedule Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .no-classes {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            width: auto;
+            margin-top: 0;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+    </style>
 </head>
 <body>
-    <!-- Background Animated Orbs -->
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
 
-    <!-- MAIN APP CONTAINER -->
-    <div class="app-wrapper">
-        <!-- Header Banner -->
-        <header class="glass-header">
-            <div class="brand">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h1>Student Class Lookup</h1>
-            </div>
-            <p class="subtitle">Enter your credentials below to instantly access your customized batch schedule.</p>
-        </header>
+    <header>
+        <div class="logo">
+            📅 CampusSchedule Hub
+        </div>
+        <div id="header-user-info" class="hidden">
+            <button class="btn-secondary" onclick="logout()">Change Details</button>
+        </div>
+    </header>
 
-        <!-- Lookup Form Card -->
-        <section class="glass-card lookup-card">
-            <h2><i class="fa-solid fa-id-card"></i> Student Verification</h2>
-            <form id="lookup-form" onsubmit="handleLookup(event)">
-                <div class="form-grid">
-                    <div class="input-group">
+    <main>
+        <div class="container">
+            <!-- Login / Input Screen -->
+            <div id="login-screen" class="card">
+                <h1>Find Your Classes</h1>
+                <p>Enter your student credentials to view your personalized weekly schedule.</p>
+                
+                <form id="lookup-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
                         <label for="student-id">Student ID</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-regular fa-user"></i>
-                            <input type="text" id="student-id" placeholder="e.g. 20265012" required>
+                        <input type="text" id="student-id" class="form-control" placeholder="e.g., 20261054" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Section</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="section" value="#IT-1" required> #IT-1
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="section" value="#IT-2" checked> #IT-2
+                            </label>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label for="section-select">Select Section / Batch</label>
-                        <div class="input-field-wrapper">
-                            <i class="fa-solid fa-users-rectangle"></i>
-                            <select id="section-select" required>
-                                <option value="" disabled selected>Choose your batch...</option>
-                                <option value="IT-1">#IT-1 (Batch 1)</option>
-                                <option value="IT-2">#IT-2 (Batch 2)</option>
-                            </select>
-                        </div>
+
+                    <button type="submit" class="btn">View My Schedule</button>
+                </form>
+
+                <div class="tip-box">
+                    💡 <strong>Tip:</strong> Your section selection automatically filters joint tutorials and practical slots tailored specifically to your section.
+                </div>
+            </div>
+
+            <!-- Dashboard Screen -->
+            <div id="dashboard-screen" class="card hidden">
+                <div class="dashboard-header">
+                    <div>
+                        <h2 id="welcome-title" style="font-size: 1.5rem; margin-bottom: 0.25rem;">Weekly Schedule</h2>
+                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.875rem;"></p>
+                    </div>
+                    <div id="section-display-badge" class="user-badge"></div>
+                </div>
+
+                <div class="controls-bar">
+                    <div class="day-tabs" id="day-tabs">
+                        <button class="day-tab active" onclick="filterDay('All')">All Days</button>
+                        <button class="day-tab" onclick="filterDay('Monday')">Mon</button>
+                        <button class="day-tab" onclick="filterDay('Tuesday')">Tue</button>
+                        <button class="day-tab" onclick="filterDay('Wednesday')">Wed</button>
+                        <button class="day-tab" onclick="filterDay('Thursday')">Thu</button>
+                        <button class="day-tab" onclick="filterDay('Friday')">Fri</button>
+                        <button class="day-tab" onclick="filterDay('Saturday')">Sat</button>
                     </div>
                 </div>
-                <button type="submit" class="glass-btn primary-btn">
-                    <span>View My Schedule</span> <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
-        </section>
 
-        <!-- Results Display Container (Initially Hidden) -->
-        <section id="results-container" class="results-container" style="display: none;">
-            <div class="glass-card result-summary-card">
-                <div class="summary-info">
-                    <h3 id="result-title">Schedule for Section</h3>
-                    <p id="result-student-tag">Student: --</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Time</th>
+                                <th>Subject</th>
+                                <th>Room / Venue</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-table-body">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
                 </div>
-                <button class="glass-btn secondary-btn" onclick="resetLookup()">
-                    <i class="fa-solid fa-rotate-left"></i> Change Details
-                </button>
             </div>
+        </div>
+    </main>
 
-            <!-- Day Tabs Filter -->
-            <div class="day-tabs" id="day-tabs">
-                <button class="day-tab active" onclick="filterSchedule('All', event)">All Days</button>
-                <button class="day-tab" onclick="filterSchedule('Monday', event)">Monday</button>
-                <button class="day-tab" onclick="filterSchedule('Tuesday', event)">Tuesday</button>
-                <button class="day-tab" onclick="filterSchedule('Wednesday', event)">Wednesday</button>
-                <button class="day-tab" onclick="filterSchedule('Thursday', event)">Thursday</button>
-                <button class="day-tab" onclick="filterSchedule('Friday', event)">Friday</button>
-                <button class="day-tab" onclick="filterSchedule('Saturday', event)">Saturday</button>
-            </div>
+    <script>
+        // Raw Schedule Dataset based on user input
+        const rawSchedule = [
+            { day: "Monday", time: "11:00 - 12:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Monday", time: "12:00 - 13:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Monday", time: "15:00 - 16:00", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            
+            { day: "Tuesday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Tuesday", time: "11:00 - 13:00", subject: "Digital Electronics (Tutorial/Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-2"], specific: "#IT-2" },
+            { day: "Tuesday", time: "14:00 - 15:00", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-1"], specific: "#IT-1" },
+            { day: "Tuesday", time: "15:00 - 16:00", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-2"], specific: "#IT-2" },
+            { day: "Tuesday", time: "16:00 - 17:00", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            
+            { day: "Wednesday", time: "09:00 - 10:00", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "10:00 - 11:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "11:00 - 12:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "12:00 - 13:00", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            // Shared Split Slot handling
+            { day: "Wednesday", time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-1"], specific: "#IT-1" },
+            { day: "Wednesday", time: "15:00 - 17:00", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-2"], specific: "#IT-2" },
+            
+            { day: "Thursday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "11:00 - 12:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "12:00 - 13:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-2"], specific: "#IT-2" },
+            
+            { day: "Friday", time: "10:00 - 11:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "11:00 - 12:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "12:00 - 13:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "15:00 - 17:00", subject: "Digital Electronics (Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-1"], specific: "#IT-1" },
+            
+            { day: "Saturday", time: "09:00 - 11:00", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-1"], specific: "#IT-1" },
+            { day: "Saturday", time: "11:00 - 12:00", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Saturday", time: "12:00 - 13:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Saturday", time: "14:00 - 18:00", subject: "NSS/NCC", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+        ];
 
-            <!-- Schedule List Grid -->
-            <div class="schedule-grid" id="schedule-grid-output">
-                <!-- Populated dynamically via JS -->
-            </div>
-        </section>
-    </div>
+        let currentUser = { id: "", section: "" };
+        let currentDayFilter = "All";
 
-    <script src="app.js"></script>
+        // Check local storage on load
+        window.addEventListener("DOMContentLoaded", () => {
+            const savedUser = localStorage.getItem("campus_schedule_user");
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const studentId = document.getElementById("student-id").value.trim();
+            const selectedSection = document.querySelector('input[name="section"]:checked').value;
+
+            if (!studentId) return;
+
+            currentUser = { id: studentId, section: selectedSection };
+            localStorage.setItem("campus_schedule_user", JSON.stringify(currentUser));
+            showDashboard();
+        }
+
+        function showDashboard() {
+            document.getElementById("login-screen").classList.add("hidden");
+            document.getElementById("dashboard-screen").classList.remove("hidden");
+            document.getElementById("header-user-info").classList.remove("hidden");
+
+            document.getElementById("welcome-subtitle").innerText = `Student ID: ${currentUser.id}`;
+            document.getElementById("section-display-badge").innerText = `Section: ${currentUser.section}`;
+
+            renderSchedule();
+        }
+
+        function logout() {
+            localStorage.removeItem("campus_schedule_user");
+            document.getElementById("dashboard-screen").classList.add("hidden");
+            document.getElementById("login-screen").classList.remove("hidden");
+            document.getElementById("header-user-info").classList.add("hidden");
+            document.getElementById("lookup-form").reset();
+        }
+
+        function filterDay(day) {
+            currentDayFilter = day;
+            
+            // Update active tab styling
+            const tabs = document.querySelectorAll(".day-tab");
+            tabs.forEach(tab => {
+                if (tab.innerText.includes(day) || (day === 'All' && tab.innerText === 'All Days')) {
+                    tab.classList.add("active");
+                } else {
+                    tab.classList.remove("active");
+                }
+            });
+
+            renderSchedule();
+        }
+
+        function renderSchedule() {
+            const tbody = document.getElementById("schedule-table-body");
+            tbody.innerHTML = "";
+
+            // Filter schedule matching user's section
+            const filteredItems = rawSchedule.filter(item => {
+                // Check if item belongs to user's section
+                const matchesSection = item.sections.includes(currentUser.section);
+                // Check day filter
+                const matchesDay = currentDayFilter === "All" || item.day === currentDayFilter;
+                return matchesSection && matchesDay;
+            });
+
+            if (filteredItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="no-classes">No classes scheduled for this view.</td></tr>`;
+                return;
+            }
+
+            filteredItems.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="font-weight: 500;">${item.day}</td>
+                    <td>${item.time}</td>
+                    <td>${item.subject}</td>
+                    <td style="color: var(--text-muted);">${item.venue}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
 </body>
 </html>
