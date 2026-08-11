@@ -1,312 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>IT Second Year - Timetable & Daily Flashcards</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            min-height: 100vh;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #34495e;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 5px;
-            margin-top: 40px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
-            background-color: #ffffff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            border: 1px solid #e1e8ed;
-            text-align: left;
-            padding: 14px;
-        }
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-        tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-        tr:hover {
-            background-color: #edf2f7;
-            transition: background-color 0.2s ease;
-        }
-        /* Flashcard Styling */
-        .flashcard-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .flashcard-container h2 {
-            color: #fff;
-            border-bottom: 3px solid #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        .flashcard-container p {
-            color: #fff;
-            font-weight: 500;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-        }
-        .flashcard {
-            width: 340px;
-            height: 220px;
-            background-color: #ffffff;
-            color: #000000;
-            border: 3px solid #ff758c;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-radius: 15px;
-            cursor: pointer;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-        .flashcard:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.25);
-        }
-        .flashcard.flipped {
-            background-color: #000000;
-            color: #ffffff;
-            border-color: #000000;
-        }
-        .flashcard-day {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: rgba(255, 117, 140, 0.2);
-            color: #d63031;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-        }
-        .flashcard.flipped .flashcard-day {
-            background: rgba(255, 255, 255, 0.2);
-            color: #00cec9;
-        }
-        .flashcard-time {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #0984e3;
-        }
-        .flashcard.flipped .flashcard-time {
-            color: #ffeaa7;
-        }
-        .flashcard-subject {
-            font-size: 17px;
-            font-weight: bold;
-            padding: 0 10px;
-        }
-        .flashcard-buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-        }
-        button {
-            padding: 10px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-            filter: brightness(1.1);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn — Morphism</title>
+<meta name="description" content="Identity, composition, and isomorphism, explained with real, runnable conversion functions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>IT - Second Year Hub</h1>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="grid-backdrop" aria-hidden="true"></div>
+<div class="blob" aria-hidden="true" style="width:480px;height:480px;background:var(--morph);top:-140px;right:-120px;"></div>
+<div class="blob" aria-hidden="true" style="width:420px;height:420px;background:var(--object);bottom:-160px;left:-100px;animation-delay:-10s;"></div>
 
-    <!-- Interactive Flashcards Section -->
-    <div class="flashcard-container">
-        <h2>Daily Schedule Flashcards</h2>
-        <p>Click the card to toggle between the Time/Day (White Face) and the Subject Details (Black Back).</p>
-        <div class="flashcard" id="flashcard" onclick="flipCard()">
-            <div class="flashcard-day" id="card-day">Loading...</div>
-            <div class="flashcard-time" id="card-time">Loading...</div>
-            <div class="flashcard-subject" id="card-text">Loading...</div>
-        </div>
-        <div class="flashcard-buttons">
-            <button onclick="prevCard()">Previous</button>
-            <button onclick="nextCard()">Next Card</button>
-        </div>
+<nav class="site-nav" aria-label="Primary">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&#8594;</span> Morphism</a>
+  <div class="nav-links">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="learn.html">Learn</a></li>
+      <li><a href="index.html#playground">Playground</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="signup.html" class="btn btn-solid">Sign up</a>
     </div>
+  </div>
+</nav>
 
-    <h2>Main Timetable</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Day</th>
-                <th>Time</th>
-                <th>Subject</th>
-                <th>Room / Venue</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Monday</td><td>11:00 - 12:00</td><td>Data Structures and Algorithms (IT-202)</td><td>-</td></tr>
-            <tr><td>Monday</td><td>12:00 - 13:00</td><td>Effective Technical Communication</td><td>-</td></tr>
-            <tr><td>Tuesday</td><td>10:00 - 11:00</td><td>Foundations of Information Technology</td><td>IT-202</td></tr>
-            <tr><td>Tuesday</td><td>11:00 - 13:00</td><td>Data Structures and Algorithms (Practical) (IT-202)</td><td>IT-302</td></tr>
-            <tr><td>Tuesday</td><td>14:00 - 15:00</td><td>Digital Electronics (Tutorial/Practical) (IT-201)</td><td>IT-202</td></tr>
-            <tr><td>Tuesday</td><td>15:00 - 16:00</td><td>Probability and Statistics (Tutorial) (IT-305)</td><td>-</td></tr>
-            <tr><td>Wednesday</td><td>10:00 - 11:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
-            <tr><td>Wednesday</td><td>11:00 - 12:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
-            <tr><td>Wednesday</td><td>12:00 - 13:00</td><td>Comp. Engg. Dept.</td><td>IT-202</td></tr>
-            <tr><td>Wednesday</td><td>14:00 - 15:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
-            <tr><td>Thursday</td><td>10:00 - 11:00</td><td>Data Structures and Algorithms (IT-202)</td><td>-</td></tr>
-            <tr><td>Thursday</td><td>11:00 - 12:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
-            <tr><td>Thursday</td><td>12:00 - 13:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
-            <tr><td>Thursday</td><td>14:00 - 17:00</td><td>Foundation of Information Technology (Practical) (IT-204)</td><td>IT-204 / IT-206</td></tr>
-            <tr><td>Friday</td><td>10:00 - 11:00</td><td>Formal Languages and Automata Theory (IT-203)</td><td>-</td></tr>
-            <tr><td>Friday</td><td>11:00 - 12:00</td><td>Digital Electronics (IT-201)</td><td>-</td></tr>
-            <tr><td>Friday</td><td>12:00 - 13:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
-            <tr><td>Friday</td><td>14:00 - 16:00</td><td>Digital Electronics (Practical) - IT-201</td><td>IT-201</td></tr>
-            <tr><td>Saturday</td><td>11:00 - 12:00</td><td>Theory (IT-202)</td><td>-</td></tr>
-            <tr><td>Saturday</td><td>12:00 - 13:00</td><td>Probability and Statistics (IT-305)</td><td>-</td></tr>
-        </tbody>
-    </table>
+<main id="main">
+  <div class="container">
+    <section style="padding: 40px 0 10px;">
+      <p class="eyebrow">Three laws, three real functions</p>
+      <h1 style="font-size:clamp(32px,4.2vw,46px); margin:14px 0 16px;">Learn by composing real conversions.</h1>
+      <p style="color:var(--muted); max-width:600px; font-size:16px; line-height:1.65;">
+        Every demo below uses genuine temperature-conversion functions — Celsius, Fahrenheit, and Kelvin form a
+        small, honest category. Watch the same three laws that govern any category theory textbook play out
+        in numbers you can check by hand.
+      </p>
+    </section>
 
-    <h2>IT1 and IT2 Breakdown Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Day</th>
-                <th>Time</th>
-                <th>Subject / Activity</th>
-                <th>Group / Allocation</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Tuesday</td><td>14:00 - 15:00</td><td>Probability and Statistics (Tutorial)</td><td>IT1</td></tr>
-            <tr><td>Tuesday</td><td>15:00 - 16:00</td><td>Probability and Statistics (Tutorial)</td><td>IT2</td></tr>
-            <tr><td>Wednesday</td><td>15:00 - 17:00</td><td>Data Structures and Algorithms (Practical)</td><td>IT1</td></tr>
-            <tr><td>Thursday</td><td>14:00 - 17:00</td><td>Data Structures and Algorithms (Practical)</td><td>IT2</td></tr>
-            <tr><td>Friday</td><td>15:00 - 17:00</td><td>Digital Electronics (Practical)</td><td>IT1</td></tr>
-            <tr><td>Saturday</td><td>14:00 - 18:00</td><td>NSS/NCC</td><td>IT I & IT II</td></tr>
-        </tbody>
-    </table>
+    <!-- ===================== IDENTITY ===================== -->
+    <section class="section">
+      <div class="concept-row" style="align-items: center;">
+        <div class="panel glass reveal">
+          <p class="eyebrow" style="color:var(--object);">Law 1 — Identity</p>
+          <h3>Every object has a "do nothing" morphism.</h3>
+          <p>
+            For every object A, an identity morphism <code>id_A : A → A</code> exists, and composing it with
+            any other morphism changes nothing: <code>f ∘ id_A = f = id_B ∘ f</code>. In code, this is the
+            method that just returns <code>this</code>.
+          </p>
+        </div>
 
-    <h2>Room and Venue Reference Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Room / Venue Code</th>
-                <th>Description / Associated Classes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>IT-201</td><td>Digital Electronics theory, tutorials, and practicals</td></tr>
-            <tr><td>IT-202</td><td>Data Structures and Algorithms, Foundations of IT, Formal Languages & Automata Theory</td></tr>
-            <tr><td>IT-204 / IT-206</td><td>Foundation of Information Technology (Practical)</td></tr>
-            <tr><td>IT-302</td><td>Data Structures and Algorithms (Practical)</td></tr>
-            <tr><td>IT-305</td><td>Probability and Statistics lectures and tutorials</td></tr>
-            <tr><td>Comp. Engg. Dept.</td><td>Departmental classes / sessions</td></tr>
-            <tr><td>Complex Theory</td><td>NSS/NCC sessions</td></tr>
-        </tbody>
-    </table>
+        <div class="panel glass reveal" id="identityDemo">
+          <svg viewBox="0 0 200 140" role="img" aria-labelledby="idTitle" style="width:100%; max-width:220px; margin:0 auto 14px; display:block;">
+            <title id="idTitle">Identity morphism: a loop from object A back to itself</title>
+            <g class="diagram-arrow" data-id-arrow>
+              <path d="M60,70 C60,20 140,20 140,70 C140,105 100,105 88,75" marker-end="url(#arrow-morph-learn)"></path>
+              <text x="100" y="30">id_A</text>
+            </g>
+            <g class="diagram-node"><circle cx="70" cy="90" r="26"></circle><text x="70" y="90">A</text></g>
+            <defs>
+              <marker id="arrow-morph-learn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--morph)"></path>
+              </marker>
+            </defs>
+          </svg>
 
-    <script>
-        const flashcards = [
-            { day: "Monday", time: "11:00 - 12:00", subject: "Data Structures and Algorithms (IT-202)", venue: "Venue: -" },
-            { day: "Monday", time: "12:00 - 13:00", subject: "Effective Technical Communication", venue: "Venue: -" },
-            { day: "Tuesday", time: "10:00 - 11:00", subject: "Foundations of Information Technology", venue: "Venue: IT-202" },
-            { day: "Tuesday", time: "11:00 - 13:00", subject: "Data Structures & Algorithms (Practical)", venue: "Venue: IT-302" },
-            { day: "Tuesday", time: "14:00 - 15:00", subject: "Digital Electronics (Tutorial/Practical)", venue: "Venue: IT-202" },
-            { day: "Tuesday", time: "15:00 - 16:00", subject: "Probability and Statistics (Tutorial)", venue: "Venue: - (IT2)" },
-            { day: "Wednesday", time: "10:00 - 11:00", subject: "Digital Electronics (IT-201)", venue: "Venue: -" },
-            { day: "Wednesday", time: "11:00 - 12:00", subject: "Formal Languages & Automata Theory", venue: "Venue: -" },
-            { day: "Wednesday", time: "12:00 - 13:00", subject: "Comp. Engg. Dept.", venue: "Venue: IT-202" },
-            { day: "Wednesday", time: "14:00 - 15:00", subject: "Probability and Statistics (IT-305)", venue: "Venue: -" },
-            { day: "Thursday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", venue: "Venue: -" },
-            { day: "Thursday", time: "11:00 - 12:00", subject: "Digital Electronics (IT-201)", venue: "Venue: -" },
-            { day: "Thursday", time: "12:00 - 13:00", subject: "Formal Languages & Automata Theory", venue: "Venue: -" },
-            { day: "Thursday", time: "14:00 - 17:00", subject: "Foundation of IT (Practical)", venue: "Venue: IT-204 / IT-206" },
-            { day: "Friday", time: "10:00 - 11:00", subject: "Formal Languages & Automata Theory", venue: "Venue: -" },
-            { day: "Friday", time: "11:00 - 12:00", subject: "Digital Electronics (IT-201)", venue: "Venue: -" },
-            { day: "Friday", time: "12:00 - 13:00", subject: "Probability and Statistics (IT-305)", venue: "Venue: -" },
-            { day: "Friday", time: "14:00 - 16:00", subject: "Digital Electronics (Practical)", venue: "Venue: IT-201" },
-            { day: "Saturday", time: "11:00 - 12:00", subject: "Theory (IT-202)", venue: "Venue: -" },
-            { day: "Saturday", time: "12:00 - 13:00", subject: "Probability and Statistics (IT-305)", venue: "Venue: -" }
-        ];
+          <div class="playground-input">
+            <label for="idInput" style="font-family:var(--font-mono); font-size:12px; color:var(--muted);">Value:</label>
+            <input type="number" id="idInput" data-id-input value="20" aria-describedby="idOutput">
+            <button type="button" class="diagram-btn" data-id-apply>Apply id_A</button>
+          </div>
+          <p class="playground-output" id="idOutput" data-id-output aria-live="polite">Click "Apply id_A" to see it leave the value unchanged.</p>
+        </div>
+      </div>
+    </section>
 
-        let currentIndex = 0;
-        let showingDetails = false;
+    <!-- ===================== COMPOSITION ===================== -->
+    <section class="section" style="padding-top:0;">
+      <div class="concept-row" style="align-items: center;">
+        <div class="panel glass reveal" id="compositionDemo">
+          <svg viewBox="0 0 300 190" role="img" aria-labelledby="compTitle compDesc" style="width:100%; max-width:320px; margin:0 auto 14px; display:block;">
+            <title id="compTitle">Composition triangle: Celsius, Fahrenheit, Kelvin</title>
+            <desc id="compDesc">f maps Celsius to Fahrenheit, g maps Fahrenheit to Kelvin, and h maps Celsius directly to Kelvin — matching the composite g after f.</desc>
+            <defs>
+              <marker id="arrow-comp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--morph)"></path>
+              </marker>
+              <marker id="arrow-comp-good" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--good)"></path>
+              </marker>
+            </defs>
+            <g class="diagram-arrow" data-arrow="ck" style="color:var(--good);">
+              <path d="M50,120 C110,165 210,165 255,125" stroke="var(--good)" stroke-dasharray="6 6" marker-end="url(#arrow-comp-good)"></path>
+              <text x="150" y="182" fill="var(--good)">h (direct)</text>
+            </g>
+            <g class="diagram-arrow" data-arrow="cf" style="color:var(--morph);">
+              <path d="M62,100 C90,55 130,35 175,28" marker-end="url(#arrow-comp)"></path>
+              <text x="105" y="48">f</text>
+            </g>
+            <g class="diagram-arrow" data-arrow="fk" style="color:var(--morph);">
+              <path d="M205,32 C235,42 255,70 260,100" marker-end="url(#arrow-comp)"></path>
+              <text x="248" y="60">g</text>
+            </g>
+            <g class="diagram-node"><circle cx="42" cy="120" r="24"></circle><text x="42" y="120">C</text></g>
+            <g class="diagram-node"><circle cx="192" cy="22" r="24"></circle><text x="192" y="22">F</text></g>
+            <g class="diagram-node"><circle cx="264" cy="120" r="24"></circle><text x="264" y="120">K</text></g>
+          </svg>
 
-        const cardElement = document.getElementById("flashcard");
-        const cardDay = document.getElementById("card-day");
-        const cardTime = document.getElementById("card-time");
-        const cardText = document.getElementById("card-text");
+          <div class="playground-input">
+            <label for="compInput" style="font-family:var(--font-mono); font-size:12px; color:var(--muted);">Celsius:</label>
+            <input type="number" id="compInput" data-comp-input value="0">
+            <button type="button" class="diagram-btn" data-comp-run>Compute g ∘ f</button>
+          </div>
+          <div class="playground-output" data-comp-steps aria-live="polite">Run the composite to see each step.</div>
+        </div>
 
-        function updateCard() {
-            cardDay.innerText = flashcards[currentIndex].day;
-            cardTime.innerText = flashcards[currentIndex].time;
-            
-            if (!showingDetails) {
-                cardElement.classList.remove("flipped");
-                cardText.innerText = "Click to reveal Subject";
-            } else {
-                cardElement.classList.add("flipped");
-                cardText.innerText = flashcards[currentIndex].subject + " (" + flashcards[currentIndex].venue + ")";
-            }
-        }
+        <div class="panel glass reveal">
+          <p class="eyebrow" style="color:var(--morph);">Law 2 — Composition</p>
+          <h3>Composable morphisms always produce a third.</h3>
+          <p>
+            If <code>f : C → F</code> and <code>g : F → K</code>, their composite <code>g ∘ f : C → K</code>
+            must exist and must be associative. Here it's not abstract — <code>g∘f</code> and the direct
+            Celsius→Kelvin conversion <code>h</code> agree to the decimal, because both describe the same
+            physical relationship.
+          </p>
+        </div>
+      </div>
+    </section>
 
-        function flipCard() {
-            showingDetails = !showingDetails;
-            updateCard();
-        }
+    <!-- ===================== ISOMORPHISM ===================== -->
+    <section class="section" style="padding-top:0;">
+      <div class="concept-row" style="align-items: center;">
+        <div class="panel glass reveal">
+          <p class="eyebrow" style="color:var(--good);">Law 3 — Isomorphism</p>
+          <h3>Some morphisms are perfectly reversible.</h3>
+          <p>
+            A morphism <code>f : A → B</code> is an isomorphism if there's an inverse <code>f⁻¹ : B → A</code>
+            with <code>f⁻¹ ∘ f = id_A</code> and <code>f ∘ f⁻¹ = id_B</code>. Celsius and Fahrenheit are
+            isomorphic objects: convert either way, then back, and you land exactly where you started.
+          </p>
+        </div>
 
-        function nextCard() {
-            currentIndex = (currentIndex + 1) % flashcards.length;
-            showingDetails = false;
-            updateCard();
-        }
+        <div class="panel glass reveal" id="isoDemo">
+          <svg viewBox="0 0 260 120" role="img" aria-labelledby="isoTitle" style="width:100%; max-width:280px; margin:0 auto 14px; display:block;">
+            <title id="isoTitle">Two arrows between Celsius and Fahrenheit, one each direction</title>
+            <defs>
+              <marker id="arrow-iso" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--object)"></path>
+              </marker>
+            </defs>
+            <g class="diagram-arrow"><path d="M70,42 C110,28 150,28 188,42" marker-end="url(#arrow-iso)"></path><text x="130" y="22">f</text></g>
+            <g class="diagram-arrow"><path d="M188,76 C150,90 110,90 70,76" marker-end="url(#arrow-iso)"></path><text x="130" y="106">f⁻¹</text></g>
+            <g class="diagram-node"><circle cx="48" cy="60" r="26"></circle><text x="48" y="60">C</text></g>
+            <g class="diagram-node"><circle cx="210" cy="60" r="26"></circle><text x="210" y="60">F</text></g>
+          </svg>
 
-        function prevCard() {
-            currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
-            showingDetails = false;
-            updateCard();
-        }
+          <div class="playground-input">
+            <label for="isoInput" style="font-family:var(--font-mono); font-size:12px; color:var(--muted);">Celsius:</label>
+            <input type="number" id="isoInput" data-iso-input value="37">
+            <button type="button" class="diagram-btn" data-iso-run>Round-trip it</button>
+          </div>
+          <p class="playground-output" data-iso-output aria-live="polite"></p>
+          <p class="playground-output" data-iso-roundtrip></p>
+        </div>
+      </div>
+    </section>
 
-        updateCard();
-    </script>
+    <section class="section" style="padding-top:0;">
+      <div class="glass" style="border-radius:28px; padding:56px; text-align:center;">
+        <h2 style="font-size:clamp(26px,3.4vw,36px); margin-bottom:14px;">Bring the idea into your own code.</h2>
+        <p style="color:var(--muted); margin-bottom:26px;">Create an account to save notes against each law as you work through your own class hierarchy.</p>
+        <a href="signup.html" class="btn btn-solid">Create a free account</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Morphism. An educational demo — not a production auth system.</span>
+  <span><a href="login.html" style="margin-right:18px;">Log in</a><a href="signup.html">Sign up</a></span>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/playground.js"></script>
 </body>
 </html>
