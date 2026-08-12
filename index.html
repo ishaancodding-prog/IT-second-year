@@ -3,43 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CampusSync Pro - Mobile Student Portal</title>
+    <title>IT 2nd Year — Student Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #818cf8;
-            --primary-hover: #6366f1;
-            --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 100%);
-            --card-bg: #1f2937;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border: #374151;
-            --badge-bg: #312e81;
-            --badge-text: #e0e7ff;
-            --danger: #ef4444;
-            --danger-hover: #dc2626;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --bg-base: #030712;
+            --bg-surface: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-border-hover: rgba(99, 102, 241, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --badge-bg: rgba(99, 102, 241, 0.15);
+            --badge-text: #a5b4fc;
+            --danger: #f43f5e;
+            --danger-hover: #e11d48;
+            --accent-glow: 0 0 25px rgba(99, 102, 241, 0.15);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         header {
-            background: rgba(31, 41, 55, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
-            padding: 0.875rem 1rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -50,49 +63,63 @@
 
         .logo {
             font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--primary);
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
         main {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: stretch;
-            padding: 1rem 0.75rem;
+            align-items: center;
+            padding: 1.5rem 1rem;
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             display: flex;
             flex-direction: column;
         }
 
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-            padding: 1.25rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), var(--accent-glow);
+            padding: 1.75rem;
             width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--card-border-hover);
         }
 
         #login-screen h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
             text-align: center;
-            color: white;
+            letter-spacing: -0.03em;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         #login-screen p {
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+            margin-bottom: 1.75rem;
+            font-size: 0.925rem;
         }
 
         .form-group {
@@ -102,30 +129,33 @@
         .form-group label {
             display: block;
             font-weight: 600;
-            font-size: 0.875rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
             color: var(--text-main);
+            letter-spacing: 0.01em;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.75rem;
-            background: #111827;
+            padding: 0.85rem 1rem;
+            background: rgba(3, 7, 18, 0.6);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             color: white;
             outline: none;
+            transition: all 0.25s ease;
         }
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+            background: rgba(3, 7, 18, 0.9);
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 100px;
+            min-height: 110px;
         }
 
         .radio-group {
@@ -137,61 +167,99 @@
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
+            gap: 0.6rem;
+            font-weight: 600;
             cursor: pointer;
             color: var(--text-main);
             font-size: 0.95rem;
+            background: rgba(30, 41, 59, 0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            flex: 1;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .radio-label:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: var(--primary-light);
         }
 
         .radio-label input {
-            transform: scale(1.2);
+            accent-color: var(--primary);
+            transform: scale(1.15);
         }
 
         .btn {
             display: block;
             width: 100%;
-            background: var(--primary);
-            color: #0f172a;
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            color: white;
             border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 0.9rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            transition: all 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
         }
 
         .btn:active {
-            transform: scale(0.98);
+            transform: translateY(1px);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(30, 41, 59, 0.6);
             color: var(--text-muted);
             border: 1px solid var(--border);
-            padding: 0.4rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.8);
+            color: white;
+            border-color: var(--text-muted);
         }
 
         .btn-danger {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-danger:hover {
             background: var(--danger);
             color: white;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.75rem;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
         }
 
         .nav-tabs {
             display: flex;
-            gap: 0.25rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.25rem;
+            gap: 0.35rem;
+            background: rgba(3, 7, 18, 0.6);
+            padding: 0.35rem;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -199,88 +267,111 @@
         .nav-tab {
             background: transparent;
             border: none;
-            padding: 0.6rem 0.75rem;
-            font-size: 0.85rem;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.875rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
+            border-radius: 10px;
             white-space: nowrap;
+            transition: all 0.25s ease;
+            flex: 1;
+            text-align: center;
         }
 
         .nav-tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
         }
 
         .watch-box {
-            background: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
+            background: linear-gradient(135deg, rgba(11, 15, 25, 0.9) 0%, rgba(3, 7, 18, 0.95) 100%);
             color: white;
-            padding: 1.75rem 1rem;
-            border-radius: 12px;
+            padding: 2.25rem 1rem;
+            border-radius: 16px;
             text-align: center;
             border: 1px solid var(--border);
-            margin-bottom: 1rem;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+            margin-bottom: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watch-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .live-clock {
-            font-size: 2.25rem;
+            font-size: 2.75rem;
             font-weight: 800;
-            letter-spacing: 0.03em;
-            margin-bottom: 0.25rem;
-            color: #818cf8;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.35rem;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-variant-numeric: tabular-nums;
         }
 
         .live-date {
             font-size: 0.95rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .notes-grid {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.85rem;
             margin-top: 1rem;
         }
 
         .note-card {
-            background: #273548;
-            border: 1px solid #3b4d66;
-            border-radius: 10px;
-            padding: 1rem;
+            background: rgba(30, 41, 59, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.15rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+
+        .note-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(30, 41, 59, 0.5);
         }
 
         .note-content {
-            font-size: 0.9rem;
+            font-size: 0.925rem;
             color: #e2e8f0;
             white-space: pre-wrap;
             word-break: break-word;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
+            margin-bottom: 0.85rem;
+            line-height: 1.5;
         }
 
         .note-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            border-top: 1px solid #374151;
-            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 0.65rem;
         }
 
         .day-tabs {
             display: flex;
-            gap: 0.25rem;
-            background: #111827;
-            padding: 0.25rem;
-            border-radius: 8px;
+            gap: 0.35rem;
+            background: rgba(3, 7, 18, 0.6);
+            padding: 0.35rem;
+            border-radius: 12px;
             overflow-x: auto;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             border: 1px solid var(--border);
             -webkit-overflow-scrolling: touch;
         }
@@ -288,26 +379,28 @@
         .day-tab {
             background: transparent;
             border: none;
-            padding: 0.4rem 0.65rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.825rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--text-muted);
             white-space: nowrap;
+            transition: all 0.2s;
         }
 
         .day-tab.active {
-            background: var(--card-bg);
-            color: var(--primary);
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
         .table-container {
             width: 100%;
             overflow-x: auto;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #111827;
+            border-radius: 12px;
+            background: rgba(3, 7, 18, 0.4);
             -webkit-overflow-scrolling: touch;
         }
 
@@ -315,35 +408,40 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.875rem;
             white-space: nowrap;
         }
 
         th, td {
-            padding: 0.75rem;
+            padding: 0.85rem 1rem;
             border-bottom: 1px solid var(--border);
         }
 
         th {
-            background: #1f2937;
+            background: rgba(15, 23, 42, 0.8);
             font-weight: 700;
             color: var(--text-muted);
             font-size: 0.75rem;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
+        tr:hover td {
+            background: rgba(99, 102, 241, 0.04);
+        }
+
         .user-badge {
             background: var(--badge-bg);
             color: var(--badge-text);
-            padding: 0.25rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid #4f46e5;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
         .hidden {
@@ -351,20 +449,22 @@
         }
 
         .tip-box {
-            background: rgba(49, 46, 129, 0.3);
+            background: rgba(99, 102, 241, 0.08);
             border-left: 3px solid var(--primary);
-            padding: 0.75rem;
-            border-radius: 0 6px 6px 0;
-            font-size: 0.8rem;
+            padding: 0.85rem 1rem;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.825rem;
             color: #c7d2fe;
-            margin-top: 1rem;
-            border: 1px solid rgba(129, 140, 248, 0.2);
+            margin-top: 1.25rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.15);
+            border-right: 1px solid rgba(99, 102, 241, 0.15);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.15);
         }
 
         @media (min-width: 640px) {
-            .card { padding: 2rem; }
-            .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-            table { white-space: normal; font-size: 0.95rem; }
+            .card { padding: 2.25rem; }
+            .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+            table { white-space: normal; font-size: 0.925rem; }
         }
     </style>
 </head>
@@ -372,23 +472,23 @@
 
     <header>
         <div class="logo">
-            ⚡ CampusSync
+            <span>⚡</span> IT 2nd Year Portal
         </div>
         <div id="header-user-info" class="hidden">
-            <button class="btn-secondary" onclick="logoutSession()">Switch</button>
+            <button class="btn-secondary" onclick="logoutSession()">Switch Profile</button>
         </div>
     </header>
 
     <main>
         <div class="container">
             <div id="login-screen" class="card">
-                <h1>Student Portal</h1>
-                <p>Log in to view your timetable and notes.</p>
+                <h1>IT 2nd Year Portal</h1>
+                <p>Enter your ID and section to access your timetable & notes.</p>
                 
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" class="form-control" placeholder="e.g., 20261054" required>
+                        <input type="text" id="student-id" class="form-control" placeholder="e.g., 20261054" required autocomplete="off">
                     </div>
 
                     <div class="form-group">
@@ -403,32 +503,32 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn">Launch Portal</button>
+                    <button type="submit" class="btn" style="margin-top: 1.5rem;">Launch Dashboard</button>
                 </form>
 
                 <div class="tip-box">
-                    💡 <strong>Updated Schedule:</strong> 9:00 - 10:00 slots removed for all sections, and Saturday IT-1 practical added.
+                    💡 <strong>Smart Portal:</strong> Remembers your preferences and encrypts your local notes securely on your device.
                 </div>
             </div>
 
             <div id="dashboard-screen" class="card hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap: 0.5rem;">
                     <div>
-                        <h2 id="welcome-title" style="font-size: 1.25rem; color: white;">Dashboard</h2>
-                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.75rem;"></p>
+                        <h2 id="welcome-title" style="font-size: 1.35rem; font-weight: 800; color: white; letter-spacing: -0.02em;">IT 2nd Year Dashboard</h2>
+                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 500;"></p>
                     </div>
                     <div id="section-display-badge" class="user-badge"></div>
                 </div>
 
                 <div class="nav-tabs">
                     <button class="nav-tab active" onclick="switchTab('schedule', event)">📅 Schedule</button>
-                    <button class="nav-tab" onclick="switchTab('watch', event)">⏰ Clock</button>
+                    <button class="nav-tab" onclick="switchTab('watch', event)">⏰ Live Clock</button>
                     <button class="nav-tab" onclick="switchTab('notes', event)">📝 Notes</button>
                 </div>
 
                 <div id="tab-schedule" class="tab-content">
                     <div class="day-tabs">
-                        <button class="day-tab active" onclick="filterDay('All')">All</button>
+                        <button class="day-tab active" onclick="filterDay('All')">All Week</button>
                         <button class="day-tab" onclick="filterDay('Monday')">Mon</button>
                         <button class="day-tab" onclick="filterDay('Tuesday')">Tue</button>
                         <button class="day-tab" onclick="filterDay('Wednesday')">Wed</button>
@@ -458,18 +558,18 @@
                         <div class="live-date" id="live-date-display">Loading date...</div>
                     </div>
                     <div class="tip-box">
-                        🕒 Track class timing directly from your mobile device.
+                        🕒 Track class intervals and lecture times seamlessly.
                     </div>
                 </div>
 
                 <div id="tab-notes" class="tab-content hidden">
-                    <div style="background: #111827; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem;">
-                        <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: white; font-size: 0.85rem;">Add Note / Reminder</label>
-                        <textarea id="new-note-text" class="form-control" placeholder="Jot down a quick task or reminder..."></textarea>
-                        <button class="btn" style="margin-top: 0.75rem;" onclick="addNote()">Save Note</button>
+                    <div style="background: rgba(3, 7, 18, 0.5); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.25rem;">
+                        <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: white; font-size: 0.85rem;">Add Note or Reminder</label>
+                        <textarea id="new-note-text" class="form-control" placeholder="Jot down quick lecture summaries, formulas or tasks..."></textarea>
+                        <button class="btn" style="margin-top: 0.85rem;" onclick="addNote()">Save to Notes</button>
                     </div>
 
-                    <h3 style="font-size: 1rem; margin-bottom: 0.5rem; color: white;">My Saved Notes</h3>
+                    <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; color: white;">My Saved Notes</h3>
                     <div id="notes-container" class="notes-grid"></div>
                 </div>
             </div>
@@ -515,7 +615,7 @@
         let clockInterval = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const saved = localStorage.getItem("campussync_mobile_user");
+            const saved = localStorage.getItem("it2ndyear_user");
             if (saved) {
                 currentUser = JSON.parse(saved);
                 showDashboard();
@@ -529,7 +629,7 @@
             if (!idVal) return;
 
             currentUser = { id: idVal, section: secVal };
-            localStorage.setItem("campussync_mobile_user", JSON.stringify(currentUser));
+            localStorage.setItem("it2ndyear_user", JSON.stringify(currentUser));
             showDashboard();
         }
 
@@ -538,7 +638,7 @@
             document.getElementById("dashboard-screen").classList.remove("hidden");
             document.getElementById("header-user-info").classList.remove("hidden");
 
-            document.getElementById("welcome-subtitle").innerText = `ID: ${currentUser.id}`;
+            document.getElementById("welcome-subtitle").innerText = `Student ID: ${currentUser.id}`;
             document.getElementById("section-display-badge").innerText = currentUser.section;
 
             renderSchedule();
@@ -547,7 +647,7 @@
         }
 
         function logoutSession() {
-            localStorage.removeItem("campussync_mobile_user");
+            localStorage.removeItem("it2ndyear_user");
             if (clockInterval) clearInterval(clockInterval);
             document.getElementById("dashboard-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
@@ -573,12 +673,12 @@
             const now = new Date();
             document.getElementById("live-clock-display").innerText = now.toLocaleTimeString();
             document.getElementById("live-date-display").innerText = now.toLocaleDateString(undefined, {
-                weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+                weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
             });
         }
 
         function getStorageKey() {
-            return `campussync_mobile_notes_${currentUser.id}`;
+            return `it2ndyear_notes_${currentUser.id}`;
         }
 
         function addNote() {
@@ -611,7 +711,7 @@
 
             container.innerHTML = "";
             if (notes.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1.5rem; font-size: 0.85rem;">No saved notes yet.</p>`;
+                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2rem; font-size: 0.85rem;">No saved notes yet. Create your first note above!</p>`;
                 return;
             }
 
@@ -636,7 +736,7 @@
         function filterDay(day) {
             currentDayFilter = day;
             document.querySelectorAll(".day-tab").forEach(tab => {
-                if (tab.innerText.includes(day) || (day === 'All' && tab.innerText === 'All')) {
+                if (tab.innerText.includes(day) || (day === 'All' && tab.innerText === 'All Week')) {
                     tab.classList.add("active");
                 } else {
                     tab.classList.remove("active");
@@ -656,17 +756,17 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted);">No classes found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">No classes scheduled for this filter.</td></tr>`;
                 return;
             }
 
             filtered.forEach(item => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td style="font-weight: 600; color: #f3f4f6;">${item.day}</td>
-                    <td>${item.time}</td>
-                    <td style="color: #e2e8f0; white-space: normal;">${item.subject}</td>
-                    <td style="color: var(--text-muted);">${item.venue}</td>
+                    <td style="font-weight: 700; color: #f8fafc;">${item.day}</td>
+                    <td style="font-weight: 500; color: #cbd5e1;">${item.time}</td>
+                    <td style="color: #f1f5f9; font-weight: 600; white-space: normal;">${item.subject}</td>
+                    <td style="color: var(--text-muted); font-weight: 500;">${item.venue}</td>
                 `;
                 tbody.appendChild(tr);
             });
