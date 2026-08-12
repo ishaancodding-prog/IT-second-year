@@ -275,7 +275,7 @@
             transform: scale(1.05);
         }
 
-        /* Interactive Navigation Tabs */
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 0.4rem;
@@ -291,8 +291,8 @@
         .nav-tab {
             background: transparent;
             border: none;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
@@ -326,12 +326,6 @@
             margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
-            animation: pulse-glow 4s infinite alternate;
-        }
-
-        @keyframes pulse-glow {
-            0% { border-color: var(--border); }
-            100% { border-color: rgba(99, 102, 241, 0.4); }
         }
 
         .watch-box::before {
@@ -342,7 +336,7 @@
         }
 
         .live-clock {
-            font-size: 3.25rem;
+            font-size: 3rem;
             font-weight: 800;
             letter-spacing: 0.03em;
             margin-bottom: 0.4rem;
@@ -359,7 +353,6 @@
             font-weight: 500;
         }
 
-        /* Interactive Countdown / Status Widget */
         .status-pill {
             display: inline-flex;
             align-items: center;
@@ -372,7 +365,6 @@
             font-weight: 700;
             border: 1px solid rgba(16, 185, 129, 0.3);
             margin-top: 1rem;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
         }
 
         .status-dot {
@@ -387,6 +379,100 @@
         @keyframes blink {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Chat Room Section */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 380px;
+            background: rgba(2, 6, 23, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .chat-bubble.incoming {
+            background: rgba(30, 41, 59, 0.7);
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-bubble.outgoing {
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .chat-sender {
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            opacity: 0.8;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--border);
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .chat-send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--primary-light);
         }
 
         /* Notes Grid & Cards */
@@ -405,20 +491,13 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: slideUp 0.3s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            transition: all 0.3s ease;
         }
 
         .note-card:hover {
             border-color: rgba(99, 102, 241, 0.4);
             background: rgba(30, 41, 59, 0.65);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
         }
 
         .note-content {
@@ -475,10 +554,9 @@
             background: rgba(99, 102, 241, 0.2);
             color: var(--primary-light);
             border: 1px solid rgba(99, 102, 241, 0.35);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
         }
 
-        /* Table Container & Styling */
+        /* Table Container */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -515,10 +593,6 @@
             border-bottom: none;
         }
 
-        tr {
-            transition: background 0.2s ease;
-        }
-
         tr:hover td {
             background: rgba(99, 102, 241, 0.06);
         }
@@ -531,7 +605,6 @@
             font-size: 0.825rem;
             font-weight: 700;
             border: 1px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
         }
 
         .hidden {
@@ -546,9 +619,7 @@
             font-size: 0.85rem;
             color: #c7d2fe;
             margin-top: 1.5rem;
-            border-top: 1px solid rgba(99, 102, 241, 0.15);
-            border-right: 1px solid rgba(99, 102, 241, 0.15);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.15);
         }
 
         @media (min-width: 640px) {
@@ -598,7 +669,7 @@
                 </form>
 
                 <div class="tip-box">
-                    💡 <strong>Interactive Experience:</strong> Includes real-time clock, quick day filtering, section-specific schedule adjustments, and encrypted local notes.
+                    💡 <strong>Features:</strong> 12hr clock sync, live discussion chat, section timetable filters, and private notes.
                 </div>
             </div>
 
@@ -614,8 +685,9 @@
 
                 <div class="nav-tabs">
                     <button class="nav-tab active" onclick="switchTab('schedule', event)">📅 Timetable</button>
-                    <button class="nav-tab" onclick="switchTab('watch', event)">⏰ Live Clock</button>
-                    <button class="nav-tab" onclick="switchTab('notes', event)">📝 Personal Notes</button>
+                    <button class="nav-tab" onclick="switchTab('watch', event)">⏰ Clock</button>
+                    <button class="nav-tab" onclick="switchTab('chat', event)">💬 IT Chat</button>
+                    <button class="nav-tab" onclick="switchTab('notes', event)">📝 Notes</button>
                 </div>
 
                 <!-- Schedule Tab -->
@@ -651,11 +723,26 @@
                         <div class="live-clock" id="live-clock-display">00:00:00 AM</div>
                         <div class="live-date" id="live-date-display">Loading date...</div>
                         <div class="status-pill">
-                            <span class="status-dot"></span> System Operational & Live Sync Active
+                            <span class="status-dot"></span> 12-Hour Sync Active
                         </div>
                     </div>
                     <div class="tip-box">
-                        🕒 Use this live clock to easily synchronize your class intervals and group practical sessions.
+                        🕒 Track class intervals using standard 12-hour AM/PM formatting.
+                    </div>
+                </div>
+
+                <!-- Chat Room Tab -->
+                <div id="tab-chat" class="tab-content hidden">
+                    <div style="margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+                        <span>📢 Live Batch Discussion (<span id="chat-section-label"></span>)</span>
+                        <button class="btn-secondary" onclick="clearChat()" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">Clear Chat</button>
+                    </div>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages-container"></div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input-field" class="chat-input" placeholder="Type a message to your batch..." onkeypress="handleChatKeyPress(event)">
+                            <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+                        </div>
                     </div>
                 </div>
 
@@ -676,36 +763,36 @@
 
     <script>
         const rawSchedule = [
-            { day: "Monday", time: "11:00 - 12:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Monday", time: "12:00 - 13:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Monday", time: "15:00 - 16:00", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Monday", time: "03:00 PM - 04:00 PM", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             
-            { day: "Tuesday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Tuesday", time: "11:00 - 13:00", subject: "Digital Electronics (Tutorial/Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
-            { day: "Tuesday", time: "14:00 - 15:00", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-1"] },
-            { day: "Tuesday", time: "15:00 - 16:00", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-2"] },
-            { day: "Tuesday", time: "16:00 - 17:00", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Tuesday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Tuesday", time: "11:00 AM - 01:00 PM", subject: "Digital Electronics (Tutorial/Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
+            { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-1"] },
+            { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", venue: "IT-305", sections: ["#IT-2"] },
+            { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             
-            { day: "Wednesday", time: "10:00 - 11:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "11:00 - 12:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "12:00 - 13:00", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-1"] },
-            { day: "Wednesday", time: "15:00 - 17:00", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-2"] },
+            { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-1"] },
+            { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-2"] },
             
-            { day: "Thursday", time: "10:00 - 11:00", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "11:00 - 12:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "12:00 - 13:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "15:00 - 17:00", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-2"] },
+            { day: "Thursday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Thursday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", venue: "IT-203", sections: ["#IT-2"] },
             
-            { day: "Friday", time: "10:00 - 11:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "11:00 - 12:00", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "12:00 - 13:00", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "15:00 - 17:00", subject: "Digital Electronics (Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
+            { day: "Friday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Friday", time: "03:00 PM - 05:00 PM", subject: "Digital Electronics (Practical)", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
             
-            { day: "Saturday", time: "09:00 - 11:00", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-1"] },
-            { day: "Saturday", time: "11:00 - 12:00", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Saturday", time: "12:00 - 13:00", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Saturday", time: "14:00 - 18:00", subject: "NSS/NCC", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+            { day: "Saturday", time: "09:00 AM - 11:00 AM", subject: "Foundations of Information Technology (Practical)", venue: "IT-204", sections: ["#IT-1"] },
+            { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+            { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
         ];
 
         let currentUser = { id: "", section: "" };
@@ -713,7 +800,7 @@
         let clockInterval = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const saved = localStorage.getItem("it2ndyear_interactive_user");
+            const saved = localStorage.getItem("it2ndyear_chat_user");
             if (saved) {
                 currentUser = JSON.parse(saved);
                 showDashboard();
@@ -727,7 +814,7 @@
             if (!idVal) return;
 
             currentUser = { id: idVal, section: secVal };
-            localStorage.setItem("it2ndyear_interactive_user", JSON.stringify(currentUser));
+            localStorage.setItem("it2ndyear_chat_user", JSON.stringify(currentUser));
             showDashboard();
         }
 
@@ -738,14 +825,16 @@
 
             document.getElementById("welcome-subtitle").innerText = `Student ID: ${currentUser.id}`;
             document.getElementById("section-display-badge").innerText = currentUser.section;
+            document.getElementById("chat-section-label").innerText = currentUser.section;
 
             renderSchedule();
             renderNotes();
+            renderChatMessages();
             startLiveClock();
         }
 
         function logoutSession() {
-            localStorage.removeItem("it2ndyear_interactive_user");
+            localStorage.removeItem("it2ndyear_chat_user");
             if (clockInterval) clearInterval(clockInterval);
             document.getElementById("dashboard-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
@@ -759,8 +848,14 @@
 
             document.querySelectorAll(".tab-content").forEach(c => c.classList.add("hidden"));
             document.getElementById(`tab-${tabName}`).classList.remove("hidden");
+
+            if(tabName === 'chat') {
+                const container = document.getElementById("chat-messages-container");
+                container.scrollTop = container.scrollHeight;
+            }
         }
 
+        // 12-Hour Clock
         function startLiveClock() {
             updateClock();
             if (clockInterval) clearInterval(clockInterval);
@@ -769,14 +864,82 @@
 
         function updateClock() {
             const now = new Date();
-            document.getElementById("live-clock-display").innerText = now.toLocaleTimeString();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            const formattedHours = String(hours).padStart(2, '0');
+
+            document.getElementById("live-clock-display").innerText = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
             document.getElementById("live-date-display").innerText = now.toLocaleDateString(undefined, {
                 weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
             });
         }
 
+        // Chat Room Logic
+        function getChatStorageKey() {
+            return `it2ndyear_chat_messages_${currentUser.section}`;
+        }
+
+        function sendChatMessage() {
+            const inputField = document.getElementById("chat-input-field");
+            const text = inputField.value.trim();
+            if(!text) return;
+
+            const messages = JSON.parse(localStorage.getItem(getChatStorageKey()) || "[]");
+            messages.push({
+                id: Date.now(),
+                senderId: currentUser.id,
+                text: text,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+            });
+
+            localStorage.setItem(getChatStorageKey(), JSON.stringify(messages));
+            inputField.value = "";
+            renderChatMessages();
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function clearChat() {
+            localStorage.removeItem(getChatStorageKey());
+            renderChatMessages();
+        }
+
+        function renderChatMessages() {
+            const container = document.getElementById("chat-messages-container");
+            const messages = JSON.parse(localStorage.getItem(getChatStorageKey()) || "[]");
+
+            container.innerHTML = "";
+            if(messages.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; margin-bottom: auto;">No messages in ${currentUser.section} chat yet. Start the conversation!</div>`;
+                return;
+            }
+
+            messages.forEach(msg => {
+                const isMe = msg.senderId === currentUser.id;
+                const bubble = document.createElement("div");
+                bubble.className = `chat-bubble ${isMe ? 'outgoing' : 'incoming'}`;
+                bubble.innerHTML = `
+                    <div class="chat-sender">${isMe ? 'You' : 'ID: ' + msg.senderId}</div>
+                    <div>${escapeHTML(msg.text)}</div>
+                    <div style="font-size: 0.65rem; text-align: right; opacity: 0.7; margin-top: 0.2rem;">${msg.time}</div>
+                `;
+                container.appendChild(bubble);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Notes Logic
         function getStorageKey() {
-            return `it2ndyear_interactive_notes_${currentUser.id}`;
+            return `it2ndyear_notes_${currentUser.id}`;
         }
 
         function addNote() {
@@ -788,7 +951,7 @@
             notes.unshift({
                 id: Date.now(),
                 text: val,
-                timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
             });
 
             localStorage.setItem(getStorageKey(), JSON.stringify(notes));
@@ -854,7 +1017,7 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No classes scheduled for this filter. Enjoy your break!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">No classes scheduled for this filter. Enjoy your break!</td></tr>`;
                 return;
             }
 
