@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IT 2nd Year — Student Portal</title>
+    <title>IT 2nd Year — NextGen Student Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,20 +11,20 @@
         :root {
             --primary: #6366f1;
             --primary-light: #818cf8;
-            --primary-glow: rgba(99, 102, 241, 0.35);
-            --bg-base: #030712;
-            --bg-surface: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.75);
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --accent-cyan: #38bdf8;
+            --bg-base: #020617;
+            --card-bg: rgba(15, 23, 42, 0.65);
             --card-border: rgba(255, 255, 255, 0.08);
-            --card-border-hover: rgba(99, 102, 241, 0.4);
+            --card-border-hover: rgba(99, 102, 241, 0.5);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: #1e293b;
             --badge-bg: rgba(99, 102, 241, 0.15);
             --badge-text: #a5b4fc;
             --danger: #f43f5e;
-            --danger-hover: #e11d48;
-            --accent-glow: 0 0 25px rgba(99, 102, 241, 0.15);
+            --success: #10b981;
+            --accent-glow: 0 0 35px rgba(99, 102, 241, 0.15);
         }
 
         * {
@@ -38,8 +38,8 @@
         body {
             background-color: var(--bg-base);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.1) 0%, transparent 45%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -48,9 +48,9 @@
         }
 
         header {
-            background: rgba(3, 7, 18, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             padding: 1rem 1.5rem;
             display: flex;
@@ -63,14 +63,25 @@
 
         .logo {
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.5));
+            animation: pulse-icon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         main {
@@ -83,31 +94,38 @@
 
         .container {
             width: 100%;
-            max-width: 850px;
+            max-width: 880px;
             display: flex;
             flex-direction: column;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), var(--accent-glow);
-            padding: 1.75rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), var(--accent-glow);
+            padding: 2rem;
             width: 100%;
-            transition: border-color 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card:hover {
             border-color: var(--card-border-hover);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25);
         }
 
         #login-screen h1 {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.4rem;
             text-align: center;
             letter-spacing: -0.03em;
             background: linear-gradient(to right, #ffffff, #94a3b8);
@@ -118,18 +136,18 @@
         #login-screen p {
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 1.75rem;
-            font-size: 0.925rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.875rem;
             margin-bottom: 0.5rem;
             color: var(--text-main);
             letter-spacing: 0.01em;
@@ -137,58 +155,60 @@
 
         .form-control {
             width: 100%;
-            padding: 0.85rem 1rem;
-            background: rgba(3, 7, 18, 0.6);
+            padding: 0.95rem 1.15rem;
+            background: rgba(2, 6, 23, 0.7);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 0.95rem;
+            border-radius: 14px;
+            font-size: 1rem;
             color: white;
             outline: none;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .form-control:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 4px var(--primary-glow);
-            background: rgba(3, 7, 18, 0.9);
+            background: rgba(2, 6, 23, 0.95);
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 110px;
+            min-height: 120px;
         }
 
         .radio-group {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.25rem;
             margin-top: 0.5rem;
         }
 
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--text-main);
-            font-size: 0.95rem;
-            background: rgba(30, 41, 59, 0.4);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(30, 41, 59, 0.3);
+            padding: 0.75rem 1.25rem;
+            border-radius: 14px;
             border: 1px solid var(--border);
             flex: 1;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .radio-label:hover {
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(30, 41, 59, 0.7);
             border-color: var(--primary-light);
+            transform: translateY(-2px);
         }
 
         .radio-label input {
             accent-color: var(--primary);
-            transform: scale(1.15);
+            transform: scale(1.2);
+            cursor: pointer;
         }
 
         .btn {
@@ -197,19 +217,20 @@
             background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
             color: white;
             border: none;
-            padding: 0.9rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
+            padding: 1rem;
+            border-radius: 14px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-            transition: all 0.25s ease;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.6);
+            filter: brightness(1.1);
         }
 
         .btn:active {
@@ -217,49 +238,52 @@
         }
 
         .btn-secondary {
-            background: rgba(30, 41, 59, 0.6);
+            background: rgba(30, 41, 59, 0.5);
             color: var(--text-muted);
             border: 1px solid var(--border);
-            padding: 0.45rem 0.85rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.825rem;
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
         }
 
         .btn-secondary:hover {
             background: rgba(51, 65, 85, 0.8);
             color: white;
             border-color: var(--text-muted);
+            transform: translateY(-1px);
         }
 
         .btn-danger {
             background: rgba(244, 63, 94, 0.15);
             color: #fb7185;
-            padding: 0.35rem 0.75rem;
-            font-size: 0.75rem;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid rgba(244, 63, 94, 0.3);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
         }
 
         .btn-danger:hover {
             background: var(--danger);
             color: white;
+            transform: scale(1.05);
         }
 
+        /* Interactive Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 0.35rem;
-            background: rgba(3, 7, 18, 0.6);
-            padding: 0.35rem;
-            border-radius: 14px;
+            gap: 0.4rem;
+            background: rgba(2, 6, 23, 0.7);
+            padding: 0.4rem;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -267,111 +291,164 @@
         .nav-tab {
             background: transparent;
             border: none;
-            padding: 0.65rem 1.1rem;
-            font-size: 0.875rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 12px;
             white-space: nowrap;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             flex: 1;
             text-align: center;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .nav-tab.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
+        /* Live Clock & Widget Banner */
         .watch-box {
-            background: linear-gradient(135deg, rgba(11, 15, 25, 0.9) 0%, rgba(3, 7, 18, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.98) 100%);
             color: white;
-            padding: 2.25rem 1rem;
-            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
             text-align: center;
             border: 1px solid var(--border);
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
-            margin-bottom: 1.25rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { border-color: var(--border); }
+            100% { border-color: rgba(99, 102, 241, 0.4); }
         }
 
         .watch-box::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent-cyan), transparent);
         }
 
         .live-clock {
-            font-size: 2.75rem;
+            font-size: 3.25rem;
             font-weight: 800;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.35rem;
-            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            letter-spacing: 0.03em;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(135deg, #ffffff 20%, #a5b4fc 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-variant-numeric: tabular-nums;
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.3));
         }
 
         .live-date {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
             font-weight: 500;
         }
 
+        /* Interactive Countdown / Status Widget */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            margin-top: 1rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Notes Grid & Cards */
         .notes-grid {
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            margin-top: 1.25rem;
         }
 
         .note-card {
-            background: rgba(30, 41, 59, 0.35);
+            background: rgba(30, 41, 59, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 1.15rem;
+            border-radius: 16px;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUp 0.3s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .note-card:hover {
-            border-color: rgba(99, 102, 241, 0.3);
-            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(30, 41, 59, 0.65);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
         }
 
         .note-content {
-            font-size: 0.925rem;
+            font-size: 0.95rem;
             color: #e2e8f0;
             white-space: pre-wrap;
             word-break: break-word;
-            margin-bottom: 0.85rem;
-            line-height: 1.5;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
         .note-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
+            font-size: 0.775rem;
             color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 0.65rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 0.75rem;
         }
 
+        /* Day Selector Tabs */
         .day-tabs {
             display: flex;
-            gap: 0.35rem;
-            background: rgba(3, 7, 18, 0.6);
-            padding: 0.35rem;
-            border-radius: 12px;
+            gap: 0.4rem;
+            background: rgba(2, 6, 23, 0.7);
+            padding: 0.4rem;
+            border-radius: 14px;
             overflow-x: auto;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--border);
             -webkit-overflow-scrolling: touch;
         }
@@ -379,49 +456,57 @@
         .day-tab {
             background: transparent;
             border: none;
-            padding: 0.45rem 0.85rem;
-            border-radius: 8px;
-            font-size: 0.825rem;
+            padding: 0.5rem 0.95rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--text-muted);
             white-space: nowrap;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
+        }
+
+        .day-tab:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .day-tab.active {
             background: rgba(99, 102, 241, 0.2);
             color: var(--primary-light);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
         }
 
+        /* Table Container & Styling */
         .table-container {
             width: 100%;
             overflow-x: auto;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            background: rgba(3, 7, 18, 0.4);
+            border-radius: 16px;
+            background: rgba(2, 6, 23, 0.5);
             -webkit-overflow-scrolling: touch;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             white-space: nowrap;
         }
 
         th, td {
-            padding: 0.85rem 1rem;
+            padding: 1rem;
             border-bottom: 1px solid var(--border);
         }
 
         th {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.9);
             font-weight: 700;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.775rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -430,18 +515,23 @@
             border-bottom: none;
         }
 
+        tr {
+            transition: background 0.2s ease;
+        }
+
         tr:hover td {
-            background: rgba(99, 102, 241, 0.04);
+            background: rgba(99, 102, 241, 0.06);
         }
 
         .user-badge {
             background: var(--badge-bg);
             color: var(--badge-text);
-            padding: 0.3rem 0.75rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.825rem;
             font-weight: 700;
             border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
         }
 
         .hidden {
@@ -451,20 +541,20 @@
         .tip-box {
             background: rgba(99, 102, 241, 0.08);
             border-left: 3px solid var(--primary);
-            padding: 0.85rem 1rem;
-            border-radius: 0 10px 10px 0;
-            font-size: 0.825rem;
+            padding: 1rem 1.15rem;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.85rem;
             color: #c7d2fe;
-            margin-top: 1.25rem;
+            margin-top: 1.5rem;
             border-top: 1px solid rgba(99, 102, 241, 0.15);
             border-right: 1px solid rgba(99, 102, 241, 0.15);
             border-bottom: 1px solid rgba(99, 102, 241, 0.15);
         }
 
         @media (min-width: 640px) {
-            .card { padding: 2.25rem; }
+            .card { padding: 2.5rem; }
             .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-            table { white-space: normal; font-size: 0.925rem; }
+            table { white-space: normal; font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -472,7 +562,7 @@
 
     <header>
         <div class="logo">
-            <span>⚡</span> IT 2nd Year Portal
+            <span class="logo-icon">⚡</span> IT 2nd Year Hub
         </div>
         <div id="header-user-info" class="hidden">
             <button class="btn-secondary" onclick="logoutSession()">Switch Profile</button>
@@ -481,9 +571,10 @@
 
     <main>
         <div class="container">
+            <!-- Login Screen -->
             <div id="login-screen" class="card">
-                <h1>IT 2nd Year Portal</h1>
-                <p>Enter your ID and section to access your timetable & notes.</p>
+                <h1>Welcome, IT Scholar</h1>
+                <p>Enter your Student ID and select your section to launch your interactive dashboard.</p>
                 
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
@@ -503,29 +594,31 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn" style="margin-top: 1.5rem;">Launch Dashboard</button>
+                    <button type="submit" class="btn" style="margin-top: 1.75rem;">Access Portal</button>
                 </form>
 
                 <div class="tip-box">
-                    💡 <strong>Smart Portal:</strong> Remembers your preferences and encrypts your local notes securely on your device.
+                    💡 <strong>Interactive Experience:</strong> Includes real-time clock, quick day filtering, section-specific schedule adjustments, and encrypted local notes.
                 </div>
             </div>
 
+            <!-- Dashboard Screen -->
             <div id="dashboard-screen" class="card hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 0.75rem; flex-wrap: wrap;">
                     <div>
-                        <h2 id="welcome-title" style="font-size: 1.35rem; font-weight: 800; color: white; letter-spacing: -0.02em;">IT 2nd Year Dashboard</h2>
-                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.8rem; font-weight: 500;"></p>
+                        <h2 id="welcome-title" style="font-size: 1.5rem; font-weight: 800; color: white; letter-spacing: -0.02em;">IT 2nd Year Dashboard</h2>
+                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500;"></p>
                     </div>
                     <div id="section-display-badge" class="user-badge"></div>
                 </div>
 
                 <div class="nav-tabs">
-                    <button class="nav-tab active" onclick="switchTab('schedule', event)">📅 Schedule</button>
+                    <button class="nav-tab active" onclick="switchTab('schedule', event)">📅 Timetable</button>
                     <button class="nav-tab" onclick="switchTab('watch', event)">⏰ Live Clock</button>
-                    <button class="nav-tab" onclick="switchTab('notes', event)">📝 Notes</button>
+                    <button class="nav-tab" onclick="switchTab('notes', event)">📝 Personal Notes</button>
                 </div>
 
+                <!-- Schedule Tab -->
                 <div id="tab-schedule" class="tab-content">
                     <div class="day-tabs">
                         <button class="day-tab active" onclick="filterDay('All')">All Week</button>
@@ -543,7 +636,7 @@
                                 <tr>
                                     <th>Day</th>
                                     <th>Time</th>
-                                    <th>Subject</th>
+                                    <th>Subject / Session</th>
                                     <th>Venue</th>
                                 </tr>
                             </thead>
@@ -552,24 +645,29 @@
                     </div>
                 </div>
 
+                <!-- Live Clock Tab -->
                 <div id="tab-watch" class="tab-content hidden">
                     <div class="watch-box">
                         <div class="live-clock" id="live-clock-display">00:00:00 AM</div>
                         <div class="live-date" id="live-date-display">Loading date...</div>
+                        <div class="status-pill">
+                            <span class="status-dot"></span> System Operational & Live Sync Active
+                        </div>
                     </div>
                     <div class="tip-box">
-                        🕒 Track class intervals and lecture times seamlessly.
+                        🕒 Use this live clock to easily synchronize your class intervals and group practical sessions.
                     </div>
                 </div>
 
+                <!-- Notes Tab -->
                 <div id="tab-notes" class="tab-content hidden">
-                    <div style="background: rgba(3, 7, 18, 0.5); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.25rem;">
-                        <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: white; font-size: 0.85rem;">Add Note or Reminder</label>
-                        <textarea id="new-note-text" class="form-control" placeholder="Jot down quick lecture summaries, formulas or tasks..."></textarea>
-                        <button class="btn" style="margin-top: 0.85rem;" onclick="addNote()">Save to Notes</button>
+                    <div style="background: rgba(2, 6, 23, 0.6); padding: 1.35rem; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 1.5rem;">
+                        <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: white; font-size: 0.9rem;">Create New Note or Reminder</label>
+                        <textarea id="new-note-text" class="form-control" placeholder="Jot down formulas, lab submissions, or assignment deadlines..."></textarea>
+                        <button class="btn" style="margin-top: 1rem;" onclick="addNote()">Save Note</button>
                     </div>
 
-                    <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; color: white;">My Saved Notes</h3>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.85rem; color: white;">My Saved Notes</h3>
                     <div id="notes-container" class="notes-grid"></div>
                 </div>
             </div>
@@ -615,7 +713,7 @@
         let clockInterval = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const saved = localStorage.getItem("it2ndyear_user");
+            const saved = localStorage.getItem("it2ndyear_interactive_user");
             if (saved) {
                 currentUser = JSON.parse(saved);
                 showDashboard();
@@ -629,7 +727,7 @@
             if (!idVal) return;
 
             currentUser = { id: idVal, section: secVal };
-            localStorage.setItem("it2ndyear_user", JSON.stringify(currentUser));
+            localStorage.setItem("it2ndyear_interactive_user", JSON.stringify(currentUser));
             showDashboard();
         }
 
@@ -647,7 +745,7 @@
         }
 
         function logoutSession() {
-            localStorage.removeItem("it2ndyear_user");
+            localStorage.removeItem("it2ndyear_interactive_user");
             if (clockInterval) clearInterval(clockInterval);
             document.getElementById("dashboard-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
@@ -678,7 +776,7 @@
         }
 
         function getStorageKey() {
-            return `it2ndyear_notes_${currentUser.id}`;
+            return `it2ndyear_interactive_notes_${currentUser.id}`;
         }
 
         function addNote() {
@@ -711,7 +809,7 @@
 
             container.innerHTML = "";
             if (notes.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2rem; font-size: 0.85rem;">No saved notes yet. Create your first note above!</p>`;
+                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2.5rem; font-size: 0.875rem;">No saved notes yet. Create your first note above!</p>`;
                 return;
             }
 
@@ -756,7 +854,7 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">No classes scheduled for this filter.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No classes scheduled for this filter. Enjoy your break!</td></tr>`;
                 return;
             }
 
