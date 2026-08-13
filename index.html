@@ -14,7 +14,7 @@
             --primary-glow: rgba(99, 102, 241, 0.4);
             --accent-cyan: #38bdf8;
             --bg-base: #020617;
-            --card-bg: rgba(15, 23, 42, 0.65);
+            --card-bg: rgba(15, 23, 42, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
             --card-border-hover: rgba(99, 102, 241, 0.5);
             --text-main: #f8fafc;
@@ -24,7 +24,7 @@
             --badge-text: #a5b4fc;
             --danger: #f43f5e;
             --success: #10b981;
-            --accent-glow: 0 0 35px rgba(99, 102, 241, 0.15);
+            --accent-glow: 0 0 40px rgba(0, 0, 0, 0.8);
         }
 
         * {
@@ -37,9 +37,14 @@
 
         body {
             background-color: var(--bg-base);
+            /* Immersive background matching the provided glassmorphism screenshot style */
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.1) 0%, transparent 45%);
+                radial-gradient(circle at 50% 30%, rgba(30, 41, 59, 0.6) 0%, rgba(2, 6, 23, 0.95) 80%),
+                linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.95)),
+                url('https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -48,7 +53,7 @@
         }
 
         header {
-            background: rgba(2, 6, 23, 0.85);
+            background: rgba(2, 6, 23, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -89,24 +94,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem 1rem;
+            padding: 2rem 1rem;
         }
 
         .container {
             width: 100%;
-            max-width: 880px;
+            max-width: 440px; /* Slimmer card layout matching authentication card references */
             display: flex;
             flex-direction: column;
         }
 
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--card-border);
+            background: rgba(11, 15, 25, 0.75); /* Deep frosted glass background */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), var(--accent-glow);
-            padding: 2rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.15);
+            padding: 2.25rem;
             width: 100%;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             animation: fadeIn 0.5s ease-out forwards;
@@ -117,49 +122,40 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .card:hover {
-            border-color: var(--card-border-hover);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25);
-        }
-
         #login-screen h1 {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 800;
             margin-bottom: 0.4rem;
-            text-align: center;
             letter-spacing: -0.03em;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
 
         #login-screen p {
             color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
+            margin-bottom: 1.75rem;
+            font-size: 0.9rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
             display: block;
             font-weight: 600;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
             color: var(--text-main);
             letter-spacing: 0.01em;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.95rem 1.15rem;
-            background: rgba(2, 6, 23, 0.7);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            font-size: 1rem;
+            padding: 0.9rem 1.1rem;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 0.95rem;
             color: white;
             outline: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -168,46 +164,45 @@
         .form-control:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 4px var(--primary-glow);
-            background: rgba(2, 6, 23, 0.95);
+            background: rgba(2, 6, 23, 0.85);
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 120px;
+            min-height: 110px;
         }
 
         .radio-group {
             display: flex;
-            gap: 1.25rem;
-            margin-top: 0.5rem;
+            gap: 1rem;
+            margin-top: 0.4rem;
         }
 
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.6rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--text-main);
-            font-size: 1rem;
-            background: rgba(30, 41, 59, 0.3);
-            padding: 0.75rem 1.25rem;
-            border-radius: 14px;
-            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            background: rgba(30, 41, 59, 0.4);
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             flex: 1;
             justify-content: center;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
         }
 
         .radio-label:hover {
-            background: rgba(30, 41, 59, 0.7);
+            background: rgba(30, 41, 59, 0.8);
             border-color: var(--primary-light);
-            transform: translateY(-2px);
         }
 
         .radio-label input {
             accent-color: var(--primary);
-            transform: scale(1.2);
+            transform: scale(1.1);
             cursor: pointer;
         }
 
@@ -217,9 +212,9 @@
             background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
             color: white;
             border: none;
-            padding: 1rem;
-            border-radius: 14px;
-            font-size: 1rem;
+            padding: 0.95rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
@@ -528,8 +523,12 @@
             border: 1px solid rgba(99, 102, 241, 0.15);
         }
 
+        /* Dynamic expanded container when dashboard opens */
+        .dashboard-expanded {
+            max-width: 880px !important;
+        }
+
         @media (min-width: 640px) {
-            .card { padding: 2.5rem; }
             .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
             table { white-space: normal; font-size: 0.95rem; }
         }
@@ -547,11 +546,11 @@
     </header>
 
     <main>
-        <div class="container">
-            <!-- Login Screen -->
+        <div class="container" id="main-container">
+            <!-- Login Screen (Styled like the reference image with moonlit aesthetic glassmorphism) -->
             <div id="login-screen" class="card">
-                <h1>Welcome, IT Scholar</h1>
-                <p>Enter your name, Student ID, and section to launch your interactive dashboard.</p>
+                <h1>Welcome back</h1>
+                <p>Sign in to continue to IT 2nd Year Hub</p>
                 
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
@@ -576,11 +575,11 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn" style="margin-top: 1.75rem;">Access Portal</button>
+                    <button type="submit" class="btn" style="margin-top: 1.75rem;">Sign In</button>
                 </form>
 
                 <div class="tip-box">
-                    💡 <strong>Features:</strong> Name personalization, 12hr clock sync, section timetable filters, and private notes.
+                    💡 <strong>Secure & Local:</strong> Your name, ID, schedule filters, and notes are saved securely in your browser storage.
                 </div>
             </div>
 
@@ -695,7 +694,7 @@
         let clockInterval = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const saved = localStorage.getItem("it2ndyear_name_user");
+            const saved = localStorage.getItem("it2ndyear_moonlit_user");
             if (saved) {
                 currentUser = JSON.parse(saved);
                 showDashboard();
@@ -710,7 +709,7 @@
             if (!nameVal || !idVal) return;
 
             currentUser = { name: nameVal, id: idVal, section: secVal };
-            localStorage.setItem("it2ndyear_name_user", JSON.stringify(currentUser));
+            localStorage.setItem("it2ndyear_moonlit_user", JSON.stringify(currentUser));
             showDashboard();
         }
 
@@ -718,8 +717,9 @@
             document.getElementById("login-screen").classList.add("hidden");
             document.getElementById("dashboard-screen").classList.remove("hidden");
             document.getElementById("header-user-info").classList.remove("hidden");
+            document.getElementById("main-container").classList.add("dashboard-expanded");
 
-            document.getElementById("welcome-title").innerText = `Welcome, ${currentUser.name}!`;
+            document.getElementById("welcome-title").innerText = `Welcome back, ${currentUser.name}!`;
             document.getElementById("welcome-subtitle").innerText = `ID: ${currentUser.id}`;
             document.getElementById("section-display-badge").innerText = currentUser.section;
 
@@ -729,11 +729,12 @@
         }
 
         function logoutSession() {
-            localStorage.removeItem("it2ndyear_name_user");
+            localStorage.removeItem("it2ndyear_moonlit_user");
             if (clockInterval) clearInterval(clockInterval);
             document.getElementById("dashboard-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
             document.getElementById("header-user-info").classList.add("hidden");
+            document.getElementById("main-container").classList.remove("dashboard-expanded");
             document.getElementById("login-form").reset();
         }
 
