@@ -551,9 +551,14 @@
             <!-- Login Screen -->
             <div id="login-screen" class="card">
                 <h1>Welcome, IT Scholar</h1>
-                <p>Enter your Student ID and select your section to launch your interactive dashboard.</p>
+                <p>Enter your Name, Student ID, and Section to launch your interactive dashboard.</p>
                 
                 <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="student-name">Your Name</label>
+                        <input type="text" id="student-name" class="form-control" placeholder="e.g., Ishaan Thusoo" required autocomplete="name">
+                    </div>
+
                     <div class="form-group">
                         <label for="student-id">Student ID</label>
                         <input type="text" id="student-id" class="form-control" placeholder="e.g., 20261054" required autocomplete="off">
@@ -575,7 +580,7 @@
                 </form>
 
                 <div class="tip-box">
-                    💡 <strong>Features:</strong> 12hr clock sync, section timetable filters, and private notes.
+                    💡 <strong>Features:</strong> Name personalization, 12hr clock sync, section timetable filters, and private notes.
                 </div>
             </div>
 
@@ -685,12 +690,12 @@
             { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
         ];
 
-        let currentUser = { id: "", section: "" };
+        let currentUser = { name: "", id: "", section: "" };
         let currentDayFilter = "All";
         let clockInterval = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            const saved = localStorage.getItem("it2ndyear_chat_user");
+            const saved = localStorage.getItem("it2ndyear_name_user");
             if (saved) {
                 currentUser = JSON.parse(saved);
                 showDashboard();
@@ -699,12 +704,13 @@
 
         function handleLogin(event) {
             event.preventDefault();
+            const nameVal = document.getElementById("student-name").value.trim();
             const idVal = document.getElementById("student-id").value.trim();
             const secVal = document.querySelector('input[name="section"]:checked').value;
-            if (!idVal) return;
+            if (!nameVal || !idVal) return;
 
-            currentUser = { id: idVal, section: secVal };
-            localStorage.setItem("it2ndyear_chat_user", JSON.stringify(currentUser));
+            currentUser = { name: nameVal, id: idVal, section: secVal };
+            localStorage.setItem("it2ndyear_name_user", JSON.stringify(currentUser));
             showDashboard();
         }
 
@@ -713,7 +719,8 @@
             document.getElementById("dashboard-screen").classList.remove("hidden");
             document.getElementById("header-user-info").classList.remove("hidden");
 
-            document.getElementById("welcome-subtitle").innerText = `Student ID: ${currentUser.id}`;
+            document.getElementById("welcome-title").innerText = `Welcome, ${currentUser.name}!`;
+            document.getElementById("welcome-subtitle").innerText = `ID: ${currentUser.id}`;
             document.getElementById("section-display-badge").innerText = currentUser.section;
 
             renderSchedule();
@@ -722,7 +729,7 @@
         }
 
         function logoutSession() {
-            localStorage.removeItem("it2ndyear_chat_user");
+            localStorage.removeItem("it2ndyear_name_user");
             if (clockInterval) clearInterval(clockInterval);
             document.getElementById("dashboard-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
