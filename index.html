@@ -33,7 +33,11 @@
 
         body {
             background-color: var(--bg-base);
-            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 80%);
+            /* NEW: Adds your specific image with a dark overlay to keep it readable */
+            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.95)), url('image_0bef6e.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
