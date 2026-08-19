@@ -577,10 +577,12 @@
                 <div class="nav-tabs" role="tablist">
                     <button class="nav-tab active" data-target="schedule" role="tab">📅 Timetable</button>
                     <button class="nav-tab" data-target="assignments" role="tab">📋 Assignments</button>
+                    <button class="nav-tab" data-target="holidays" role="tab">🎉 Holidays</button>
                     <button class="nav-tab" data-target="watch" role="tab">⏰ Clock</button>
                     <button class="nav-tab" data-target="notes" role="tab">📝 Notes</button>
                 </div>
 
+                <!-- Timetable Tab -->
                 <div id="tab-schedule" class="tab-content" role="tabpanel">
                     <div class="day-tabs" id="day-filter-container">
                         <button class="day-tab active" data-day="All">All week</button>
@@ -599,6 +601,7 @@
                     </div>
                 </div>
 
+                <!-- Assignments Tab -->
                 <div id="tab-assignments" class="tab-content hidden" role="tabpanel">
                     <div class="tracker-input-box">
                         <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.85rem;">Add Assignment</h3>
@@ -646,6 +649,19 @@
                     <div id="tasks-container" class="tasks-list"></div>
                 </div>
 
+                <!-- Holidays Tab -->
+                <div id="tab-holidays" class="tab-content hidden" role="tabpanel">
+                    <div class="watch-box" style="padding: 1.5rem; text-align: left; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(15, 23, 42, 0.9));">
+                        <h3 style="color: var(--primary-light); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Next Upcoming Break</h3>
+                        <div id="next-holiday-display" style="font-size: 1.75rem; font-weight: 800; color: white;">Loading...</div>
+                        <div id="next-holiday-countdown" style="color: var(--text-muted); margin-top: 0.25rem; font-size: 0.9rem;"></div>
+                    </div>
+                    
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 1rem 0;">2026 Academic Holidays</h3>
+                    <div id="holidays-container" class="tasks-list"></div>
+                </div>
+
+                <!-- Clock Tab -->
                 <div id="tab-watch" class="tab-content hidden" role="tabpanel">
                     <div class="watch-box">
                         <div class="live-clock" id="live-clock-display">00:00:00 AM</div>
@@ -654,6 +670,7 @@
                     </div>
                 </div>
 
+                <!-- Notes Tab -->
                 <div id="tab-notes" class="tab-content hidden" role="tabpanel">
                     <div class="tracker-input-box">
                         <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Create new note</label>
@@ -696,6 +713,19 @@
             { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+        ];
+
+        // India 2026 Academic & National Holidays
+        const holidays2026 = [
+            { date: "2026-01-26", name: "Republic Day", type: "National Holiday", emoji: "🇮🇳" },
+            { date: "2026-03-03", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
+            { date: "2026-03-20", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
+            { date: "2026-04-03", name: "Good Friday", type: "Gazetted Holiday", emoji: "⛪" },
+            { date: "2026-08-15", name: "Independence Day", type: "National Holiday", emoji: "🇮🇳" },
+            { date: "2026-10-02", name: "Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
+            { date: "2026-10-18", name: "Dussehra", type: "Gazetted Holiday", emoji: "🏹" },
+            { date: "2026-11-08", name: "Diwali", type: "Gazetted Holiday", emoji: "🪔" },
+            { date: "2026-12-25", name: "Christmas Day", type: "Gazetted Holiday", emoji: "🎄" }
         ];
 
         let currentUser = { name: "", id: "", section: "" };
@@ -798,6 +828,7 @@
 
             renderNotes();
             renderTasks();
+            renderHolidays();
             startLiveClock();
             showToast(isAutoLogin ? "Session restored" : "Logged in", "info");
         }
@@ -841,6 +872,79 @@
             document.getElementById("live-date-display").innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
         }
 
+        // --- Holidays Feature ---
+        function renderHolidays() {
+            const container = document.getElementById("holidays-container");
+            const nextDisplay = document.getElementById("next-holiday-display");
+            const countdownDisplay = document.getElementById("next-holiday-countdown");
+            container.innerHTML = "";
+            
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            let nextHoliday = null;
+            const fragment = document.createDocumentFragment();
+
+            holidays2026.forEach(h => {
+                const hDate = new Date(h.date);
+                hDate.setHours(0,0,0,0);
+                const isPast = hDate < today;
+                
+                // Find the first holiday that is either today or in the future
+                if (!isPast && !nextHoliday) {
+                    nextHoliday = { ...h, dateObj: hDate };
+                }
+
+                const item = document.createElement("div");
+                item.className = "task-item";
+                if (isPast) {
+                    item.style.opacity = "0.4";
+                }
+
+                const left = document.createElement("div"); 
+                left.className = "task-left";
+                
+                const emoji = document.createElement("div");
+                emoji.style.fontSize = "1.5rem";
+                emoji.textContent = h.emoji;
+
+                const info = document.createElement("div");
+                const titleText = document.createElement("div"); 
+                titleText.style.cssText = `font-weight: 700; font-size: 0.95rem; color: var(--text-main); ${isPast ? 'text-decoration: line-through;' : ''}`; 
+                titleText.textContent = h.name;
+                
+                const meta = document.createElement("div"); 
+                meta.className = "task-meta";
+                meta.innerHTML = `<span class="tag tag-subject">${hDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span><span style="color: var(--text-muted);">${h.type}</span>`;
+                
+                info.appendChild(titleText); 
+                info.appendChild(meta);
+                left.appendChild(emoji); 
+                left.appendChild(info);
+                item.appendChild(left);
+                fragment.appendChild(item);
+            });
+            
+            container.appendChild(fragment);
+
+            if (nextHoliday) {
+                const diffTime = nextHoliday.dateObj - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                nextDisplay.textContent = `${nextHoliday.emoji} ${nextHoliday.name}`;
+                
+                if (diffDays === 0) {
+                    countdownDisplay.innerHTML = `<span style="color: var(--success); font-weight: 700;">It's today! Enjoy your break!</span>`;
+                } else {
+                    countdownDisplay.textContent = `${nextHoliday.dateObj.toLocaleDateString(undefined, { month: 'long', day: 'numeric' })} • In ${diffDays} day${diffDays > 1 ? 's' : ''}!`;
+                }
+            } else {
+                nextDisplay.textContent = "No more holidays!";
+                countdownDisplay.textContent = "You've survived the year.";
+            }
+        }
+
+        // --- Tasks Feature ---
         function getTasksList() {
             if (!tasksByStudent[currentUser.id]) tasksByStudent[currentUser.id] = [];
             return tasksByStudent[currentUser.id];
@@ -915,6 +1019,7 @@
             container.appendChild(fragment);
         }
 
+        // --- Notes Feature ---
         function getNotesList() {
             if (!notesByStudent[currentUser.id]) notesByStudent[currentUser.id] = [];
             return notesByStudent[currentUser.id];
@@ -941,6 +1046,7 @@
             container.appendChild(fragment);
         }
 
+        // --- Timetable Feature ---
         function filterDay(day) {
             currentDayFilter = day;
             document.querySelectorAll(".day-tab").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
