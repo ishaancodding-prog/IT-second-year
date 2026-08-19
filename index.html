@@ -1,141 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IT 2nd Year — NextGen Student Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Link to our external CSS file -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<!-- 1. In your .nav-tabs div, add the Assignments tab button: -->
+<div class="nav-tabs" role="tablist">
+    <button class="nav-tab active" data-target="schedule" role="tab" aria-selected="true">📅 Timetable</button>
+    <button class="nav-tab" data-target="assignments" role="tab" aria-selected="false">📋 Assignments</button>
+    <button class="nav-tab" data-target="watch" role="tab" aria-selected="false">⏰ Clock</button>
+    <button class="nav-tab" data-target="notes" role="tab" aria-selected="false">📝 Notes</button>
+</div>
 
-    <header>
-        <div class="logo">
-            <span class="logo-icon">⚡</span> IT 2nd Year Hub
-        </div>
-        <div id="header-user-info" class="hidden">
-            <button class="btn-secondary" id="btn-logout">Switch profile</button>
-        </div>
-    </header>
-
-    <main>
-        <div class="container" id="main-container">
-            <!-- Login Screen -->
-            <div id="login-screen" class="card">
-                <h1>Welcome back</h1>
-                <p>Sign in to continue to IT 2nd Year Hub</p>
-
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="student-name">Your name</label>
-                        <input type="text" id="student-name" class="form-control" placeholder="Enter your name" autocomplete="name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" class="form-control" placeholder="Enter your student ID" autocomplete="off">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Select section</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="section" value="#IT-1"> #IT-1
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="section" value="#IT-2" checked> #IT-2
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- aria-live="polite" tells screen readers to announce this error when it appears -->
-                    <div id="login-error" class="error-text" aria-live="polite">Enter your name and student ID to continue.</div>
-
-                    <button type="submit" class="btn" style="margin-top: 1.25rem;">Sign in</button>
-                </form>
-
-                <div class="tip-box">
-                    💡 <strong>This session only:</strong> your name, ID, schedule filters, and notes are kept in memory for this session — they reset if you reload the page.
-                </div>
+<!-- 2. Right after the #tab-schedule section, add this #tab-assignments block: -->
+<div id="tab-assignments" class="tab-content hidden" role="tabpanel">
+    <!-- Assignment Creation Box -->
+    <div class="tracker-input-box">
+        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.85rem; color: var(--text-main);">Add Assignment or Task</h3>
+        <div class="assignment-form-grid">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="task-title">Task / Assignment Title</label>
+                <input type="text" id="task-title" class="form-control" placeholder="e.g., DSA Lab 3 Assignment">
             </div>
-
-            <!-- Dashboard Screen -->
-            <div id="dashboard-screen" class="card hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 0.75rem; flex-wrap: wrap;">
-                    <!-- tabindex="-1" allows us to programmatically focus this element for accessibility -->
-                    <div tabindex="-1" id="dashboard-header-focus">
-                        <h2 id="welcome-title" style="font-size: 1.5rem; font-weight: 800; color: white; letter-spacing: -0.02em;">IT 2nd Year Dashboard</h2>
-                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500;"></p>
-                    </div>
-                    <div id="section-display-badge" class="user-badge"></div>
-                </div>
-
-                <!-- Added accessibility roles for tabs -->
-                <div class="nav-tabs" role="tablist">
-                    <button class="nav-tab active" data-target="schedule" role="tab" aria-selected="true">📅 Timetable</button>
-                    <button class="nav-tab" data-target="watch" role="tab" aria-selected="false">⏰ Clock</button>
-                    <button class="nav-tab" data-target="notes" role="tab" aria-selected="false">📝 Notes</button>
-                </div>
-
-                <div id="tab-schedule" class="tab-content" role="tabpanel">
-                    <div class="day-tabs" id="day-filter-container">
-                        <button class="day-tab active" data-day="All">All week</button>
-                        <button class="day-tab" data-day="Monday">Mon</button>
-                        <button class="day-tab" data-day="Tuesday">Tue</button>
-                        <button class="day-tab" data-day="Wednesday">Wed</button>
-                        <button class="day-tab" data-day="Thursday">Thu</button>
-                        <button class="day-tab" data-day="Friday">Fri</button>
-                        <button class="day-tab" data-day="Saturday">Sat</button>
-                    </div>
-
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Day</th>
-                                    <th>Time</th>
-                                    <th>Subject / session</th>
-                                    <th>Venue</th>
-                                </tr>
-                            </thead>
-                            <tbody id="schedule-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="tab-watch" class="tab-content hidden" role="tabpanel">
-                    <div class="watch-box">
-                        <!-- aria-hidden prevents screen readers from reading every single second tick -->
-                        <div class="live-clock" id="live-clock-display" aria-hidden="true">00:00:00 AM</div>
-                        <div class="live-date" id="live-date-display">Loading date...</div>
-                        <div class="status-pill">
-                            <span class="status-dot"></span> 12-hour sync active
-                        </div>
-                    </div>
-                    <div class="tip-box">
-                        🕒 Track class intervals using standard 12-hour AM/PM formatting.
-                    </div>
-                </div>
-
-                <div id="tab-notes" class="tab-content hidden" role="tabpanel">
-                    <div style="background: rgba(2, 6, 23, 0.6); padding: 1.35rem; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 1.5rem;">
-                        <label for="new-note-text" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: white; font-size: 0.9rem;">Create new note or reminder</label>
-                        <textarea id="new-note-text" class="form-control" placeholder="Jot down formulas, lab submissions, or assignment deadlines..."></textarea>
-                        <div id="note-error" class="error-text" aria-live="polite">Write something before saving.</div>
-                        <button class="btn" id="btn-save-note" style="margin-top: 1rem;">Save note</button>
-                    </div>
-
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.85rem; color: white;">My saved notes</h3>
-                    <div id="notes-container" class="notes-grid"></div>
-                </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="task-subject">Subject</label>
+                <select id="task-subject" class="form-control">
+                    <option value="Data Structures">Data Structures</option>
+                    <option value="Digital Electronics">Digital Electronics</option>
+                    <option value="Automata Theory">Automata Theory</option>
+                    <option value="Prob & Stats">Prob & Stats</option>
+                    <option value="Tech Communication">Tech Communication</option>
+                    <option value="FIT">FIT</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="task-due-date">Due Date</label>
+                <input type="date" id="task-due-date" class="form-control">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="task-priority">Priority</label>
+                <select id="task-priority" class="form-control">
+                    <option value="High">🔴 High</option>
+                    <option value="Medium" selected>🟡 Medium</option>
+                    <option value="Low">🟢 Low</option>
+                </select>
             </div>
         </div>
-    </main>
+        <div id="task-error" class="error-text" aria-live="polite">Please enter a task title and valid due date.</div>
+        <button class="btn" id="btn-add-task" style="margin-top: 1rem;">Add Assignment</button>
+    </div>
 
-    <!-- Link to our external JavaScript file -->
-    <script src="app.js"></script>
-</body>
-</html>
+    <!-- Filters & List Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0 1rem 0; flex-wrap: wrap; gap: 0.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">My Tasks</h3>
+        <div class="task-filter-group">
+            <button class="task-filter-btn active" data-filter="all">All</button>
+            <button class="task-filter-btn" data-filter="pending">Pending</button>
+            <button class="task-filter-btn" data-filter="completed">Done</button>
+        </div>
+    </div>
+
+    <!-- Tasks List Container -->
+    <div id="tasks-container" class="tasks-list"></div>
+</div>
