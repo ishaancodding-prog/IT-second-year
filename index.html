@@ -677,7 +677,7 @@
                 <div id="tab-chat" class="tab-content hidden" role="tabpanel">
                     <div class="chat-box">
                         <div class="chat-messages" id="chat-messages">
-                            <div class="chat-bubble bot">Hello! I'm your IT 2nd Year Assistant. Ask me about your timetable for any day, professors, or holidays!</div>
+                            <div class="chat-bubble bot">Hello! I'm your IT 2nd Year Assistant. Ask me about your timetable for any day, professors, or university holidays!</div>
                         </div>
                         <div class="chat-suggestions">
                             <span class="suggestion-chip" onclick="sendSuggestion('What is my timetable for Monday?')">Monday Schedule</span>
@@ -748,7 +748,7 @@
                         <div id="next-holiday-countdown" style="color: var(--text-muted); margin-top: 0.25rem; font-size: 0.9rem;"></div>
                     </div>
                     
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 1rem 0;">2026 Academic Holidays</h3>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 1rem 0;">GBPUAT Official 2026 Holidays List</h3>
                     <div id="holidays-container" class="tasks-list"></div>
                 </div>
 
@@ -805,15 +805,37 @@
             { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
         ];
 
+        // Complete Official GBPUAT 2026 Holidays List parsed from document
         const holidays2026 = [
-            { date: "2026-01-26", name: "Republic Day", type: "National Holiday", emoji: "🇮🇳" },
-            { date: "2026-03-03", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
-            { date: "2026-03-20", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
+            { date: "2026-01-26", name: "Republic Day", type: "Gazetted Holiday", emoji: "🇮🇳" },
+            { date: "2026-02-15", name: "Mahashivratri", type: "Gazetted Holiday", emoji: "🔱" },
+            { date: "2026-03-03", name: "Holika Dahan", type: "Gazetted Holiday", emoji: "🔥" },
+            { date: "2026-03-04", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
+            { date: "2026-03-19", name: "Chetchand", type: "Gazetted Holiday", emoji: "🌊" },
+            { date: "2026-03-21", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
+            { date: "2026-03-26", name: "Ram Navmi", type: "Gazetted Holiday", emoji: "🏹" },
+            { date: "2026-03-31", name: "Mahavir Jayanti", type: "Gazetted Holiday", emoji: "🕊️" },
             { date: "2026-04-03", name: "Good Friday", type: "Gazetted Holiday", emoji: "⛪" },
+            { date: "2026-04-13", name: "Approved by B.O.M.", type: "University Holiday", emoji: "🏛️" },
+            { date: "2026-04-14", name: "Dr. Bheemrao Ambedkar B.day", type: "Gazetted Holiday", emoji: "📜" },
+            { date: "2026-05-01", name: "Budh Purnima", type: "Gazetted Holiday", emoji: "☸️" },
+            { date: "2026-05-27", name: "Eid-Ul-Zuha (Bakar-Eld)", type: "Gazetted Holiday", emoji: "🐑" },
+            { date: "2026-06-26", name: "Moharram", type: "Gazetted Holiday", emoji: "🏴" },
+            { date: "2026-07-16", name: "Harela", type: "University Holiday", emoji: "🌿" },
             { date: "2026-08-15", name: "Independence Day", type: "National Holiday", emoji: "🇮🇳" },
-            { date: "2026-10-02", name: "Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
-            { date: "2026-10-18", name: "Dussehra", type: "Gazetted Holiday", emoji: "🏹" },
-            { date: "2026-11-08", name: "Diwali", type: "Gazetted Holiday", emoji: "🪔" },
+            { date: "2026-08-26", name: "Eid-E-Milad / Milad-Un-Nabi Barawafat", type: "Gazetted Holiday", emoji: "✨" },
+            { date: "2026-08-28", name: "Rakshabandhan", type: "Gazetted Holiday", emoji: "🧵" },
+            { date: "2026-09-04", name: "Shri Krishna Janmastmi", type: "Gazetted Holiday", emoji: "🪈" },
+            { date: "2026-09-17", name: "Vishwakarma Pooja", type: "Gazetted Holiday", emoji: "⚙️" },
+            { date: "2026-10-02", name: "Mahatma Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
+            { date: "2026-10-20", name: "Dushehra (Vidyadashmi)", type: "Gazetted Holiday", emoji: "🏹" },
+            { date: "2026-10-25", name: "Maharishi Balmiki Jayanti", type: "Gazetted Holiday", emoji: "🪔" },
+            { date: "2026-11-07", name: "Deepawall (Narak Chaturdashi)", type: "Gazetted Holiday", emoji: "🪔" },
+            { date: "2026-11-08", name: "Deepawall", type: "Gazetted Holiday", emoji: "🪔" },
+            { date: "2026-11-10", name: "Deepawall (Govardhan Pooja)", type: "Gazetted Holiday", emoji: "🐄" },
+            { date: "2026-11-11", name: "Bhaijoo", type: "Gazetted Holiday", emoji: "👫" },
+            { date: "2026-11-20", name: "Eigas-Bagwal", type: "University Holiday", emoji: "🪔" },
+            { date: "2026-11-24", name: "Guru Nanak Jayanti / Guru Teghabadur Shahid Diwas", type: "Gazetted Holiday", emoji: "🪯" },
             { date: "2026-12-25", name: "Christmas Day", type: "Gazetted Holiday", emoji: "🎄" }
         ];
 
@@ -997,7 +1019,6 @@
         function generateBotResponse(q) {
             const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
             
-            // Check if user asked for a specific day
             let foundDay = days.find(d => q.includes(d));
             if (q.includes("today")) {
                 const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -1022,7 +1043,7 @@
                 today.setHours(0,0,0,0);
                 const upcoming = holidays2026.find(h => new Date(h.date) >= today);
                 if (upcoming) {
-                    return `The next holiday is ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type}).`;
+                    return `The next GBPUAT holiday is ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type}).`;
                 }
                 return "There are no upcoming holidays listed for the rest of 2026.";
             }
@@ -1036,10 +1057,10 @@
             }
 
             if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-                return `Hi ${currentUser.name}! How can I help you check your timetable or tasks today?`;
+                return `Hi ${currentUser.name}! How can I help you check your timetable, university holidays, or tasks today?`;
             }
 
-            return "I can help you look up day-wise timetables (e.g., 'Show Monday timetable'), check teachers, or ask about holidays. Try asking about a specific day!";
+            return "I can help you look up day-wise timetables (e.g., 'Show Monday timetable'), GBPUAT holidays, or teachers. Try asking about a specific day or holiday!";
         }
 
         function renderHolidays() {
