@@ -452,28 +452,6 @@
             color: #0f172a;
         }
 
-        .tasks-list { display: flex; flex-direction: column; gap: 0.75rem; }
-        .task-item {
-            background: var(--paper);
-            border: 1px solid var(--paper-border);
-            padding: 0.9rem 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .task-item.completed { opacity: 0.4; background: rgba(26, 34, 51, 0.5); }
-        .task-item.completed .task-title-text { text-decoration: line-through; }
-        .task-left { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
-        .task-checkbox { width: 16px; height: 16px; accent-color: var(--blueprint); cursor: pointer; }
-        .task-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.25rem; font-size: 0.7rem; font-family: var(--mono); }
-        
-        .tag { padding: 0.15rem 0.45rem; border-radius: 2px; font-weight: 700; font-size: 0.65rem; }
-        .tag-subject { background: var(--blueprint-light); color: var(--blueprint); }
-        .tag-priority-High { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
-        .tag-priority-Medium { background: var(--copper-bg); color: var(--copper); border: 1px solid var(--copper-border); }
-        .tag-priority-Low { background: var(--success-bg); color: var(--success-green); border: 1px solid rgba(52, 211, 153, 0.3); }
-
         .notes-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
         .note-card {
             background: var(--paper);
@@ -645,7 +623,6 @@
                     <button class="nav-tab active" data-target="overview" role="tab">📌 Overview</button>
                     <button class="nav-tab" data-target="schedule" role="tab">📅 Timetable</button>
                     <button class="nav-tab" data-target="chat" role="tab">🤖 Smart Assistant</button>
-                    <button class="nav-tab" data-target="assignments" role="tab">📋 Tasks & Tray</button>
                     <button class="nav-tab" data-target="holidays" role="tab">🎉 Academic Calendar</button>
                     <button class="nav-tab" data-target="watch" role="tab">⏰ Chrono / Clock</button>
                     <button class="nav-tab" data-target="notes" role="tab">📝 Scratchpad Notes</button>
@@ -669,7 +646,6 @@
                     <button class="mobile-tab active" data-target="overview">Overview</button>
                     <button class="mobile-tab" data-target="schedule">Timetable</button>
                     <button class="mobile-tab" data-target="chat">AI Bot</button>
-                    <button class="mobile-tab" data-target="assignments">Tasks</button>
                     <button class="mobile-tab" data-target="holidays">Holidays</button>
                     <button class="mobile-tab" data-target="watch">Clock</button>
                     <button class="mobile-tab" data-target="notes">Notes</button>
@@ -683,14 +659,10 @@
                             <div id="desk-next-class" style="font-size: 0.95rem; font-weight: 600; margin-top: 0.3rem;">Calculating schedule...</div>
                         </div>
                         <div class="desk-card">
-                            <div class="desk-card-title">Open Tasks</div>
-                            <div id="desk-task-count" style="font-size: 1.1rem; font-weight: 700; font-family: var(--mono); margin-top: 0.3rem;">0 items pending</div>
-                        </div>
-                        <div class="desk-card">
                             <div class="desk-card-title">Next Recess / Holiday</div>
                             <div id="desk-next-holiday" style="font-size: 0.95rem; font-weight: 600; margin-top: 0.3rem;">Loading calendar...</div>
                         </div>
-                        <div class="desk-card">
+                        <div class="desk-card" style="grid-column: 1 / -1;">
                             <div class="desk-card-title">Daily Rule (Pinned)</div>
                             <div style="font-size: 0.85rem; font-family: var(--mono); color: var(--ink-muted); margin-top: 0.3rem;">"Probability & Statistics venue verified at IT 202 / Golakota."</div>
                         </div>
@@ -740,57 +712,6 @@
                             <button class="btn" id="btn-send-chat" style="width: auto; padding: 0.55rem 1rem; margin: 0; font-size: 0.75rem;">Query</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- TASKS / ASSIGNMENT TRAY TAB -->
-                <div id="tab-assignments" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.25rem;">Assignment Tray</h3>
-                    <p class="panel-subtitle">Physical-style checklist for lab reports and coursework.</p>
-
-                    <div class="desk-card" style="margin-bottom: 1.5rem;">
-                        <h4 style="font-family: var(--mono); font-size: 0.8rem; color: var(--blueprint); margin-bottom: 0.75rem; text-transform: uppercase;">Log New Task</h4>
-                        <div class="assignment-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="task-title">Task Title</label>
-                                <input type="text" id="task-title" class="form-control" placeholder="e.g. DSA Assignment 4">
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="task-subject">Subject</label>
-                                <select id="task-subject" class="form-control">
-                                    <option value="Data Structures">Data Structures</option>
-                                    <option value="Digital Electronics">Digital Electronics</option>
-                                    <option value="Automata Theory">Automata Theory</option>
-                                    <option value="Prob & Stats">Prob & Stats</option>
-                                    <option value="Tech Communication">Tech Communication</option>
-                                    <option value="FIT">FIT</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="task-due-date">Deadline</label>
-                                <input type="date" id="task-due-date" class="form-control">
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="task-priority">Priority</label>
-                                <select id="task-priority" class="form-control">
-                                    <option value="High">High</option>
-                                    <option value="Medium" selected>Medium</option>
-                                    <option value="Low">Low</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="task-error" class="error-text">Provide task title and deadline.</div>
-                        <button class="btn" id="btn-add-task" style="margin-top: 0.85rem; font-size: 0.8rem;">Add to Tray</button>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                        <span style="font-family: var(--mono); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Active Tray Items</span>
-                        <div class="day-tabs" style="margin-bottom: 0; padding: 2px;">
-                            <button class="day-tab active" data-filter="all" onclick="setTaskFilter('all', this)">All</button>
-                            <button class="day-tab" data-filter="pending" onclick="setTaskFilter('pending', this)">Pending</button>
-                            <button class="day-tab" data-filter="completed" onclick="setTaskFilter('completed', this)">Done</button>
-                        </div>
-                    </div>
-                    <div id="tasks-container" class="tasks-list"></div>
                 </div>
 
                 <!-- ACADEMIC CALENDAR / HOLIDAYS TAB -->
@@ -902,9 +823,6 @@
 
         let currentUser = { name: "", id: "", section: "" };
         let notesByStudent = {};
-        let tasksByStudent = {};
-        let currentDayFilter = "All";
-        let currentTaskFilter = "all";
         let clockInterval = null;
 
         function showToast(msg) {
@@ -917,16 +835,13 @@
         function loadState() {
             const u = localStorage.getItem('hub_user');
             const n = localStorage.getItem('hub_notes');
-            const tk = localStorage.getItem('hub_tasks');
             if (u) currentUser = JSON.parse(u);
             if (n) notesByStudent = JSON.parse(n);
-            if (tk) tasksByStudent = JSON.parse(tk);
         }
 
         function saveState() {
             localStorage.setItem('hub_user', JSON.stringify(currentUser));
             localStorage.setItem('hub_notes', JSON.stringify(notesByStudent));
-            localStorage.setItem('hub_tasks', JSON.stringify(tasksByStudent));
         }
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -936,7 +851,6 @@
             document.getElementById('login-form').addEventListener('submit', handleLogin);
             document.getElementById('btn-logout').addEventListener('click', logoutSession);
             document.getElementById('btn-save-note').addEventListener('click', addNote);
-            document.getElementById('btn-add-task').addEventListener('click', addTask);
             document.getElementById('btn-send-chat').addEventListener('click', handleUserChat);
             document.getElementById('chat-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') handleUserChat();
@@ -981,7 +895,6 @@
 
             switchTab('overview');
             renderNotes();
-            renderTasks();
             renderHolidays();
             updateDeskOverview();
             startLiveClock();
@@ -1012,7 +925,6 @@
                 overview: "DAILY DESK",
                 schedule: "SCHEDULE SHEET",
                 chat: "HELP DESK",
-                assignments: "TASK TRAY",
                 holidays: "CALENDAR",
                 watch: "CHRONO",
                 notes: "SCRATCHPAD"
@@ -1031,10 +943,6 @@
             } else {
                 nextClassEl.innerText = "No classes scheduled for today. Free day.";
             }
-
-            const tasks = tasksByStudent[currentUser.id] || [];
-            const pendingCount = tasks.filter(t => !t.completed).length;
-            document.getElementById('desk-task-count').innerText = `${pendingCount} item(s) pending`;
 
             const today = new Date();
             today.setHours(0,0,0,0);
@@ -1066,7 +974,6 @@
             if (dateEl) dateEl.innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        // Chatbot Logic
         function sendSuggestion(text) {
             document.getElementById('chat-input').value = text;
             handleUserChat();
@@ -1196,88 +1103,6 @@
                     countdownDisplay.textContent = `T-Minus ${diffDays} Day(s) remaining`;
                 }
             }
-        }
-
-        function getTasksList() {
-            if (!tasksByStudent[currentUser.id]) tasksByStudent[currentUser.id] = [];
-            return tasksByStudent[currentUser.id];
-        }
-
-        function addTask() {
-            const titleInput = document.getElementById("task-title");
-            const subjectInput = document.getElementById("task-subject");
-            const dateInput = document.getElementById("task-due-date");
-            const priorityInput = document.getElementById("task-priority");
-            const errorEl = document.getElementById("task-error");
-
-            if (!titleInput.value.trim() || !dateInput.value) { errorEl.style.display = "block"; return; }
-            errorEl.style.display = "none";
-
-            getTasksList().unshift({
-                id: Date.now(),
-                title: titleInput.value.trim(),
-                subject: subjectInput.value,
-                dueDate: dateInput.value,
-                priority: priorityInput.value,
-                completed: false
-            });
-
-            saveState();
-            titleInput.value = ""; dateInput.value = "";
-            renderTasks();
-            updateDeskOverview();
-            showToast("Task logged to tray.");
-        }
-
-        function setTaskFilter(filter, btn) {
-            currentTaskFilter = filter;
-            document.querySelectorAll('#tab-assignments .day-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderTasks();
-        }
-
-        function renderTasks() {
-            const container = document.getElementById("tasks-container");
-            const tasks = getTasksList();
-            container.innerHTML = "";
-
-            const filtered = tasks.filter(t => currentTaskFilter === "all" || (currentTaskFilter === "pending" && !t.completed) || (currentTaskFilter === "completed" && t.completed));
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<p style="color: var(--ink-muted); text-align: center; padding: 1.5rem; font-size: 0.8rem; font-family: var(--mono);">No task records found.</p>`;
-                return;
-            }
-
-            const fragment = document.createDocumentFragment();
-            const today = new Date().toISOString().split('T')[0];
-
-            filtered.forEach(task => {
-                const item = document.createElement("div");
-                item.className = `task-item ${task.completed ? 'completed' : ''}`;
-
-                const left = document.createElement("div"); left.className = "task-left";
-                const chk = document.createElement("input"); chk.type = "checkbox"; chk.className = "task-checkbox"; chk.checked = task.completed;
-                chk.onchange = () => { task.completed = !task.completed; saveState(); renderTasks(); updateDeskOverview(); };
-                
-                const info = document.createElement("div");
-                const titleText = document.createElement("div"); titleText.className = "task-title-text"; titleText.style.cssText = "font-weight: 700; font-size: 0.85rem; font-family: var(--mono);"; titleText.textContent = task.title;
-                const meta = document.createElement("div"); meta.className = "task-meta";
-                
-                meta.innerHTML = `<span class="tag tag-subject">${task.subject}</span><span class="tag tag-priority-${task.priority}">${task.priority}</span><span style="color: var(--ink-muted)">Due: ${task.dueDate}</span>`;
-                
-                if (!task.completed && task.dueDate < today) meta.innerHTML += `<span class="tag tag-priority-High">OVERDUE</span>`;
-                else if (!task.completed && task.dueDate === today) meta.innerHTML += `<span class="tag tag-priority-Medium">TODAY</span>`;
-
-                info.appendChild(titleText); info.appendChild(meta);
-                left.appendChild(chk); left.appendChild(info);
-
-                const delBtn = document.createElement("button"); delBtn.className = "btn-danger"; delBtn.textContent = "Drop";
-                delBtn.onclick = () => { tasksByStudent[currentUser.id] = getTasksList().filter(t => t.id !== task.id); saveState(); renderTasks(); updateDeskOverview(); };
-
-                item.appendChild(left); item.appendChild(delBtn);
-                fragment.appendChild(item);
-            });
-            container.appendChild(fragment);
         }
 
         function getNotesList() {
