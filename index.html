@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IT 2nd Year — NextGen Student Hub</title>
+    <title>IT 2nd Year — AI Assistant & Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1; /* Neon Indigo */
+            --primary: #6366f1;
             --primary-light: #818cf8;
             --primary-hover: #4f46e5;
-            --bg-base: #020617; /* Deep Slate */
-            --card-bg: rgba(15, 23, 42, 0.75);
+            --bg-base: #020617;
+            --card-bg: rgba(15, 23, 42, 0.85);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
@@ -33,7 +33,7 @@
 
         body {
             background-color: var(--bg-base);
-            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.95)), url('./image_0bef6e.jpg');
+            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.95)), url('./image_0bef6e.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -45,7 +45,7 @@
         }
 
         header {
-            background: rgba(2, 6, 23, 0.8);
+            background: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
@@ -317,6 +317,115 @@
             50% { opacity: 0.4; }
         }
 
+        /* Chatbot Interface Styles */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 480px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .chat-bubble.bot {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--border);
+            gap: 0.5rem;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--primary);
+        }
+
+        .chat-input-area button {
+            padding: 0 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-input-area button:hover {
+            background: var(--primary-light);
+        }
+
+        .quick-chips {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            overflow-x: auto;
+            background: rgba(15, 23, 42, 0.3);
+            border-top: 1px solid var(--border);
+        }
+
+        .chip {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--badge-text);
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.775rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         .notes-grid {
             display: flex;
             flex-direction: column;
@@ -577,15 +686,38 @@
                 </div>
 
                 <div class="nav-tabs" role="tablist">
-                    <button class="nav-tab active" data-target="schedule" role="tab">📅 Timetable</button>
+                    <button class="nav-tab active" data-target="chatbot" role="tab">🤖 AI Assistant</button>
+                    <button class="nav-tab" data-target="schedule" role="tab">📅 Timetable</button>
                     <button class="nav-tab" data-target="assignments" role="tab">📋 Tasks</button>
                     <button class="nav-tab" data-target="holidays" role="tab">🎉 Holidays</button>
                     <button class="nav-tab" data-target="watch" role="tab">⏰ Clock</button>
                     <button class="nav-tab" data-target="notes" role="tab">📝 Notes</button>
                 </div>
 
+                <!-- Chatbot Tab -->
+                <div id="tab-chatbot" class="tab-content" role="tabpanel">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages-box">
+                            <div class="chat-bubble bot">Hello! I'm your IT 2nd Year Assistant. Ask me anything about your timetable, classes, or teachers (e.g., "What classes do I have on Tuesday?" or "Who teaches DSA?").</div>
+                        </div>
+                        <div class="quick-chips">
+                            <span class="chip" onclick="sendQuery('Monday timetable')">Monday</span>
+                            <span class="chip" onclick="sendQuery('Tuesday timetable')">Tuesday</span>
+                            <span class="chip" onclick="sendQuery('Wednesday timetable')">Wednesday</span>
+                            <span class="chip" onclick="sendQuery('Thursday timetable')">Thursday</span>
+                            <span class="chip" onclick="sendQuery('Friday timetable')">Friday</span>
+                            <span class="chip" onclick="sendQuery('Saturday timetable')">Saturday</span>
+                            <span class="chip" onclick="sendQuery('Who teaches DSA?')">Teachers</span>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input-field" placeholder="Type a message or day..." autocomplete="off">
+                            <button onclick="handleUserChat()">Send</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Timetable Tab -->
-                <div id="tab-schedule" class="tab-content" role="tabpanel">
+                <div id="tab-schedule" class="tab-content hidden" role="tabpanel">
                     <div class="day-tabs" id="day-filter-container">
                         <button class="day-tab active" data-day="All">All week</button>
                         <button class="day-tab" data-day="Monday">Mon</button>
@@ -770,6 +902,10 @@
             document.getElementById('btn-logout').addEventListener('click', logoutSession);
             document.getElementById('btn-save-note').addEventListener('click', addNote);
             document.getElementById('btn-add-task').addEventListener('click', addTask);
+            
+            document.getElementById('chat-input-field').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleUserChat();
+            });
 
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => switchTab(e.target.dataset.target, e));
@@ -851,6 +987,93 @@
             event.target.classList.add("active");
             document.querySelectorAll(".tab-content").forEach(c => c.classList.add("hidden"));
             document.getElementById(`tab-${tabName}`).classList.remove("hidden");
+        }
+
+        // Chatbot Logic
+        function sendQuery(text) {
+            document.getElementById('chat-input-field').value = text;
+            handleUserChat();
+        }
+
+        function appendMessage(sender, text) {
+            const box = document.getElementById("chat-messages-box");
+            const bubble = document.createElement("div");
+            bubble.className = `chat-bubble ${sender}`;
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            box.appendChild(bubble);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function handleUserChat() {
+            const inputField = document.getElementById("chat-input-field");
+            const query = inputField.value.trim();
+            if (!query) return;
+
+            appendMessage("user", query);
+            inputField.value = "";
+
+            setTimeout(() => {
+                const response = generateBotResponse(query);
+                appendMessage("bot", response);
+            }, 300);
+        }
+
+        function generateBotResponse(query) {
+            const q = query.toLowerCase();
+            const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+            
+            // Check if query matches a day
+            const foundDay = daysOfWeek.find(d => q.includes(d));
+            if (foundDay) {
+                if (foundDay === "sunday") {
+                    return "Sunday is a holiday! No classes scheduled for your section (" + currentUser.section + "). Enjoy your day off! 🎉";
+                }
+                const capitalizedDay = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
+                const classes = rawSchedule.filter(item => item.day.toLowerCase() === foundDay && item.sections.includes(currentUser.section));
+                
+                if (classes.length === 0) {
+                    return `You have no classes scheduled for ${capitalizedDay} in your section (${currentUser.section}).`;
+                }
+                
+                let reply = `Here is your timetable for <b>${capitalizedDay}</b> (${currentUser.section}):<br><br>`;
+                classes.forEach(c => {
+                    reply += `• <b>${c.time}</b>: ${c.subject}<br>&nbsp;&nbsp;&nbsp;&nbsp;📍 Venue: ${c.venue}${c.professor ? ' | 👨‍🏫 ' + c.professor : ''}<br>`;
+                });
+                return reply;
+            }
+
+            if (q.includes("today")) {
+                const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const todayName = days[new Date().getDay()];
+                return generateBotResponse(todayName);
+            }
+
+            if (q.includes("tomorrow")) {
+                const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const tomorrowIndex = (new Date().getDay() + 1) % 7;
+                const tomorrowName = days[tomorrowIndex];
+                return generateBotResponse(tomorrowName);
+            }
+
+            if (q.includes("teacher") || q.includes("professor") || q.includes("who teaches")) {
+                return "Here are your course instructors:<br>" +
+                    "• <b>Data Structures:</b> Mr. Sanjay Joshi<br>" +
+                    "• <b>Digital Electronics:</b> Mr. Jalaj Sharma<br>" +
+                    "• <b>Automata Theory:</b> Dr. Shri Prakash Dwivedi<br>" +
+                    "• <b>Probability & Statistics:</b> Prof. Arun Kumar<br>" +
+                    "• <b>Tech Communication:</b> Dr. Govind Singh Kushwaha<br>" +
+                    "• <b>FIT:</b> Dr. Ashok Kumar";
+            }
+
+            if (q.includes("holiday") || q.includes("break")) {
+                return "You can check all upcoming 2026 academic and national holidays by heading over to the <b>🎉 Holidays</b> tab above!";
+            }
+
+            if (q.includes("venue") || q.includes("room")) {
+                return "Most of your theory lectures take place in room <b>IT-202</b>. Practical sessions take place in specialized labs like IT-203, IT-204, or the Computer Engineering Department.";
+            }
+
+            return "I can help you look up day-wise timetables! Try asking things like:<br>• 'What do I have on Tuesday?'<br>• 'Show me Friday classes'<br>• 'Who teaches Data Structures?'<br>• 'Is there class tomorrow?'";
         }
 
         function startLiveClock() {
