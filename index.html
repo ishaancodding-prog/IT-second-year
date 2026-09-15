@@ -33,7 +33,6 @@
 
         body {
             background-color: var(--bg-base);
-            /* Background image with dark overlay */
             background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.95)), url('./image_0bef6e.jpg');
             background-size: cover;
             background-position: center;
@@ -463,7 +462,6 @@
         .toast.error { border-left-color: var(--danger); }
         .toast.success { border-left-color: var(--success); }
 
-        /* Assignment & Note specific styles */
         .tracker-input-box {
             background: rgba(15, 23, 42, 0.4);
             padding: 1.25rem;
@@ -690,7 +688,6 @@
     </main>
 
     <script>
-        // Updated Schedule with Teacher Names mapped exactly to your list
         const rawSchedule = [
             { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
@@ -700,7 +697,6 @@
             { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT-305", sections: ["#IT-1"] },
             { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT-305", sections: ["#IT-2"] },
             { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. SHRI PRAKASH DWIVEDI", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "09:00 AM - 10:00 AM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
             { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
@@ -720,7 +716,6 @@
             { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
         ];
 
-        // India 2026 Academic & National Holidays
         const holidays2026 = [
             { date: "2026-01-26", name: "Republic Day", type: "National Holiday", emoji: "🇮🇳" },
             { date: "2026-03-03", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
@@ -1053,7 +1048,6 @@
             renderSchedule();
         }
 
-        // Updated Render Schedule logic to neatly display the professor's name
         function renderSchedule() {
             const tbody = document.getElementById("schedule-table-body");
             tbody.innerHTML = ""; 
