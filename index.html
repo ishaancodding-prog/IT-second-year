@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IT 2nd Year — Engineering Student Hub</title>
+    <title>IT 2nd Year — Engineering Field Notebook</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #0a192f;
-            --navy-card: #112240;
-            --navy-border: #1e3a8a;
-            --copper: #b45309;
-            --copper-light: #d97706;
-            --copper-glow: rgba(180, 83, 9, 0.25);
-            --text-main: #e2e8f0;
-            --text-muted: #8892b0;
-            --mono: 'JetBrains Mono', monospace;
+            --paper: #f4f0ea;
+            --paper-sheet: #fffdf9;
+            --paper-border: #d4cec2;
+            --ink: #111d2e;
+            --ink-muted: #526175;
+            --blueprint: #1d4ed8;
+            --blueprint-light: #eff6ff;
+            --copper: #9a3412;
+            --copper-bg: #fff7ed;
+            --copper-border: #fed7aa;
+            --success-green: #15803d;
+            --success-bg: #f0fdf4;
+            --serif: 'Newsreader', Georgia, serif;
             --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --mono: 'Courier Prime', Courier, monospace;
         }
 
         * {
@@ -30,43 +35,24 @@
         }
 
         body {
-            background-color: var(--navy-dark);
-            /* Graph paper background grid */
+            background-color: var(--paper);
+            /* Graph paper grid texture */
             background-image: 
-                linear-gradient(to right, rgba(30, 58, 138, 0.15) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(30, 58, 138, 0.15) 1px, transparent 1px);
-            background-size: 24px 24px;
-            color: var(--text-main);
+                linear-gradient(to right, rgba(29, 78, 216, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(29, 78, 216, 0.06) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--ink);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Decorative Stamp Header Icon */
-        .stamp {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            border: 2px dashed var(--copper);
-            color: var(--copper);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transform: rotate(4deg);
-            pointer-events: none;
-            opacity: 0.8;
-            background: rgba(10, 25, 47, 0.8);
-        }
-
+        /* Top Bar & Header */
         header {
-            background: rgba(10, 25, 47, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--navy-border);
-            padding: 1.1rem 1.75rem;
+            background: var(--paper-sheet);
+            border-bottom: 2px solid var(--paper-border);
+            padding: 0.85rem 1.75rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -76,109 +62,222 @@
         }
 
         .logo {
-            font-family: var(--mono);
-            font-weight: 700;
+            font-family: var(--serif);
+            font-weight: 600;
             font-size: 1.25rem;
-            color: var(--copper-light);
+            color: var(--blueprint);
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            letter-spacing: -0.02em;
+            gap: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
+        .logo span {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            background: var(--blueprint-light);
+            color: var(--blueprint);
+            padding: 2px 6px;
+            border: 1px solid var(--blueprint);
+            border-radius: 2px;
+        }
+
+        /* App Layout Container */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2.5rem 1rem;
+            padding: 2rem 1rem;
         }
 
-        .container {
+        .auth-container {
             width: 100%;
             max-width: 440px;
-            display: flex;
-            flex-direction: column;
             position: relative;
         }
 
-        /* Tape strip styling on cards */
-        .card {
-            background: var(--navy-card);
-            border: 1px solid var(--navy-border);
-            border-radius: 12px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
-            padding: 2.5rem;
+        .app-layout {
+            display: none;
             width: 100%;
-            position: relative;
-            transition: all 0.3s ease;
+            max-width: 1100px;
+            gap: 1.75rem;
+            align-items: flex-start;
         }
 
-        .card::before {
+        @media(min-width: 800px) {
+            .app-layout {
+                display: grid;
+                grid-template-columns: 260px 1fr;
+            }
+        }
+
+        /* Physical Paper Sheet Styling */
+        .paper-card {
+            background: var(--paper-sheet);
+            border: 1px solid var(--paper-border);
+            box-shadow: 2px 4px 12px rgba(17, 29, 46, 0.06), 0 1px 3px rgba(17, 29, 46, 0.04);
+            padding: 2.25rem;
+            position: relative;
+            border-radius: 2px;
+        }
+
+        /* Tape strip effect */
+        .paper-card::before {
             content: '';
             position: absolute;
-            top: -12px;
+            top: -10px;
             left: 50%;
-            transform: translateX(-50%) rotate(-1deg);
-            width: 100px;
-            height: 26px;
-            background: rgba(217, 119, 6, 0.25);
-            border-left: 2px dashed rgba(217, 119, 6, 0.4);
-            border-right: 2px dashed rgba(217, 119, 6, 0.4);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            z-index: 10;
+            transform: translateX(-50%) rotate(0.5deg);
+            width: 110px;
+            height: 22px;
+            background: rgba(212, 206, 194, 0.55);
+            border-left: 1px dashed rgba(154, 52, 18, 0.2);
+            border-right: 1px dashed rgba(154, 52, 18, 0.2);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            z-index: 5;
         }
 
-        #login-screen h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 0.4rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
-        }
-
-        #login-screen p {
-            color: var(--text-muted);
-            margin-bottom: 1.75rem;
-            font-size: 0.9rem;
+        /* Stamp Effect */
+        .stamp {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            border: 2px solid var(--copper);
+            color: var(--copper);
             font-family: var(--mono);
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transform: rotate(3deg);
+            pointer-events: none;
+            opacity: 0.85;
+            background: rgba(254, 215, 170, 0.15);
+            font-weight: 700;
         }
 
+        /* Sidebar Field Notebook Navigation */
+        .sidebar {
+            background: var(--paper-sheet);
+            border: 1px solid var(--paper-border);
+            padding: 1.5rem;
+            box-shadow: 2px 4px 12px rgba(17, 29, 46, 0.05);
+            position: sticky;
+            top: 5rem;
+        }
+
+        .sidebar-header {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--paper-border);
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            text-align: left;
+            padding: 0.7rem 0.9rem;
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-tab:hover {
+            background: var(--blueprint-light);
+            color: var(--blueprint);
+        }
+
+        .nav-tab.active {
+            background: var(--blueprint);
+            color: white;
+            box-shadow: 1px 2px 5px rgba(29, 78, 216, 0.2);
+        }
+
+        /* Mobile Bottom/Top Tab Alternative */
+        .mobile-tabs {
+            display: flex;
+            gap: 0.35rem;
+            overflow-x: auto;
+            background: var(--paper-sheet);
+            padding: 0.4rem;
+            border: 1px solid var(--paper-border);
+            margin-bottom: 1.5rem;
+        }
+
+        @media(min-width: 800px) {
+            .mobile-tabs { display: none; }
+        }
+
+        .mobile-tab {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .mobile-tab.active {
+            background: var(--blueprint);
+            color: white;
+        }
+
+        /* Form Elements */
         .form-group { margin-bottom: 1.25rem; }
 
         .form-group label {
             display: block;
             font-family: var(--mono);
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-bottom: 0.45rem;
-            color: var(--copper-light);
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 0.4rem;
+            color: var(--blueprint);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.9rem 1.1rem;
-            background: rgba(10, 25, 47, 0.8);
-            border: 1px solid var(--navy-border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-family: var(--mono);
-            color: var(--text-main);
+            padding: 0.75rem 0.9rem;
+            background: var(--paper);
+            border: 1px solid var(--paper-border);
+            border-radius: 2px;
+            font-size: 0.9rem;
+            color: var(--ink);
             outline: none;
-            transition: all 0.2s ease;
-            color-scheme: dark;
+            transition: border-color 0.2s;
         }
 
         .form-control:focus {
-            border-color: var(--copper-light);
-            box-shadow: 0 0 0 3px var(--copper-glow);
+            border-color: var(--blueprint);
+            background: var(--paper-sheet);
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 110px;
+            min-height: 100px;
+            font-family: var(--mono);
         }
 
         .radio-group {
@@ -190,244 +289,125 @@
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             font-family: var(--mono);
             font-weight: 600;
             cursor: pointer;
-            color: var(--text-main);
+            color: var(--ink);
             font-size: 0.85rem;
-            background: rgba(10, 25, 47, 0.6);
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--navy-border);
+            background: var(--paper);
+            padding: 0.5rem 0.9rem;
+            border: 1px solid var(--paper-border);
             flex: 1;
             justify-content: center;
-            transition: all 0.2s;
         }
 
-        .radio-label:hover {
-            border-color: var(--copper);
-            background: rgba(30, 58, 138, 0.4);
-        }
-
-        .radio-label input {
-            accent-color: var(--copper);
-            transform: scale(1.1);
-        }
+        .radio-label input { accent-color: var(--blueprint); }
 
         .btn {
             display: block;
             width: 100%;
-            background: linear-gradient(135deg, var(--copper), var(--copper-light));
+            background: var(--blueprint);
             color: white;
             border: none;
-            padding: 0.95rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-family: var(--mono);
+            padding: 0.85rem;
+            border-radius: 2px;
+            font-size: 0.9rem;
             font-weight: 700;
+            font-family: var(--mono);
             cursor: pointer;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px var(--copper-glow);
-            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 1px 2px 6px rgba(29, 78, 216, 0.25);
+            transition: filter 0.2s;
         }
 
-        .btn:hover {
-            filter: brightness(1.15);
-            transform: translateY(-1px);
-        }
+        .btn:hover { filter: brightness(1.1); }
 
         .btn-secondary {
-            background: rgba(30, 58, 138, 0.4);
-            color: var(--text-main);
-            border: 1px solid var(--navy-border);
-            padding: 0.55rem 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(30, 58, 138, 0.8);
-        }
-
-        .btn-danger {
-            background: rgba(244, 63, 94, 0.15);
-            color: var(--text-main);
-            padding: 0.4rem 0.85rem;
+            background: var(--paper);
+            color: var(--ink);
+            border: 1px solid var(--paper-border);
+            padding: 0.45rem 0.85rem;
+            border-radius: 2px;
             font-size: 0.75rem;
             font-family: var(--mono);
             font-weight: 600;
-            border-radius: 6px;
-            border: 1px solid rgba(244, 63, 94, 0.3);
             cursor: pointer;
+            text-transform: uppercase;
         }
-        .btn-danger:hover { background: rgba(244, 63, 94, 0.3); }
+        .btn-secondary:hover { background: var(--paper-border); }
 
-        .nav-tabs {
-            display: flex;
-            gap: 0.35rem;
-            background: rgba(10, 25, 47, 0.8);
-            padding: 0.4rem;
-            border-radius: 10px;
-            border: 1px solid var(--navy-border);
-            margin-bottom: 1.75rem;
-            overflow-x: auto;
-        }
-
-        .nav-tab {
-            background: transparent;
-            border: none;
-            padding: 0.65rem 0.85rem;
-            font-size: 0.8rem;
+        .btn-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.75rem;
             font-family: var(--mono);
             font-weight: 600;
-            color: var(--text-muted);
+            border: 1px solid #fca5a5;
             cursor: pointer;
-            border-radius: 8px;
-            white-space: nowrap;
-            flex: 1;
-            transition: all 0.2s;
+            border-radius: 2px;
+        }
+        .btn-danger:hover { background: #fee2e2; }
+
+        /* Typography & Headers */
+        h1, h2, h3 {
+            font-family: var(--serif);
+            color: var(--ink);
         }
 
-        .nav-tab.active {
-            background: var(--copper);
-            color: white;
-            box-shadow: 0 2px 8px var(--copper-glow);
+        .panel-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
         }
 
-        .watch-box {
-            background: rgba(10, 25, 47, 0.9);
-            color: var(--text-main);
-            padding: 2.25rem 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid var(--navy-border);
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        .panel-subtitle {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            font-family: var(--mono);
             margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--paper-border);
+        }
+
+        /* Dashboard Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media(min-width: 650px) {
+            .overview-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .desk-card {
+            background: var(--paper);
+            border: 1px solid var(--paper-border);
+            padding: 1.25rem;
+            border-radius: 2px;
             position: relative;
         }
 
-        .live-clock {
-            font-size: 2.75rem;
-            font-weight: 700;
+        .desk-card-title {
             font-family: var(--mono);
-            margin-bottom: 0.4rem;
-            color: var(--copper-light);
-            letter-spacing: -1px;
-        }
-
-        .live-date {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-family: var(--mono);
-        }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            padding: 0.35rem 0.9rem;
-            border-radius: 20px;
             font-size: 0.75rem;
-            font-family: var(--mono);
+            color: var(--blueprint);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
             font-weight: 700;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            margin-top: 1rem;
         }
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #34d399;
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .notes-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.25rem;
-        }
-
-        .note-card {
-            background: rgba(10, 25, 47, 0.6);
-            border: 1px solid var(--navy-border);
-            border-radius: 10px;
-            padding: 1.15rem;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.2s;
-        }
-
-        .note-content {
-            font-size: 0.9rem;
-            color: var(--text-main);
-            white-space: pre-wrap;
-            margin-bottom: 0.85rem;
-            line-height: 1.5;
-            font-family: var(--mono);
-        }
-
-        .note-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            font-family: var(--mono);
-            color: var(--text-muted);
-            border-top: 1px solid var(--navy-border);
-            padding-top: 0.65rem;
-        }
-
-        .day-tabs {
-            display: flex;
-            gap: 0.35rem;
-            background: rgba(10, 25, 47, 0.6);
-            padding: 0.35rem;
-            border-radius: 10px;
-            overflow-x: auto;
-            margin-bottom: 1.25rem;
-            border: 1px solid var(--navy-border);
-        }
-
-        .day-tab {
-            background: transparent;
-            border: none;
-            padding: 0.45rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            font-weight: 600;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        .day-tab.active {
-            background: rgba(217, 119, 6, 0.2);
-            color: var(--copper-light);
-            border: 1px solid rgba(217, 119, 6, 0.4);
-        }
-
+        /* Tables (Timetable Sheet style) */
         .table-container {
             width: 100%;
             overflow-x: auto;
-            border: 1px solid var(--navy-border);
-            border-radius: 10px;
-            background: rgba(10, 25, 47, 0.5);
+            border: 1px solid var(--paper-border);
+            background: var(--paper-sheet);
         }
 
         table {
@@ -436,147 +416,110 @@
             text-align: left;
             font-size: 0.85rem;
             white-space: nowrap;
-            font-family: var(--mono);
         }
 
         th, td {
             padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--navy-border);
+            border-bottom: 1px solid var(--paper-border);
         }
 
         th {
-            background: rgba(30, 58, 138, 0.4);
+            background: var(--blueprint-light);
+            font-family: var(--mono);
             font-weight: 700;
-            color: var(--copper-light);
+            color: var(--blueprint);
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
 
-        .user-badge {
-            background: rgba(217, 119, 6, 0.15);
-            color: var(--copper-light);
-            padding: 0.3rem 0.75rem;
-            border-radius: 16px;
-            font-size: 0.75rem;
-            font-family: var(--mono);
-            font-weight: 700;
-            border: 1px solid rgba(217, 119, 6, 0.3);
-        }
+        tr:hover td { background: rgba(29, 78, 216, 0.02); }
 
-        .hidden { display: none !important; }
-
-        .error-text {
-            color: #f43f5e;
-            font-size: 0.75rem;
-            font-family: var(--mono);
-            font-weight: 600;
-            margin-top: 0.4rem;
-            display: none;
-        }
-
-        .dashboard-expanded { max-width: 880px !important; }
-
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--navy-card);
-            color: var(--text-main);
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-family: var(--mono);
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            border: 1px solid var(--navy-border);
-            border-left: 4px solid var(--copper);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        .toast.show { transform: translateY(0); opacity: 1; }
-
-        .tracker-input-box {
-            background: rgba(10, 25, 47, 0.5);
-            padding: 1.15rem;
-            border-radius: 10px;
-            border: 1px solid var(--navy-border);
-            margin-bottom: 1.15rem;
-        }
-        
-        .assignment-form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-        }
-        @media (min-width: 600px) {
-            .assignment-form-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .task-filter-group {
+        /* Day Navigation Filter */
+        .day-tabs {
             display: flex;
             gap: 0.35rem;
-            background: rgba(10, 25, 47, 0.6);
-            padding: 0.25rem;
-            border-radius: 8px;
-            border: 1px solid var(--navy-border);
+            background: var(--paper);
+            padding: 0.35rem;
+            border: 1px solid var(--paper-border);
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
         }
-        .task-filter-btn {
-            border: none;
+
+        .day-tab {
             background: transparent;
-            font-size: 0.7rem;
+            border: none;
+            padding: 0.45rem 0.85rem;
+            font-size: 0.75rem;
             font-family: var(--mono);
             font-weight: 700;
-            padding: 0.3rem 0.65rem;
-            border-radius: 6px;
+            color: var(--ink-muted);
             cursor: pointer;
-            color: var(--text-muted);
+            white-space: nowrap;
         }
-        .task-filter-btn.active {
-            background: rgba(217, 119, 6, 0.2);
-            color: var(--copper-light);
-            border: 1px solid rgba(217, 119, 6, 0.4);
+
+        .day-tab.active {
+            background: var(--blueprint);
+            color: white;
         }
-        .tasks-list { display: flex; flex-direction: column; gap: 0.65rem; }
+
+        /* Tasks & Assignment Tray */
+        .tasks-list { display: flex; flex-direction: column; gap: 0.75rem; }
         .task-item {
-            background: rgba(10, 25, 47, 0.5);
-            border: 1px solid var(--navy-border);
-            border-radius: 10px;
-            padding: 0.85rem 1rem;
+            background: var(--paper);
+            border: 1px solid var(--paper-border);
+            padding: 0.9rem 1.1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
         }
-        .task-item.completed { opacity: 0.5; }
+        .task-item.completed { opacity: 0.5; background: #fafaf9; }
         .task-item.completed .task-title-text { text-decoration: line-through; }
-        .task-left { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
-        .task-checkbox { width: 16px; height: 16px; accent-color: var(--copper); cursor: pointer; }
-        .task-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; margin-top: 0.25rem; font-size: 0.7rem; font-family: var(--mono); }
+        .task-left { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
+        .task-checkbox { width: 16px; height: 16px; accent-color: var(--blueprint); cursor: pointer; }
+        .task-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.25rem; font-size: 0.7rem; font-family: var(--mono); }
         
-        .tag { padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700; font-size: 0.65rem; }
-        .tag-subject { background: rgba(30, 58, 138, 0.4); color: var(--text-muted); }
-        .tag-priority-High { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-        .tag-priority-Medium { background: rgba(217, 119, 6, 0.15); color: #fbbf24; }
-        .tag-priority-Low { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .tag-status-overdue { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-        .tag-status-today { background: rgba(217, 119, 6, 0.15); color: #fbbf24; }
+        .tag { padding: 0.15rem 0.45rem; border-radius: 2px; font-weight: 700; font-size: 0.65rem; }
+        .tag-subject { background: var(--blueprint-light); color: var(--blueprint); }
+        .tag-priority-High { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+        .tag-priority-Medium { background: var(--copper-bg); color: var(--copper); border: 1px solid var(--copper-border); }
+        .tag-priority-Low { background: var(--success-bg); color: var(--success-green); border: 1px solid #bbf7d0; }
 
-        /* Chatbot styling */
+        /* Notes grid */
+        .notes-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+        .note-card {
+            background: var(--paper);
+            border: 1px solid var(--paper-border);
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .note-content {
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+            font-family: var(--mono);
+        }
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            font-family: var(--mono);
+            color: var(--ink-muted);
+            border-top: 1px solid var(--paper-border);
+            padding-top: 0.5rem;
+        }
+
+        /* Chatbot Interface */
         .chat-box {
             display: flex;
             flex-direction: column;
-            height: 380px;
-            background: rgba(10, 25, 47, 0.5);
-            border: 1px solid var(--navy-border);
-            border-radius: 10px;
-            overflow: hidden;
+            height: 400px;
+            background: var(--paper);
+            border: 1px solid var(--paper-border);
         }
         .chat-messages {
             flex: 1;
@@ -590,29 +533,27 @@
         }
         .chat-bubble {
             max-width: 82%;
-            padding: 0.65rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.7rem 0.95rem;
+            border-radius: 2px;
             line-height: 1.4;
             white-space: pre-wrap;
         }
         .chat-bubble.bot {
-            background: rgba(30, 58, 138, 0.4);
-            color: var(--text-main);
+            background: var(--blueprint-light);
+            color: var(--ink);
             align-self: flex-start;
-            border-left: 3px solid var(--copper);
-            border-bottom-left-radius: 2px;
+            border-left: 3px solid var(--blueprint);
         }
         .chat-bubble.user {
-            background: var(--copper);
+            background: var(--blueprint);
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 2px;
         }
         .chat-input-area {
             display: flex;
             padding: 0.65rem;
-            background: rgba(10, 25, 47, 0.9);
-            border-top: 1px solid var(--navy-border);
+            background: var(--paper-sheet);
+            border-top: 1px solid var(--paper-border);
             gap: 0.5rem;
         }
         .chat-suggestions {
@@ -620,84 +561,162 @@
             gap: 0.35rem;
             padding: 0.45rem 0.75rem;
             overflow-x: auto;
-            background: rgba(10, 25, 47, 0.3);
-            border-top: 1px solid var(--navy-border);
+            background: var(--paper);
+            border-top: 1px solid var(--paper-border);
         }
         .suggestion-chip {
-            background: rgba(217, 119, 6, 0.15);
-            border: 1px solid rgba(217, 119, 6, 0.3);
-            color: var(--copper-light);
+            background: var(--blueprint-light);
+            border: 1px solid #bfdbfe;
+            color: var(--blueprint);
             padding: 0.2rem 0.55rem;
-            border-radius: 12px;
             font-size: 0.7rem;
             font-family: var(--mono);
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
         }
-        .suggestion-chip:hover { background: rgba(217, 119, 6, 0.3); }
+        .suggestion-chip:hover { background: #dbeafe; }
+
+        /* Utility classes */
+        .hidden { display: none !important; }
+        .error-text { color: #dc2626; font-size: 0.75rem; font-family: var(--mono); font-weight: 600; margin-top: 0.35rem; display: none; }
+        
+        .user-badge {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            background: var(--blueprint-light);
+            color: var(--blueprint);
+            padding: 0.25rem 0.7rem;
+            border: 1px solid #bfdbfe;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--ink);
+            color: white;
+            padding: 10px 18px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left: 3px solid var(--blueprint);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">⚡ // IT-SEC_2</div>
+        <div class="logo">IT-2nd Year <span>DESK.v2026</span></div>
         <div id="header-user-info" class="hidden">
-            <button class="btn-secondary" id="btn-logout">Logout</button>
+            <button class="btn-secondary" id="btn-logout">Sign Out</button>
         </div>
     </header>
 
     <main>
-        <div class="container" id="main-container">
-            <div class="stamp">SYS.AUTH // 2026</div>
-            
-            <div id="login-screen" class="card">
-                <h1>Student Portal</h1>
-                <p>Initialize session parameters</p>
+        <!-- Auth Screen -->
+        <div class="auth-container" id="auth-screen">
+            <div class="paper-card">
+                <div class="stamp">FIELD AUTH</div>
+                <h1 class="panel-title" style="margin-bottom: 0.5rem;">Student Desk Init</h1>
+                <p class="panel-subtitle">Enter credentials to open your academic notebook.</p>
 
                 <form id="login-form">
                     <div class="form-group">
-                        <label for="student-name">Operator Name</label>
-                        <input type="text" id="student-name" class="form-control" placeholder="Enter name" autocomplete="name">
+                        <label for="student-name">Student Name</label>
+                        <input type="text" id="student-name" class="form-control" placeholder="e.g. Ishaan Thusoo">
                     </div>
                     <div class="form-group">
-                        <label for="student-id">Student ID / UID</label>
-                        <input type="text" id="student-id" class="form-control" placeholder="Enter ID number">
+                        <label for="student-id">Student ID</label>
+                        <input type="text" id="student-id" class="form-control" placeholder="e.g. 55412">
                     </div>
                     <div class="form-group">
-                        <label>Target Section</label>
+                        <label>Section Node</label>
                         <div class="radio-group">
                             <label class="radio-label"><input type="radio" name="section" value="#IT-1"> #IT-1</label>
                             <label class="radio-label"><input type="radio" name="section" value="#IT-2" checked> #IT-2</label>
                         </div>
                     </div>
-                    <div id="login-error" class="error-text">Provide valid Operator Name & ID.</div>
-                    <button type="submit" class="btn" style="margin-top: 1.25rem;">Authenticate</button>
+                    <div id="login-error" class="error-text">Please provide both name and student ID.</div>
+                    <button type="submit" class="btn" style="margin-top: 1.25rem;">Open Notebook</button>
                 </form>
             </div>
+        </div>
 
-            <div id="dashboard-screen" class="card hidden" style="padding: 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                    <div tabindex="-1" id="dashboard-header-focus">
-                        <h2 id="welcome-title" style="font-size: 1.35rem; font-weight: 800; color: var(--text-main); font-family: var(--mono);"></h2>
-                        <p id="welcome-subtitle" style="color: var(--text-muted); font-size: 0.8rem; font-family: var(--mono);"></p>
+        <!-- Main Portal Dashboard Layout -->
+        <div class="app-layout" id="dashboard-screen">
+            <!-- Sidebar Index Navigation -->
+            <aside class="sidebar">
+                <div class="sidebar-header">Notebook Index</div>
+                <div class="nav-tabs" role="tablist">
+                    <button class="nav-tab active" data-target="overview" role="tab">📌 Overview</button>
+                    <button class="nav-tab" data-target="schedule" role="tab">📅 Timetable</button>
+                    <button class="nav-tab" data-target="chat" role="tab">🤖 Smart Assistant</button>
+                    <button class="nav-tab" data-target="assignments" role="tab">📋 Tasks & Tray</button>
+                    <button class="nav-tab" data-target="holidays" role="tab">🎉 Academic Calendar</button>
+                    <button class="nav-tab" data-target="watch" role="tab">⏰ Chrono / Clock</button>
+                    <button class="nav-tab" data-target="notes" role="tab">📝 Scratchpad Notes</button>
+                </div>
+            </aside>
+
+            <!-- Active Paper Content Sheet -->
+            <section class="paper-card" style="min-height: 550px;">
+                <div class="stamp" id="stamp-label">ACTIVE DESK</div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--paper-border);">
+                    <div>
+                        <h2 id="welcome-title" class="panel-title">Daily Command Desk</h2>
+                        <p id="welcome-subtitle" class="panel-subtitle" style="margin-bottom: 0; border: none; padding: 0;"></p>
                     </div>
                     <div id="section-display-badge" class="user-badge"></div>
                 </div>
 
-                <div class="nav-tabs" role="tablist">
-                    <button class="nav-tab active" data-target="schedule" role="tab">Timetable</button>
-                    <button class="nav-tab" data-target="chat" role="tab">AI Bot</button>
-                    <button class="nav-tab" data-target="assignments" role="tab">Tasks</button>
-                    <button class="nav-tab" data-target="holidays" role="tab">Holidays</button>
-                    <button class="nav-tab" data-target="watch" role="tab">Clock</button>
-                    <button class="nav-tab" data-target="notes" role="tab">Notes</button>
+                <!-- Mobile Quick Tabs -->
+                <div class="mobile-tabs">
+                    <button class="mobile-tab active" data-target="overview">Overview</button>
+                    <button class="mobile-tab" data-target="schedule">Timetable</button>
+                    <button class="mobile-tab" data-target="chat">AI Bot</button>
+                    <button class="mobile-tab" data-target="assignments">Tasks</button>
+                    <button class="mobile-tab" data-target="holidays">Holidays</button>
+                    <button class="mobile-tab" data-target="watch">Clock</button>
+                    <button class="mobile-tab" data-target="notes">Notes</button>
                 </div>
 
-                <!-- Timetable Tab -->
-                <div id="tab-schedule" class="tab-content" role="tabpanel">
+                <!-- OVERVIEW TAB -->
+                <div id="tab-overview" class="tab-content" role="tabpanel">
+                    <div class="overview-grid">
+                        <div class="desk-card">
+                            <div class="desk-card-title">Next Class / Focus</div>
+                            <div id="desk-next-class" style="font-size: 0.95rem; font-weight: 600; margin-top: 0.3rem;">Calculating schedule...</div>
+                        </div>
+                        <div class="desk-card">
+                            <div class="desk-card-title">Open Tasks</div>
+                            <div id="desk-task-count" style="font-size: 1.1rem; font-weight: 700; font-family: var(--mono); margin-top: 0.3rem;">0 items pending</div>
+                        </div>
+                        <div class="desk-card">
+                            <div class="desk-card-title">Next Recess / Holiday</div>
+                            <div id="desk-next-holiday" style="font-size: 0.95rem; font-weight: 600; margin-top: 0.3rem;">Loading calendar...</div>
+                        </div>
+                        <div class="desk-card">
+                            <div class="desk-card-title">Daily Rule (Pinned)</div>
+                            <div style="font-size: 0.85rem; font-family: var(--mono); color: var(--ink-muted); margin-top: 0.3rem;">"Probability & Statistics venue verified at IT 202 / Golakota."</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TIMETABLE TAB -->
+                <div id="tab-schedule" class="tab-content hidden" role="tabpanel">
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Academic Schedule Sheet</h3>
+                    <p class="panel-subtitle">Weekly lecture and lab allocations by section node.</p>
+                    
                     <div class="day-tabs" id="day-filter-container">
-                        <button class="day-tab active" data-day="All">ALL</button>
+                        <button class="day-tab active" data-day="All">ALL DAYS</button>
                         <button class="day-tab" data-day="Monday">MON</button>
                         <button class="day-tab" data-day="Tuesday">TUE</button>
                         <button class="day-tab" data-day="Wednesday">WED</button>
@@ -705,41 +724,48 @@
                         <button class="day-tab" data-day="Friday">FRI</button>
                         <button class="day-tab" data-day="Saturday">SAT</button>
                     </div>
+
                     <div class="table-container">
                         <table>
-                            <thead><tr><th>Day</th><th>Time</th><th>Subject</th><th>Venue</th></tr></thead>
+                            <thead><tr><th>Day</th><th>Time</th><th>Subject & Professor</th><th>Venue</th></tr></thead>
                             <tbody id="schedule-table-body"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- AI Assistant Chatbot Tab -->
+                <!-- SMART ASSISTANT TAB -->
                 <div id="tab-chat" class="tab-content hidden" role="tabpanel">
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Student Help Desk & Assistant</h3>
+                    <p class="panel-subtitle">Query schedule vectors, venue codes, and academic regulations.</p>
+
                     <div class="chat-box">
                         <div class="chat-messages" id="chat-messages">
-                            <div class="chat-bubble bot">System online. Query schedules, professors, or holidays below.</div>
+                            <div class="chat-bubble bot">Desk assistant online. Ask me about your timetable, room numbers like IT 202 / Golakota, or university holidays.</div>
                         </div>
                         <div class="chat-suggestions">
-                            <span class="suggestion-chip" onclick="sendSuggestion('Monday timetable')">Mon Schedule</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Who teaches Data Structures?')">DSA Prof</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Next holiday')">Next Break</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Today classes')">Today</span>
+                            <span class="suggestion-chip" onclick="sendSuggestion('Monday schedule')">Monday Schedule</span>
+                            <span class="suggestion-chip" onclick="sendSuggestion('Who teaches Data Structures?')">DSA Professor</span>
+                            <span class="suggestion-chip" onclick="sendSuggestion('Next holiday')">Next Holiday</span>
+                            <span class="suggestion-chip" onclick="sendSuggestion('Venue for Probability')">Prob Venue</span>
                         </div>
                         <div class="chat-input-area">
-                            <input type="text" id="chat-input" class="form-control" placeholder="Query database..." style="padding: 0.55rem 0.8rem; font-size: 0.8rem;">
-                            <button class="btn" id="btn-send-chat" style="width: auto; padding: 0.55rem 1rem; margin: 0; font-size: 0.75rem;">Send</button>
+                            <input type="text" id="chat-input" class="form-control" placeholder="Ask assistant..." style="padding: 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <button class="btn" id="btn-send-chat" style="width: auto; padding: 0.55rem 1rem; margin: 0; font-size: 0.75rem;">Query</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Assignments Tab -->
+                <!-- TASKS / ASSIGNMENT TRAY TAB -->
                 <div id="tab-assignments" class="tab-content hidden" role="tabpanel">
-                    <div class="tracker-input-box">
-                        <h3 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.75rem; font-family: var(--mono); color: var(--copper-light);">Add Task Log</h3>
-                        <div class="assignment-form-grid">
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Assignment Tray</h3>
+                    <p class="panel-subtitle">Physical-style checklist for lab reports and coursework.</p>
+
+                    <div class="desk-card" style="margin-bottom: 1.5rem;">
+                        <h4 style="font-family: var(--mono); font-size: 0.8rem; color: var(--blueprint); margin-bottom: 0.75rem; text-transform: uppercase;">Log New Task</h4>
+                        <div class="assignment-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                             <div class="form-group" style="margin-bottom: 0;">
-                                <label for="task-title">Title</label>
-                                <input type="text" id="task-title" class="form-control" placeholder="e.g., DSA Lab 3">
+                                <label for="task-title">Task Title</label>
+                                <input type="text" id="task-title" class="form-control" placeholder="e.g. DSA Assignment 4">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="task-subject">Subject</label>
@@ -759,62 +785,71 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="task-priority">Priority</label>
                                 <select id="task-priority" class="form-control">
-                                    <option value="High">🔴 High</option>
-                                    <option value="Medium" selected>🟡 Medium</option>
-                                    <option value="Low">🟢 Low</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium" selected>Medium</option>
+                                    <option value="Low">Low</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="task-error" class="error-text">Fill out title and deadline parameters.</div>
-                        <button class="btn" id="btn-add-task" style="margin-top: 0.85rem; font-size: 0.8rem;">Commit Task</button>
+                        <div id="task-error" class="error-text">Provide task title and deadline.</div>
+                        <button class="btn" id="btn-add-task" style="margin-top: 0.85rem; font-size: 0.8rem;">Add to Tray</button>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.25rem 0 0.75rem 0;">
-                        <h3 style="font-size: 0.95rem; font-weight: 700; font-family: var(--mono);">Task Manifest</h3>
-                        <div class="task-filter-group">
-                            <button class="task-filter-btn active" data-filter="all">ALL</button>
-                            <button class="task-filter-btn" data-filter="pending">PENDING</button>
-                            <button class="task-filter-btn" data-filter="completed">DONE</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <span style="font-family: var(--mono); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Active Tray Items</span>
+                        <div class="day-tabs" style="margin-bottom: 0; padding: 2px;">
+                            <button class="day-tab active" data-filter="all" onclick="setTaskFilter('all', this)">All</button>
+                            <button class="day-tab" data-filter="pending" onclick="setTaskFilter('pending', this)">Pending</button>
+                            <button class="day-tab" data-filter="completed" onclick="setTaskFilter('completed', this)">Done</button>
                         </div>
                     </div>
                     <div id="tasks-container" class="tasks-list"></div>
                 </div>
 
-                <!-- Holidays Tab -->
+                <!-- ACADEMIC CALENDAR / HOLIDAYS TAB -->
                 <div id="tab-holidays" class="tab-content hidden" role="tabpanel">
-                    <div class="watch-box" style="padding: 1.25rem; text-align: left; background: rgba(30, 58, 138, 0.2);">
-                        <h3 style="color: var(--copper-light); font-size: 0.75rem; text-transform: uppercase; font-family: var(--mono); margin-bottom: 0.25rem;">Next Recess</h3>
-                        <div id="next-holiday-display" style="font-size: 1.35rem; font-weight: 700; color: white; font-family: var(--mono);">Loading...</div>
-                        <div id="next-holiday-countdown" style="color: var(--text-muted); margin-top: 0.2rem; font-size: 0.8rem; font-family: var(--mono);"></div>
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Academic Calendar & Holidays</h3>
+                    <p class="panel-subtitle">GBPUAT 2026 official recess schedule.</p>
+
+                    <div class="desk-card" style="margin-bottom: 1.25rem; background: var(--copper-bg); border-color: var(--copper-border);">
+                        <div class="desk-card-title" style="color: var(--copper);">Upcoming Recess Countdown</div>
+                        <div id="next-holiday-display" style="font-size: 1.15rem; font-weight: 600; font-family: var(--serif); color: var(--copper);">Calculating...</div>
+                        <div id="next-holiday-countdown" style="font-size: 0.8rem; font-family: var(--mono); color: var(--ink-muted); margin-top: 0.2rem;"></div>
                     </div>
-                    
-                    <h3 style="font-size: 0.95rem; font-weight: 700; margin: 1.25rem 0 0.75rem 0; font-family: var(--mono);">GBPUAT 2026 Academic Calendar</h3>
+
                     <div id="holidays-container" class="tasks-list"></div>
                 </div>
 
-                <!-- Clock Tab -->
+                <!-- CHRONO / CLOCK TAB -->
                 <div id="tab-watch" class="tab-content hidden" role="tabpanel">
-                    <div class="watch-box">
-                        <div class="live-clock" id="live-clock-display">00:00:00 AM</div>
-                        <div class="live-date" id="live-date-display">System clock syncing...</div>
-                        <div class="status-pill"><span class="status-dot"></span> 12H Chrono Sync Active</div>
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Chrono Reference</h3>
+                    <p class="panel-subtitle">Live desk clock synchronizer.</p>
+
+                    <div class="desk-card" style="text-align: center; padding: 3rem 1rem;">
+                        <div id="live-clock-display" style="font-size: 2.75rem; font-family: var(--mono); font-weight: 700; color: var(--blueprint);">00:00:00 AM</div>
+                        <div id="live-date-display" style="font-family: var(--mono); font-size: 0.95rem; color: var(--ink-muted); margin-top: 0.5rem;">Syncing date...</div>
                     </div>
                 </div>
 
-                <!-- Notes Tab -->
+                <!-- NOTES SCRATCHPAD TAB -->
                 <div id="tab-notes" class="tab-content hidden" role="tabpanel">
-                    <div class="tracker-input-box">
-                        <label for="new-note-text" style="display: block; font-family: var(--mono); font-weight: 600; font-size: 0.8rem; color: var(--copper-light); margin-bottom: 0.4rem;">New Data Entry</label>
-                        <textarea id="new-note-text" class="form-control" placeholder="Store notes or scratchpad items..."></textarea>
-                        <div id="note-error" class="error-text">Input buffer empty.</div>
-                        <button class="btn" id="btn-save-note" style="margin-top: 0.85rem; font-size: 0.8rem;">Store Note</button>
+                    <h3 class="panel-title" style="font-size: 1.25rem;">Scratchpad Notes</h3>
+                    <p class="panel-subtitle">Jot down quick reminders, formulas, or lab notes.</p>
+
+                    <div class="desk-card" style="margin-bottom: 1.25rem;">
+                        <label for="new-note-text" style="display: block; font-family: var(--mono); font-size: 0.75rem; font-weight: 700; color: var(--blueprint); margin-bottom: 0.4rem; text-transform: uppercase;">New Scratchpad Entry</label>
+                        <textarea id="new-note-text" class="form-control" placeholder="Type quick formulas or reminders..."></textarea>
+                        <div id="note-error" class="error-text">Note content cannot be empty.</div>
+                        <button class="btn" id="btn-save-note" style="margin-top: 0.75rem; font-size: 0.8rem;">Pin Note</button>
                     </div>
-                    <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; font-family: var(--mono);">Memory Bank</h3>
+
                     <div id="notes-container" class="notes-grid"></div>
                 </div>
-            </div>
+            </section>
         </div>
     </main>
+
+    <div class="toast" id="toast-notification">Notification message</div>
 
     <script>
         const rawSchedule = [
@@ -885,25 +920,20 @@
         let currentTaskFilter = "all";
         let clockInterval = null;
 
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = `toast`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+        function showToast(msg) {
+            const t = document.getElementById('toast-notification');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
 
         function loadState() {
-            const savedUser = localStorage.getItem('hub_user');
-            const savedNotes = localStorage.getItem('hub_notes');
-            const savedTasks = localStorage.getItem('hub_tasks');
-            if (savedUser) currentUser = JSON.parse(savedUser);
-            if (savedNotes) notesByStudent = JSON.parse(savedNotes);
-            if (savedTasks) tasksByStudent = JSON.parse(savedTasks);
+            const u = localStorage.getItem('hub_user');
+            const n = localStorage.getItem('hub_notes');
+            const tk = localStorage.getItem('hub_tasks');
+            if (u) currentUser = JSON.parse(u);
+            if (n) notesByStudent = JSON.parse(n);
+            if (tk) tasksByStudent = JSON.parse(tk);
         }
 
         function saveState() {
@@ -925,66 +955,51 @@
                 if (e.key === 'Enter') handleUserChat();
             });
 
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', (e) => switchTab(e.target.dataset.target, e));
-            });
-
-            document.querySelectorAll('.day-tab').forEach(tab => {
-                tab.addEventListener('click', (e) => filterDay(e.target.dataset.day));
-            });
-
-            document.querySelectorAll('.task-filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.task-filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentTaskFilter = e.target.dataset.filter;
-                    renderTasks();
+            // Nav Tab Switching (Sidebar & Mobile)
+            const allTabs = document.querySelectorAll('.nav-tab, .mobile-tab');
+            allTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const target = e.target.dataset.target;
+                    switchTab(target);
                 });
             });
 
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden && clockInterval) {
-                    clearInterval(clockInterval);
-                } else if (!document.hidden && !document.getElementById("dashboard-screen").classList.contains("hidden")) {
-                    startLiveClock();
-                }
+            document.querySelectorAll('.day-tab[data-day]').forEach(tab => {
+                tab.addEventListener('click', (e) => filterDay(e.target.dataset.day));
             });
         });
 
-        function handleLogin(event) {
-            event.preventDefault();
-            const nameVal = document.getElementById("student-name").value.trim();
-            const idVal = document.getElementById("student-id").value.trim();
-            const secVal = document.querySelector('input[name="section"]:checked').value;
-            const errorEl = document.getElementById("login-error");
+        function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('student-name').value.trim();
+            const id = document.getElementById('student-id').value.trim();
+            const section = document.querySelector('input[name="section"]:checked').value;
+            const err = document.getElementById('login-error');
 
-            if (!nameVal || !idVal) { errorEl.style.display = "block"; return; }
-            errorEl.style.display = "none";
+            if (!name || !id) { err.style.display = "block"; return; }
+            err.style.display = "none";
 
-            currentUser = { name: nameVal, id: idVal, section: secVal };
+            currentUser = { name, id, section };
             saveState();
             showDashboard(false);
         }
 
-        function showDashboard(isAutoLogin = false) {
-            document.getElementById("login-screen").classList.add("hidden");
-            document.getElementById("dashboard-screen").classList.remove("hidden");
-            document.getElementById("header-user-info").classList.remove("hidden");
-            document.getElementById("main-container").classList.add("dashboard-expanded");
+        function showDashboard(isAuto) {
+            document.getElementById('auth-screen').style.display = "none";
+            document.getElementById('dashboard-screen').style.display = "grid";
+            document.getElementById('header-user-info').classList.remove('hidden');
 
-            document.getElementById("welcome-title").innerText = `OP: ${currentUser.name}`;
-            document.getElementById("welcome-subtitle").innerText = `ID_NUM: ${currentUser.id}`;
-            document.getElementById("section-display-badge").innerText = currentUser.section;
+            document.getElementById('welcome-title').innerText = `Field Operator: ${currentUser.name}`;
+            document.getElementById('welcome-subtitle').innerText = `ID: ${currentUser.id}`;
+            document.getElementById('section-display-badge').innerText = currentUser.section;
 
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const todayName = days[new Date().getDay()];
-            filterDay(todayName !== "Sunday" ? todayName : "All");
-
+            switchTab('overview');
             renderNotes();
             renderTasks();
             renderHolidays();
+            updateDeskOverview();
             startLiveClock();
-            showToast(isAutoLogin ? "Session state restored." : "Authentication success.");
+            showToast(isAuto ? "Desk session restored." : "Notebook initialized.");
         }
 
         function logoutSession() {
@@ -992,19 +1007,56 @@
             currentUser = { name: "", id: "", section: "" };
             localStorage.removeItem('hub_user');
 
-            document.getElementById("dashboard-screen").classList.add("hidden");
-            document.getElementById("login-screen").classList.remove("hidden");
-            document.getElementById("header-user-info").classList.add("hidden");
-            document.getElementById("main-container").classList.remove("dashboard-expanded");
-            document.getElementById("login-form").reset();
-            currentDayFilter = "All";
+            document.getElementById('dashboard-screen').style.display = "none";
+            document.getElementById('auth-screen').style.display = "block";
+            document.getElementById('header-user-info').classList.add('hidden');
+            document.getElementById('login-form').reset();
         }
 
-        function switchTab(tabName, event) {
-            document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
-            event.target.classList.add("active");
-            document.querySelectorAll(".tab-content").forEach(c => c.classList.add("hidden"));
-            document.getElementById(`tab-${tabName}`).classList.remove("hidden");
+        function switchTab(tabName) {
+            // Update active states
+            document.querySelectorAll('.nav-tab, .mobile-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.target === tabName);
+            });
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.add('hidden');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            const stampMap = {
+                overview: "DAILY DESK",
+                schedule: "SCHEDULE SHEET",
+                chat: "HELP DESK",
+                assignments: "TASK TRAY",
+                holidays: "CALENDAR",
+                watch: "CHRONO",
+                notes: "SCRATCHPAD"
+            };
+            document.getElementById('stamp-label').innerText = stampMap[tabName] || "FIELD NOTE";
+        }
+
+        function updateDeskOverview() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const todayName = days[new Date().getDay()];
+            const todaysClasses = rawSchedule.filter(item => item.day === todayName && item.sections.includes(currentUser.section));
+            
+            const nextClassEl = document.getElementById('desk-next-class');
+            if (todaysClasses.length > 0) {
+                nextClassEl.innerText = `${todaysClasses[0].time} — ${todaysClasses[0].subject} (${todaysClasses[0].venue})`;
+            } else {
+                nextClassEl.innerText = "No classes scheduled for today. Free day.";
+            }
+
+            const tasks = tasksByStudent[currentUser.id] || [];
+            const pendingCount = tasks.filter(t => !t.completed).length;
+            document.getElementById('desk-task-count').innerText = `${pendingCount} item(s) pending`;
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const upcoming = holidays2026.find(h => new Date(h.date) >= today);
+            if (upcoming) {
+                document.getElementById('desk-next-holiday').innerText = `${upcoming.emoji} ${upcoming.name} (${upcoming.date})`;
+            }
         }
 
         function startLiveClock() {
@@ -1022,36 +1074,39 @@
             hours = hours % 12 || 12;
             const formattedHours = String(hours).padStart(2, '0');
 
-            document.getElementById("live-clock-display").innerText = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
-            document.getElementById("live-date-display").innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+            const clockEl = document.getElementById("live-clock-display");
+            if (clockEl) clockEl.innerText = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+            
+            const dateEl = document.getElementById("live-date-display");
+            if (dateEl) dateEl.innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        // AI Chatbot Logic
+        // Chatbot Logic
         function sendSuggestion(text) {
             document.getElementById('chat-input').value = text;
             handleUserChat();
         }
 
         function appendMessage(sender, text) {
-            const chatMessages = document.getElementById("chat-messages");
-            const bubble = document.createElement("div");
-            bubble.className = `chat-bubble ${sender}`;
-            bubble.textContent = text;
-            chatMessages.appendChild(bubble);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            const cm = document.getElementById("chat-messages");
+            const b = document.createElement("div");
+            b.className = `chat-bubble ${sender}`;
+            b.textContent = text;
+            cm.appendChild(b);
+            cm.scrollTop = cm.scrollHeight;
         }
 
         function handleUserChat() {
             const input = document.getElementById("chat-input");
-            const query = input.value.trim().toLowerCase();
-            if (!query) return;
+            const q = input.value.trim().toLowerCase();
+            if (!q) return;
 
             appendMessage("user", input.value);
             input.value = "";
 
             setTimeout(() => {
-                let response = generateBotResponse(query);
-                appendMessage("bot", response);
+                let resp = generateBotResponse(q);
+                appendMessage("bot", resp);
             }, 300);
         }
 
@@ -1064,36 +1119,37 @@
             }
 
             if (foundDay) {
-                const dayCapitalized = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
+                const dayCap = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
                 const classes = rawSchedule.filter(item => item.day.toLowerCase() === foundDay && item.sections.includes(currentUser.section));
+                if (classes.length === 0) return `No timetable entries for ${dayCap} under ${currentUser.section}.`;
                 
-                if (classes.length === 0) return `No timetable payload found for ${dayCapitalized} under ${currentUser.section}.`;
-                
-                let reply = `[TIMETABLE // ${dayCapitalized.toUpperCase()} // ${currentUser.section}]\n`;
+                let reply = `[TIMETABLE // ${dayCap.toUpperCase()} // ${currentUser.section}]\n`;
                 classes.forEach(c => {
                     reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
                 });
                 return reply.trim();
             }
 
-            if (q.includes("holiday") || q.includes("break") || q.includes("vacation")) {
+            if (q.includes("holiday") || q.includes("break") || q.includes("recess")) {
                 const today = new Date();
                 today.setHours(0,0,0,0);
                 const upcoming = holidays2026.find(h => new Date(h.date) >= today);
-                if (upcoming) {
-                    return `Next Academic Recess: ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} [${upcoming.type}]`;
-                }
-                return "Zero upcoming holiday registers for remainder of 2026.";
+                if (upcoming) return `Next Recess: ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} [${upcoming.type}]`;
+                return "No upcoming holidays registered.";
             }
 
             if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches")) {
-                return "INSTRUCTOR MANIFEST:\n• Data Structures: Mr. Sanjay Joshi\n• Digital Electronics: Mr. Jalaj Sharma\n• Automata Theory: Dr. Shri Prakash Dwivedi\n• Prob & Stats: Prof. Arun Kumar\n• Tech Communication: Dr. Govind Singh Kushwaha\n• FIT: Dr. Ashok Kumar";
+                return "FACULTY MANIFEST:\n• Data Structures: Mr. Sanjay Joshi\n• Digital Electronics: Mr. Jalaj Sharma\n• Automata Theory: Dr. Shri Prakash Dwivedi\n• Prob & Stats: Prof. Arun Kumar\n• Tech Communication: Dr. Govind Singh Kushwaha\n• FIT: Dr. Ashok Kumar";
+            }
+
+            if (q.includes("venue") || q.includes("probability") || q.includes("stats")) {
+                return "Probability & Statistics lectures and tutorials take place at IT 202 / Golakota.";
             }
 
             if (q.includes("section")) return `Active Section Node: ${currentUser.section}`;
-            if (q.includes("hello") || q.includes("hi")) return `Systems nominal, Op ${currentUser.name}. How can I assist your workflow?`;
+            if (q.includes("hello") || q.includes("hi")) return `Field desk active, ${currentUser.name}. Query schedules or faculty parameters.`;
 
-            return "Query unrecognized. Try specifying a day parameter (e.g., 'Monday schedule') or instructor info.";
+            return "Query unrecognized. Try asking for a day's schedule, instructor information, or upcoming holidays.";
         }
 
         function renderHolidays() {
@@ -1113,9 +1169,7 @@
                 hDate.setHours(0,0,0,0);
                 const isPast = hDate < today;
                 
-                if (!isPast && !nextHoliday) {
-                    nextHoliday = { ...h, dateObj: hDate };
-                }
+                if (!isPast && !nextHoliday) nextHoliday = { ...h, dateObj: hDate };
 
                 const item = document.createElement("div");
                 item.className = "task-item";
@@ -1130,12 +1184,12 @@
 
                 const info = document.createElement("div");
                 const titleText = document.createElement("div"); 
-                titleText.style.cssText = `font-weight: 700; font-size: 0.85rem; font-family: var(--mono); color: var(--text-main); ${isPast ? 'text-decoration: line-through;' : ''}`; 
+                titleText.style.cssText = `font-weight: 700; font-size: 0.85rem; font-family: var(--mono); color: var(--ink); ${isPast ? 'text-decoration: line-through;' : ''}`; 
                 titleText.textContent = h.name;
                 
                 const meta = document.createElement("div"); 
                 meta.className = "task-meta";
-                meta.innerHTML = `<span class="tag tag-subject">${hDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span><span style="color: var(--text-muted);">${h.type}</span>`;
+                meta.innerHTML = `<span class="tag tag-subject">${hDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span><span style="color: var(--ink-muted);">${h.type}</span>`;
                 
                 info.appendChild(titleText); 
                 info.appendChild(meta);
@@ -1150,15 +1204,12 @@
             if (nextHoliday) {
                 const diffTime = nextHoliday.dateObj - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                nextDisplay.textContent = `${nextHoliday.emoji} ${nextHoliday.name}`;
+                nextDisplay.textContent = `${nextHoliday.emoji} ${nextHoliday.name} (${nextHoliday.date})`;
                 if (diffDays === 0) {
-                    countdownDisplay.innerHTML = `<span style="color: #34d399; font-weight: 700;">Status: ACTIVE TODAY</span>`;
+                    countdownDisplay.innerHTML = `<span style="color: var(--success-green); font-weight: 700;">Status: ACTIVE TODAY</span>`;
                 } else {
-                    countdownDisplay.textContent = `${nextHoliday.dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} // T-Minus ${diffDays} Day(s)`;
+                    countdownDisplay.textContent = `T-Minus ${diffDays} Day(s) remaining`;
                 }
-            } else {
-                nextDisplay.textContent = "NO DATA";
-                countdownDisplay.textContent = "Calendar completed.";
             }
         }
 
@@ -1189,7 +1240,15 @@
             saveState();
             titleInput.value = ""; dateInput.value = "";
             renderTasks();
-            showToast("Task logged successfully.");
+            updateDeskOverview();
+            showToast("Task logged to tray.");
+        }
+
+        function setTaskFilter(filter, btn) {
+            currentTaskFilter = filter;
+            document.querySelectorAll('#tab-assignments .day-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTasks();
         }
 
         function renderTasks() {
@@ -1200,7 +1259,7 @@
             const filtered = tasks.filter(t => currentTaskFilter === "all" || (currentTaskFilter === "pending" && !t.completed) || (currentTaskFilter === "completed" && t.completed));
 
             if (filtered.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1.5rem; font-size: 0.8rem; font-family: var(--mono);">No task registers found.</p>`;
+                container.innerHTML = `<p style="color: var(--ink-muted); text-align: center; padding: 1.5rem; font-size: 0.8rem; font-family: var(--mono);">No task records found.</p>`;
                 return;
             }
 
@@ -1213,22 +1272,22 @@
 
                 const left = document.createElement("div"); left.className = "task-left";
                 const chk = document.createElement("input"); chk.type = "checkbox"; chk.className = "task-checkbox"; chk.checked = task.completed;
-                chk.onchange = () => { task.completed = !task.completed; saveState(); renderTasks(); };
+                chk.onchange = () => { task.completed = !task.completed; saveState(); renderTasks(); updateDeskOverview(); };
                 
                 const info = document.createElement("div");
                 const titleText = document.createElement("div"); titleText.className = "task-title-text"; titleText.style.cssText = "font-weight: 700; font-size: 0.85rem; font-family: var(--mono);"; titleText.textContent = task.title;
                 const meta = document.createElement("div"); meta.className = "task-meta";
                 
-                meta.innerHTML = `<span class="tag tag-subject">${task.subject}</span><span class="tag tag-priority-${task.priority}">${task.priority}</span><span style="color: var(--text-muted)">Due: ${task.dueDate}</span>`;
+                meta.innerHTML = `<span class="tag tag-subject">${task.subject}</span><span class="tag tag-priority-${task.priority}">${task.priority}</span><span style="color: var(--ink-muted)">Due: ${task.dueDate}</span>`;
                 
-                if (!task.completed && task.dueDate < today) meta.innerHTML += `<span class="tag tag-status-overdue">OVERDUE</span>`;
-                else if (!task.completed && task.dueDate === today) meta.innerHTML += `<span class="tag tag-status-today">TODAY</span>`;
+                if (!task.completed && task.dueDate < today) meta.innerHTML += `<span class="tag tag-priority-High">OVERDUE</span>`;
+                else if (!task.completed && task.dueDate === today) meta.innerHTML += `<span class="tag tag-priority-Medium">TODAY</span>`;
 
                 info.appendChild(titleText); info.appendChild(meta);
                 left.appendChild(chk); left.appendChild(info);
 
                 const delBtn = document.createElement("button"); delBtn.className = "btn-danger"; delBtn.textContent = "Drop";
-                delBtn.onclick = () => { tasksByStudent[currentUser.id] = getTasksList().filter(t => t.id !== task.id); saveState(); renderTasks(); };
+                delBtn.onclick = () => { tasksByStudent[currentUser.id] = getTasksList().filter(t => t.id !== task.id); saveState(); renderTasks(); updateDeskOverview(); };
 
                 item.appendChild(left); item.appendChild(delBtn);
                 fragment.appendChild(item);
@@ -1245,18 +1304,18 @@
             const textInput = document.getElementById("new-note-text");
             if (!textInput.value.trim()) return;
             getNotesList().unshift({ id: Date.now(), text: textInput.value.trim(), timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() });
-            saveState(); textInput.value = ""; renderNotes(); showToast("Note stored in memory.");
+            saveState(); textInput.value = ""; renderNotes(); showToast("Note pinned to desk.");
         }
 
         function renderNotes() {
             const container = document.getElementById("notes-container");
             const notes = getNotesList();
             container.innerHTML = ""; 
-            if (notes.length === 0) { container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2rem; font-size: 0.8rem; font-family: var(--mono);">Memory bank empty.</p>`; return; }
+            if (notes.length === 0) { container.innerHTML = `<p style="color: var(--ink-muted); text-align: center; padding: 2rem; font-size: 0.8rem; font-family: var(--mono);">Scratchpad empty.</p>`; return; }
             const fragment = document.createDocumentFragment();
             notes.forEach(note => {
                 const card = document.createElement("div"); card.className = "note-card";
-                card.innerHTML = `<div class="note-content">${note.text}</div><div class="note-footer"><span>${note.timestamp}</span><button class="btn-danger" onclick="notesByStudent['${currentUser.id}'] = getNotesList().filter(n => n.id !== ${note.id}); saveState(); renderNotes();">Purge</button></div>`;
+                card.innerHTML = `<div class="note-content">${note.text}</div><div class="note-footer"><span>${note.timestamp}</span><button class="btn-danger" onclick="notesByStudent['${currentUser.id}'] = getNotesList().filter(n => n.id !== ${note.id}); saveState(); renderNotes();">Discard</button></div>`;
                 fragment.appendChild(card);
             });
             container.appendChild(fragment);
@@ -1264,7 +1323,7 @@
 
         function filterDay(day) {
             currentDayFilter = day;
-            document.querySelectorAll(".day-tab").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
+            document.querySelectorAll("#tab-schedule .day-tab").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
             renderSchedule();
         }
 
@@ -1274,23 +1333,23 @@
             const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
             
             if (filtered.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted); font-family: var(--mono);">No entries for selection node.</td></tr>`; 
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--ink-muted); font-family: var(--mono);">No schedule entries match current selection.</td></tr>`; 
                 return; 
             }
             
             const fragment = document.createDocumentFragment();
             filtered.forEach(item => {
                 const tr = document.createElement("tr");
-                const profHTML = item.professor ? `<div style="font-size: 0.75rem; color: var(--copper-light); margin-top: 0.15rem;">👨‍🏫 ${item.professor}</div>` : '';
+                const profHTML = item.professor ? `<div style="font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.15rem; font-family: var(--mono);">👨‍🏫 ${item.professor}</div>` : '';
                 
                 tr.innerHTML = `
-                    <td style="font-weight: 700;">${item.day}</td>
-                    <td style="color: var(--text-muted);">${item.time}</td>
+                    <td style="font-weight: 700; font-family: var(--mono);">${item.day}</td>
+                    <td style="color: var(--ink-muted); font-family: var(--mono);">${item.time}</td>
                     <td>
                         <div style="font-weight: 600;">${item.subject}</div>
                         ${profHTML}
                     </td>
-                    <td style="color: var(--text-muted);">${item.venue}</td>`;
+                    <td style="color: var(--blueprint); font-family: var(--mono); font-weight: 600;">${item.venue}</td>`;
                 fragment.appendChild(tr);
             });
             tbody.appendChild(fragment);
