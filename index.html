@@ -9,18 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #8b5cf6; /* Vibrant Violet */
-            --primary-light: #a78bfa;
-            --primary-hover: #7c3aed;
-            --bg-base: #090d16; 
-            --card-bg: rgba(18, 24, 38, 0.75);
-            --text-main: #f3f4f6;
+            --primary: #0ea5e9; /* Vibrant Ocean Blue */
+            --primary-light: #38bdf8;
+            --primary-hover: #0284c7;
+            --bg-base: #030712; /* Rich Midnight Dark */
+            --card-bg: rgba(17, 24, 39, 0.8);
+            --text-main: #f9fafb;
             --text-muted: #9ca3af;
             --border: rgba(255, 255, 255, 0.08);
-            --badge-bg: rgba(139, 92, 246, 0.15);
-            --badge-text: #c4b5fd;
-            --danger: #fb7185;
-            --success: #34d399;
+            --badge-bg: rgba(14, 165, 233, 0.15);
+            --badge-text: #7dd3fc;
+            --danger: #f43f5e;
+            --success: #10b981;
         }
 
         * {
@@ -33,7 +33,7 @@
 
         body {
             background-color: var(--bg-base);
-            background-image: linear-gradient(135deg, rgba(9, 13, 22, 0.85), rgba(15, 23, 42, 0.95)), url('./image_0bef6e.jpg');
+            background-image: linear-gradient(135deg, rgba(3, 7, 18, 0.85), rgba(15, 23, 42, 0.95)), url('./image_0bef6e.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -45,7 +45,7 @@
         }
 
         header {
-            background: rgba(9, 13, 22, 0.85);
+            background: rgba(3, 7, 18, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
@@ -61,7 +61,7 @@
         .logo {
             font-weight: 800;
             font-size: 1.35rem;
-            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -136,7 +136,7 @@
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
             background: rgba(30, 41, 59, 0.7);
         }
 
@@ -181,7 +181,7 @@
         .btn {
             display: block;
             width: 100%;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
             color: white;
             border: none;
             padding: 1rem;
@@ -190,14 +190,14 @@
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
             transition: all 0.25s ease;
         }
 
         .btn:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 12px 25px rgba(14, 165, 233, 0.5);
         }
 
         .btn-secondary {
@@ -217,18 +217,18 @@
         }
 
         .btn-danger {
-            background: rgba(251, 113, 133, 0.12);
+            background: rgba(244, 63, 94, 0.12);
             color: var(--danger);
             padding: 0.45rem 0.9rem;
             font-size: 0.8rem;
             font-weight: 600;
             border-radius: 10px;
-            border: 1px solid rgba(251, 113, 133, 0.25);
+            border: 1px solid rgba(244, 63, 94, 0.25);
             cursor: pointer;
             transition: background 0.2s;
         }
         .btn-danger:hover {
-            background: rgba(251, 113, 133, 0.25);
+            background: rgba(244, 63, 94, 0.25);
         }
 
         .nav-tabs {
@@ -257,9 +257,9 @@
         }
 
         .nav-tab.active {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
             color: white;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
         }
 
         .watch-box {
@@ -279,7 +279,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
         }
 
         .live-clock {
@@ -287,7 +287,7 @@
             font-weight: 800;
             margin-bottom: 0.4rem;
             font-variant-numeric: tabular-nums;
-            background: linear-gradient(135deg, #ffffff, #c4b5fd);
+            background: linear-gradient(135deg, #ffffff, #7dd3fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -302,13 +302,13 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(52, 211, 153, 0.12);
+            background: rgba(16, 185, 129, 0.12);
             color: var(--success);
             padding: 0.45rem 1.1rem;
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 700;
-            border: 1px solid rgba(52, 211, 153, 0.25);
+            border: 1px solid rgba(16, 185, 129, 0.25);
             margin-top: 1.25rem;
         }
 
@@ -345,7 +345,7 @@
 
         .note-card:hover {
             background: rgba(30, 41, 59, 0.65);
-            border-color: rgba(139, 92, 246, 0.4);
+            border-color: rgba(14, 165, 233, 0.4);
         }
 
         .note-content {
@@ -390,9 +390,9 @@
         }
 
         .day-tab.active {
-            background: rgba(139, 92, 246, 0.2);
+            background: rgba(14, 165, 233, 0.2);
             color: var(--primary-light);
-            border: 1px solid rgba(139, 92, 246, 0.4);
+            border: 1px solid rgba(14, 165, 233, 0.4);
         }
 
         .table-container {
@@ -436,7 +436,7 @@
             border-radius: 24px;
             font-size: 0.825rem;
             font-weight: 700;
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            border: 1px solid rgba(14, 165, 233, 0.3);
         }
 
         .hidden { display: none !important; }
@@ -526,7 +526,7 @@
             transition: all 0.2s;
         }
         .task-item:hover {
-            border-color: rgba(139, 92, 246, 0.4);
+            border-color: rgba(14, 165, 233, 0.4);
             background: rgba(30, 41, 59, 0.7);
         }
         .task-item.completed { background: rgba(15, 23, 42, 0.3); opacity: 0.55; }
@@ -537,11 +537,11 @@
         
         .tag { padding: 0.25rem 0.6rem; border-radius: 8px; font-weight: 700; font-size: 0.725rem; }
         .tag-subject { background: rgba(255,255,255,0.08); color: #cbd5e1; }
-        .tag-priority-High { background: rgba(251, 113, 133, 0.15); color: #fda4af; }
-        .tag-priority-Medium { background: rgba(251, 191, 36, 0.15); color: #fde047; }
-        .tag-priority-Low { background: rgba(52, 211, 153, 0.15); color: #6ee7b7; }
-        .tag-status-overdue { background: rgba(251, 113, 133, 0.15); color: #fda4af; border: 1px solid rgba(251, 113, 133, 0.3); }
-        .tag-status-today { background: rgba(251, 191, 36, 0.15); color: #fde047; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .tag-priority-High { background: rgba(244, 63, 94, 0.15); color: #fda4af; }
+        .tag-priority-Medium { background: rgba(245, 158, 11, 0.15); color: #fde047; }
+        .tag-priority-Low { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .tag-status-overdue { background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .tag-status-today { background: rgba(245, 158, 11, 0.15); color: #fde047; border: 1px solid rgba(245, 158, 11, 0.3); }
 
         /* Chatbot UI */
         .chat-box {
@@ -577,7 +577,7 @@
             border: 1px solid var(--border);
         }
         .chat-bubble.user {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
@@ -598,8 +598,8 @@
             border-top: 1px solid var(--border);
         }
         .suggestion-chip {
-            background: rgba(139, 92, 246, 0.12);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.3);
             color: var(--primary-light);
             padding: 0.3rem 0.75rem;
             border-radius: 20px;
@@ -610,7 +610,7 @@
             transition: background 0.2s;
         }
         .suggestion-chip:hover {
-            background: rgba(139, 92, 246, 0.25);
+            background: rgba(14, 165, 233, 0.25);
         }
     </style>
 </head>
@@ -756,7 +756,7 @@
 
                 <!-- Holidays Tab -->
                 <div id="tab-holidays" class="tab-content hidden" role="tabpanel">
-                    <div class="watch-box" style="padding: 1.75rem; text-align: left; background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(15, 23, 42, 0.9));">
+                    <div class="watch-box" style="padding: 1.75rem; text-align: left; background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(15, 23, 42, 0.9));">
                         <h3 style="color: var(--primary-light); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Next Upcoming Break</h3>
                         <div id="next-holiday-display" style="font-size: 1.85rem; font-weight: 800; color: white;">Loading...</div>
                         <div id="next-holiday-countdown" style="color: var(--text-muted); margin-top: 0.35rem; font-size: 0.925rem;"></div>
@@ -1255,7 +1255,7 @@
         function renderSchedule() {
             const tbody = document.getElementById("schedule-table-body");
             tbody.innerHTML = ""; 
-            const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
+            const filtered = rawSchedule.path ? [] : rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
             
             if (filtered.length === 0) { 
                 tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">No classes scheduled.</td></tr>`; 
