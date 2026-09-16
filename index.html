@@ -1,1275 +1,1036 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IT 2nd Year — Cyberpunk Terminal Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-term: #030712;
-            --panel-bg: rgba(3, 7, 18, 0.85);
-            --border-neon: #06b6d4;
-            --border-glow: rgba(6, 182, 212, 0.4);
-            --text-neon: #22d3ee;
-            --text-dim: #67e8f9;
-            --text-main: #e2e8f0;
-            --accent-pink: #f43f5e;
-            --accent-yellow: #f59e0b;
-            --font-display: 'Orbitron', sans-serif;
-            --font-mono: 'Share Tech Mono', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-mono);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-term);
-            /* Cyberpunk Grid / Scanline FX */
-            background-image: 
-                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                radial-gradient(circle at 50% 50%, rgba(3, 7, 18, 0) 0%, rgba(3, 7, 18, 0.8) 100%);
-            background-size: 32px 32px, 32px 32px, 100% 100%;
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        /* Scanlines Overlay */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        header {
-            background: rgba(3, 7, 18, 0.95);
-            border-bottom: 2px solid var(--border-neon);
-            box-shadow: 0 0 15px var(--border-glow);
-            padding: 1rem 1.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-family: var(--font-display);
-            font-weight: 900;
-            font-size: 1.25rem;
-            color: var(--text-neon);
-            text-shadow: 0 0 10px var(--border-glow);
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-badge {
-            font-size: 0.65rem;
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--border-neon);
-            padding: 2px 6px;
-            border: 1px solid var(--border-neon);
-            letter-spacing: 1px;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1rem;
-        }
-
-        .auth-container {
-            width: 100%;
-            max-width: 440px;
-        }
-
-        /* Sci-Fi Terminal Panel Cards */
-        .term-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-neon);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
-            padding: 2.25rem;
-            position: relative;
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-        }
-
-        .term-panel::before {
-            content: '[SYS_SECURE_AUTH]';
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--bg-term);
-            color: var(--border-neon);
-            font-size: 0.7rem;
-            padding: 0 8px;
-            letter-spacing: 2px;
-        }
-
-        h1 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-neon);
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            margin-bottom: 1.75rem;
-            opacity: 0.8;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-neon);
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            background: rgba(3, 7, 18, 0.9);
-            border: 1px solid var(--border-neon);
-            border-radius: 0px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            outline: none;
-            transition: all 0.2s ease;
-            color-scheme: dark;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 12px var(--border-glow);
-            border-color: #ffffff;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            color: var(--text-main);
-            background: rgba(6, 182, 212, 0.05);
-            padding: 0.6rem 1rem;
-            border: 1px solid var(--border-neon);
-            flex: 1;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .radio-label:hover {
-            background: rgba(6, 182, 212, 0.15);
-        }
-
-        .radio-label input {
-            accent-color: var(--border-neon);
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            background: var(--border-neon);
-            color: var(--bg-term);
-            border: none;
-            padding: 0.9rem;
-            font-size: 0.9rem;
-            font-family: var(--font-display);
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 15px var(--border-glow);
-            transition: all 0.2s ease;
-        }
-
-        .btn:hover {
-            background: #ffffff;
-            box-shadow: 0 0 20px #ffffff;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-neon);
-            border: 1px solid var(--border-neon);
-            padding: 0.45rem 0.9rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(6, 182, 212, 0.2);
-        }
-
-        .btn-danger {
-            background: rgba(244, 63, 94, 0.1);
-            color: var(--accent-pink);
-            padding: 0.35rem 0.75rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            border: 1px solid var(--accent-pink);
-            cursor: pointer;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .btn-danger:hover { background: rgba(244, 63, 94, 0.3); }
-
-        /* App Responsive Grid Layout */
-        .app-layout {
-            display: none;
-            width: 100%;
-            max-width: 1200px;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        @media (min-width: 768px) {
-            .app-layout {
-                display: grid;
-                grid-template-columns: 260px 1fr;
-                padding: 1rem;
-            }
-        }
-
-        /* Terminal Sidebar Navigation */
-        .sidebar {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-neon);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
-            padding: 1.25rem;
-            position: sticky;
-            top: 5rem;
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-        }
-
-        .sidebar-header {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.85rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px dashed var(--border-neon);
-        }
-
-        .nav-tabs {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .nav-tab {
-            background: transparent;
-            border: 1px solid transparent;
-            text-align: left;
-            padding: 0.75rem 1rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-transform: uppercase;
-        }
-
-        .nav-tab:hover {
-            background: rgba(6, 182, 212, 0.1);
-            color: var(--text-neon);
-            border-color: rgba(6, 182, 212, 0.3);
-        }
-
-        .nav-tab.active {
-            background: rgba(6, 182, 212, 0.2);
-            color: var(--text-neon);
-            border-color: var(--border-neon);
-            box-shadow: inset 0 0 10px var(--border-glow);
-        }
-
-        /* Mobile Horizontal Tabs */
-        .mobile-tabs {
-            display: flex;
-            gap: 0.35rem;
-            overflow-x: auto;
-            background: rgba(3, 7, 18, 0.8);
-            padding: 0.4rem;
-            border: 1px solid var(--border-neon);
-            margin-bottom: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .mobile-tabs { display: none; }
-        }
-
-        .mobile-tab {
-            background: transparent;
-            border: 1px solid transparent;
-            padding: 0.5rem 0.85rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            cursor: pointer;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .mobile-tab.active {
-            background: rgba(6, 182, 212, 0.2);
-            color: var(--text-neon);
-            border-color: var(--border-neon);
-        }
-
-        /* Content Console Panel */
-        .content-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-neon);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
-            padding: 2rem;
-            position: relative;
-            min-height: 550px;
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed var(--border-neon);
-        }
-
-        .panel-title {
-            font-family: var(--font-display);
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-neon);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .panel-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            margin-top: 0.2rem;
-            opacity: 0.8;
-        }
-
-        /* Terminal Bento Grid */
-        .overview-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .overview-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .bento-box {
-            background: rgba(3, 7, 18, 0.6);
-            border: 1px solid var(--border-neon);
-            padding: 1.25rem;
-            position: relative;
-        }
-
-        .bento-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-yellow);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        /* Tables */
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            border: 1px solid var(--border-neon);
-            background: rgba(3, 7, 18, 0.8);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.85rem;
-            white-space: nowrap;
-        }
-
-        th, td {
-            padding: 0.9rem 1rem;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-        }
-
-        th {
-            background: rgba(6, 182, 212, 0.1);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-neon);
-        }
-
-        tr:hover td {
-            background: rgba(6, 182, 212, 0.05);
-        }
-
-        /* Day Selector Tabs */
-        .day-tabs {
-            display: flex;
-            gap: 0.35rem;
-            background: rgba(3, 7, 18, 0.8);
-            padding: 0.35rem;
-            border: 1px solid var(--border-neon);
-            overflow-x: auto;
-            margin-bottom: 1.25rem;
-        }
-
-        .day-tab {
-            background: transparent;
-            border: 1px solid transparent;
-            padding: 0.5rem 0.85rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            cursor: pointer;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .day-tab.active {
-            background: var(--border-neon);
-            color: var(--bg-term);
-            border-color: var(--border-neon);
-        }
-
-        /* Notes Grid */
-        .notes-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .notes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .note-card {
-            background: rgba(3, 7, 18, 0.7);
-            border: 1px solid var(--border-neon);
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .note-content {
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            color: var(--text-main);
-        }
-
-        .note-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            border-top: 1px dashed var(--border-neon);
-            padding-top: 0.75rem;
-        }
-
-        /* Terminal Chatbot Interface */
-        .chat-box {
-            display: flex;
-            flex-direction: column;
-            height: 400px;
-            background: rgba(3, 7, 18, 0.9);
-            border: 1px solid var(--border-neon);
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-            font-size: 0.85rem;
-        }
-
-        .chat-bubble {
-            max-width: 82%;
-            padding: 0.75rem 1rem;
-            border-radius: 0px;
-            line-height: 1.4;
-            white-space: pre-wrap;
-        }
-
-        .chat-bubble.bot {
-            background: rgba(6, 182, 212, 0.1);
-            color: var(--text-main);
-            align-self: flex-start;
-            border-left: 3px solid var(--border-neon);
-        }
-
-        .chat-bubble.user {
-            background: var(--border-neon);
-            color: var(--bg-term);
-            font-weight: 700;
-            align-self: flex-end;
-        }
-
-        .chat-input-area {
-            display: flex;
-            padding: 0.75rem;
-            background: rgba(3, 7, 18, 0.95);
-            border-top: 1px solid var(--border-neon);
-            gap: 0.5rem;
-        }
-
-        .chat-suggestions {
-            display: flex;
-            gap: 0.4rem;
-            padding: 0.5rem 0.75rem;
-            overflow-x: auto;
-            background: rgba(3, 7, 18, 0.6);
-            border-top: 1px dashed var(--border-neon);
-        }
-
-        .suggestion-chip {
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid var(--border-neon);
-            color: var(--text-neon);
-            padding: 0.25rem 0.6rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .suggestion-chip:hover {
-            background: rgba(6, 182, 212, 0.3);
-        }
-
-        /* Holiday Cards List */
-        .holiday-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .holiday-item {
-            background: rgba(3, 7, 18, 0.7);
-            border: 1px solid var(--border-neon);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .holiday-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .holiday-emoji {
-            font-size: 1.5rem;
-        }
-
-        .tag {
-            padding: 0.2rem 0.5rem;
-            font-weight: 700;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .tag-subject {
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--text-neon);
-            border: 1px solid var(--border-neon);
-        }
-
-        .hidden { display: none !important; }
-        .error-text { color: var(--accent-pink); font-size: 0.75rem; font-weight: 700; margin-top: 0.4rem; display: none; letter-spacing: 1px; }
-
-        .user-badge {
-            font-size: 0.75rem;
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--text-neon);
-            padding: 0.3rem 0.8rem;
-            border: 1px solid var(--border-neon);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--bg-term);
-            color: var(--text-neon);
-            padding: 12px 20px;
-            font-size: 0.85rem;
-            box-shadow: 0 0 20px var(--border-glow);
-            border: 1px solid var(--border-neon);
-            border-left: 4px solid var(--accent-yellow);
-            transform: translateY(80px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            letter-spacing: 1px;
-        }
-        .toast.show { transform: translateY(0); opacity: 1; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IT · 2nd Year — Class Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#1a1712;
+    --paper-raised:#221e17;
+    --tile:#2a251c;
+    --rule:#453e2c;
+    --rule-tint: rgba(69,62,44,0.55);
+    --ink:#f2ead7;
+    --ink-soft:#b6ab8f;
+    --ink-faint:#847a63;
+    --marigold:#e4a13d;
+    --marigold-deep:#f2b563;
+    --forest:#6fae95;
+    --forest-wash-1: rgba(111,174,149,0.12);
+    --forest-wash-2: rgba(111,174,149,0.1);
+    --forest-wash-3: rgba(111,174,149,0.16);
+    --clay:#e2775b;
+    --clay-wash: rgba(226,119,91,0.12);
+    --on-accent:#1a1712;
+    --line-blue:#7488a8;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 16px 34px -18px rgba(0,0,0,0.65);
+    --radius: 14px;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family: var(--font-body);
+    background:
+      repeating-linear-gradient(180deg, transparent 0 34px, var(--rule-tint) 34px 35px),
+      var(--paper);
+    color: var(--ink);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  ::selection{ background: var(--marigold); color:var(--on-accent); }
+  :focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
+  button, input, textarea { font-family: inherit; }
+
+  a { color: inherit; }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: var(--paper-raised);
+    border-bottom: 2px solid var(--ink);
+    padding: 0.9rem clamp(1rem, 4vw, 2.2rem);
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 1rem;
+  }
+  .brand{ display:flex; align-items:center; gap:0.7rem; }
+  .brand-mark{
+    width: 40px; height: 40px; flex-shrink:0;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:700; font-size:1.1rem;
+    background: var(--marigold);
+    color: var(--on-accent);
+    transform: rotate(-4deg);
+  }
+  .brand-text h1{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    letter-spacing: -0.01em;
+    line-height:1.1;
+  }
+  .brand-text p{
+    font-size:0.72rem; color: var(--ink-soft);
+    font-family: var(--font-mono);
+    margin-top:2px;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:0.4rem;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper-raised);
+    padding: 0.7rem 1.1rem;
+    border-radius: 10px;
+    font-weight:600;
+    font-size: 0.9rem;
+    cursor:pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{ transform: translateY(0); }
+  .btn-block{ width:100%; }
+  .btn-outline{
+    background: transparent; color: var(--ink);
+  }
+  .btn-outline:hover{ background: var(--ink); color: var(--paper-raised); }
+  .btn-small{ padding:0.45rem 0.75rem; font-size:0.78rem; border-radius:8px; }
+  .btn-ghost-danger{
+    background:transparent; color:var(--clay); border:2px solid var(--clay);
+    padding:0.35rem 0.65rem; font-size:0.72rem; border-radius:8px; font-weight:600; cursor:pointer;
+  }
+  .btn-ghost-danger:hover{ background: var(--clay); color:#fff; }
+
+  main{ flex:1; display:flex; justify-content:center; padding: clamp(1rem, 4vw, 2.5rem) clamp(0.75rem, 4vw, 1.5rem); }
+
+  /* ---------- Auth ---------- */
+  .auth-wrap{ width:100%; max-width: 460px; margin-top: clamp(0.5rem, 4vh, 2.5rem); }
+  .card{
+    background: var(--paper-raised);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(1.5rem, 5vw, 2.4rem);
+  }
+  .stamp{
+    display:inline-block;
+    border: 2px solid var(--clay);
+    color: var(--clay);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight:600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    transform: rotate(-3deg);
+    margin-bottom: 1rem;
+  }
+  .card h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+  .card .lead{ color: var(--ink-soft); font-size:0.92rem; margin-bottom: 1.6rem; line-height:1.5; }
+
+  .field{ margin-bottom: 1.15rem; }
+  .field label{
+    display:block; font-size:0.72rem; font-weight:600; color: var(--ink-soft);
+    margin-bottom: 0.4rem; letter-spacing:0.03em;
+  }
+  .input{
+    width:100%;
+    padding: 0.8rem 0.9rem;
+    background: #fff;
+    border: 2px solid var(--rule);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline:none;
+    transition: border-color 0.15s ease;
+  }
+  .input:focus{ border-color: var(--forest); }
+  textarea.input{ resize:vertical; min-height: 110px; font-family: var(--font-mono); font-size:0.88rem; }
+
+  .segmented{ display:flex; gap:0.6rem; }
+  .segmented label{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    border: 2px solid var(--rule);
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-weight:600; font-size:0.85rem;
+    cursor:pointer;
+    transition: all 0.15s ease;
+  }
+  .segmented input{ accent-color: var(--forest); }
+  .segmented label:has(input:checked){ border-color: var(--forest); background: var(--forest-wash-1); }
+
+  .error-text{ color: var(--clay); font-size:0.78rem; font-family: var(--font-mono); font-weight:600; margin-top:0.5rem; display:none; }
+
+  /* ---------- App shell ---------- */
+  .app{ display:none; width:100%; max-width: 1180px; gap: 1.25rem; }
+
+  @media (min-width: 860px){
+    .app{ display:grid; grid-template-columns: 220px 1fr; align-items:flex-start; }
+  }
+  @media (max-width: 859px){
+    .app{ display:flex; flex-direction:column; }
+  }
+
+  /* Sidebar (tablet/desktop) */
+  .sidebar{
+    display:none;
+    background: var(--paper-raised);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    position: sticky; top: 5.2rem;
+    box-shadow: var(--shadow);
+  }
+  @media (min-width: 860px){ .sidebar{ display:block; } }
+
+  .sidebar-eyebrow{
+    font-family: var(--font-mono); font-size:0.68rem; color: var(--ink-faint);
+    padding-bottom:0.6rem; margin-bottom:0.6rem; border-bottom: 2px dashed var(--rule);
+  }
+  .nav-list{ display:flex; flex-direction:column; gap:0.3rem; }
+  .nav-item{
+    display:flex; align-items:center; gap:0.65rem;
+    background: transparent; border:none; text-align:left;
+    padding: 0.65rem 0.7rem; border-radius: 9px;
+    font-weight:600; font-size:0.87rem; color: var(--ink-soft);
+    cursor:pointer; transition: all 0.15s ease;
+  }
+  .nav-item:hover{ background: var(--forest-wash-1); color: var(--ink); }
+  .nav-item.active{ background: var(--ink); color: var(--paper-raised); }
+
+  /* Mobile/tablet horizontal tabs */
+  .tab-strip{
+    display:flex; gap: 0.45rem; overflow-x:auto;
+    padding: 0.4rem; margin-bottom: 1.1rem;
+    background: var(--paper-raised);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 860px){ .tab-strip{ display:none; } }
+  .tab-strip::-webkit-scrollbar{ height:0; }
+  .tab-pill{
+    flex-shrink:0;
+    background: transparent; border:none;
+    padding: 0.5rem 0.85rem; border-radius: 8px;
+    font-weight:600; font-size:0.8rem; color: var(--ink-soft);
+    cursor:pointer; white-space:nowrap;
+  }
+  .tab-pill.active{ background: var(--marigold); color:var(--on-accent); }
+
+  /* Content panel */
+  .panel{
+    background: var(--paper-raised);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(1.1rem, 3.5vw, 1.9rem);
+    min-height: 480px;
+  }
+
+  .panel-head{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
+    padding-bottom: 1rem; margin-bottom: 1.3rem;
+    border-bottom: 2px dashed var(--rule);
+    flex-wrap: wrap;
+  }
+  .panel-head h2{
+    font-family: var(--font-display); font-weight:700;
+    font-size: clamp(1.2rem, 3vw, 1.55rem); letter-spacing:-0.01em;
+  }
+  .panel-head .sub{ font-size:0.82rem; color: var(--ink-soft); margin-top:0.3rem; }
+  .badge{
+    font-family: var(--font-mono); font-size:0.75rem; font-weight:700;
+    background: var(--forest); color:#fff;
+    padding: 0.35rem 0.7rem; border-radius:8px; white-space:nowrap;
+  }
+
+  /* Overview */
+  .grid-2{ display:grid; grid-template-columns:1fr; gap:0.9rem; }
+  @media (min-width:600px){ .grid-2{ grid-template-columns: 1fr 1fr; } }
+  .tile{
+    border: 2px solid var(--rule);
+    border-radius: 12px;
+    padding: 1.1rem;
+    background: var(--tile);
+  }
+  .tile-label{
+    font-family: var(--font-mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em;
+    color: var(--marigold-deep); font-weight:700; margin-bottom:0.5rem;
+  }
+  .tile-value{ font-size:0.98rem; font-weight:600; line-height:1.4; }
+  .tile-span{ grid-column: 1 / -1; }
+  .tile-note{ font-family: var(--font-mono); font-size:0.82rem; color: var(--ink-soft); }
+
+  /* Day filter */
+  .day-filter{
+    display:flex; gap:0.4rem; overflow-x:auto; margin-bottom:1.1rem;
+    padding-bottom: 0.2rem;
+  }
+  .day-chip{
+    flex-shrink:0; border: 2px solid var(--rule); background:var(--tile);
+    padding: 0.45rem 0.8rem; border-radius: 20px;
+    font-family: var(--font-mono); font-size:0.72rem; font-weight:600; color: var(--ink-soft);
+    cursor:pointer; white-space:nowrap; transition: all 0.15s ease;
+  }
+  .day-chip.active{ background: var(--ink); color: var(--paper-raised); border-color: var(--ink); }
+
+  /* Schedule table -> card list on narrow screens */
+  .table-shell{ border: 2px solid var(--rule); border-radius: 12px; overflow:hidden; background:var(--tile); }
+  table{ width:100%; border-collapse: collapse; font-size:0.86rem; }
+  thead th{
+    text-align:left; font-family: var(--font-mono); font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.05em; color: var(--ink-soft); padding: 0.8rem 1rem;
+    background: var(--forest-wash-2); border-bottom: 2px solid var(--rule);
+  }
+  tbody td{ padding: 0.85rem 1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover td{ background: rgba(217,140,34,0.06); }
+  .cell-day{ font-family: var(--font-mono); font-weight:700; white-space:nowrap; }
+  .cell-time{ font-family: var(--font-mono); color: var(--ink-soft); white-space:nowrap; }
+  .cell-subject strong{ font-weight:600; }
+  .cell-prof{ font-size:0.78rem; color: var(--ink-soft); margin-top:0.2rem; font-family: var(--font-mono); }
+  .cell-venue{ font-family: var(--font-mono); font-weight:700; color: var(--forest); white-space:nowrap; }
+
+  @media (max-width: 640px){
+    .table-shell{ border:none; background:transparent; overflow:visible; }
+    table, thead, tbody, tr, td{ display:block; width:100%; }
+    thead{ display:none; }
+    tbody tr{
+      background:var(--tile); border:2px solid var(--rule); border-radius:12px;
+      margin-bottom:0.75rem; padding: 0.9rem 1rem;
+    }
+    tbody td{ border:none; padding: 0.15rem 0; }
+    tbody td::before{
+      content: attr(data-label);
+      display:block; font-family: var(--font-mono); font-size:0.62rem;
+      text-transform:uppercase; letter-spacing:0.05em; color: var(--ink-faint); margin-bottom:0.15rem;
+    }
+    .cell-day::before{ content:none; }
+    .cell-day{
+      display:inline-block; background: var(--ink); color: var(--paper-raised);
+      padding: 0.2rem 0.55rem; border-radius:6px; font-size:0.72rem; margin-bottom:0.5rem;
+    }
+  }
+
+  /* Chat */
+  .chat-shell{
+    display:flex; flex-direction:column; height: 430px;
+    border: 2px solid var(--rule); border-radius:12px; overflow:hidden; background:var(--tile);
+  }
+  .chat-log{ flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.75rem; }
+  .bubble{ max-width: 85%; padding:0.7rem 0.95rem; border-radius:12px; line-height:1.45; white-space:pre-wrap; font-size:0.88rem; }
+  .bubble.bot{ align-self:flex-start; background: var(--forest-wash-3); border-left:3px solid var(--forest); border-bottom-left-radius:3px; }
+  .bubble.user{ align-self:flex-end; background: var(--marigold); color:var(--on-accent); font-weight:600; border-bottom-right-radius:3px; font-family: var(--font-mono); }
+  .chip-row{ display:flex; gap:0.4rem; overflow-x:auto; padding:0.5rem 0.75rem; border-top: 2px dashed var(--rule); }
+  .sugg-chip{
+    background: transparent; border: 1.5px solid var(--forest); color: var(--forest);
+    padding: 0.28rem 0.65rem; font-size:0.72rem; font-family: var(--font-mono); font-weight:600;
+    cursor:pointer; white-space:nowrap; border-radius:20px;
+  }
+  .sugg-chip:hover{ background: var(--forest); color:#fff; }
+  .chat-input-row{ display:flex; gap:0.5rem; padding:0.7rem; border-top:2px solid var(--rule); background: var(--paper-raised); }
+  .chat-input-row .input{ flex:1; }
+
+  /* Holidays */
+  .countdown-tile{
+    border: 2px solid var(--clay); background: var(--clay-wash);
+    border-radius:12px; padding:1.1rem; margin-bottom:1.2rem;
+  }
+  .countdown-tile .tile-label{ color: var(--clay); }
+  .countdown-tile .tile-value{ font-size:1.1rem; font-weight:700; color: var(--clay); }
+  .countdown-tile .sub{ font-family: var(--font-mono); font-size:0.8rem; color: var(--ink-soft); margin-top:0.3rem; }
+
+  .holiday-list{ display:flex; flex-direction:column; gap:0.6rem; }
+  .holiday-row{
+    display:flex; align-items:center; justify-content:space-between; gap:0.9rem;
+    border: 2px solid var(--rule); border-radius:12px; padding:0.85rem 1rem; background:var(--tile);
+  }
+  .holiday-info{ display:flex; align-items:center; gap:0.85rem; min-width:0; }
+  .holiday-emoji{ font-size:1.35rem; flex-shrink:0; }
+  .holiday-name{ font-weight:600; font-size:0.9rem; }
+  .holiday-meta{ font-size:0.74rem; font-family: var(--font-mono); color: var(--ink-soft); margin-top:0.15rem; }
+  .tag{
+    flex-shrink:0; padding:0.25rem 0.55rem; border-radius:7px; font-weight:700; font-size:0.65rem;
+    font-family: var(--font-mono);
+  }
+  .tag.upcoming{ background: var(--forest); color:#fff; }
+  .tag.passed{ background: var(--ink-faint); color:#fff; }
+
+  /* Clock */
+  .clock-tile{ text-align:center; padding: clamp(2rem,8vw,3.2rem) 1rem; border:2px dashed var(--rule); border-radius:12px; }
+  .clock-time{ font-family: var(--font-mono); font-weight:700; color: var(--forest); font-size: clamp(2.1rem, 8vw, 3.2rem); letter-spacing:-0.01em; }
+  .clock-date{ font-family: var(--font-mono); font-size:0.9rem; color: var(--ink-soft); margin-top:0.6rem; }
+
+  /* Notes */
+  .notes-grid{ display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1.1rem; }
+  @media (min-width:600px){ .notes-grid{ grid-template-columns: 1fr 1fr; } }
+  .note-card{
+    background:var(--tile); border:2px solid var(--rule); border-radius:12px; padding:1.1rem;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .note-content{ font-family: var(--font-mono); font-size:0.87rem; line-height:1.55; white-space:pre-wrap; margin-bottom:1rem; }
+  .note-foot{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:0.68rem; font-family: var(--font-mono); color: var(--ink-soft);
+    border-top:1px dashed var(--rule); padding-top:0.65rem;
+  }
+  .empty-note{ color: var(--ink-soft); text-align:center; padding:2rem 1rem; font-size:0.85rem; font-family: var(--font-mono); grid-column: 1/-1; }
+
+  .hidden{ display:none !important; }
+
+  .toast{
+    position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 80px);
+    background: var(--ink); color: var(--paper-raised);
+    padding: 0.75rem 1.2rem; font-size:0.85rem; font-family: var(--font-mono);
+    border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    opacity:0; transition: all 0.3s cubic-bezier(.16,1,.3,1);
+    z-index: 1000; max-width: 90vw;
+  }
+  .toast.show{ transform: translate(-50%, 0); opacity:1; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">IT-2nd_YEAR <span class="logo-badge">SYS.v2026</span></div>
-        <div id="header-user-info" class="hidden">
-            <button class="btn-secondary" id="btn-logout">Terminate Session</button>
+<header>
+  <div class="brand">
+    <div class="brand-mark">IT</div>
+    <div class="brand-text">
+      <h1>Class Almanac</h1>
+      <p>IT · Second Year</p>
+    </div>
+  </div>
+  <div id="header-user" class="hidden">
+    <button class="btn btn-outline btn-small" id="btn-logout">Sign out</button>
+  </div>
+</header>
+
+<main>
+  <!-- Auth -->
+  <div class="auth-wrap" id="auth-screen">
+    <div class="card">
+      <span class="stamp">Student Access</span>
+      <h2>Open your almanac</h2>
+      <p class="lead">Sign in with your name and student ID to see your section's timetable, holidays and notes.</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input type="text" id="student-name" class="input" placeholder="e.g. Aditi Sharma" autocomplete="name">
         </div>
-    </header>
-
-    <main>
-        <!-- Auth Screen -->
-        <div class="auth-container" id="auth-screen">
-            <div class="term-panel">
-                <h1>Terminal Login</h1>
-                <p class="subtitle">Enter operator coordinates to initialize system access.</p>
-
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="student-name">Operator Name</label>
-                        <input type="text" id="student-name" class="form-control" placeholder="ENTER NAME">
-                    </div>
-                    <div class="form-group">
-                        <label for="student-id">Operator ID</label>
-                        <input type="text" id="student-id" class="form-control" placeholder="ENTER ID">
-                    </div>
-                    <div class="form-group">
-                        <label>Section Node</label>
-                        <div class="radio-group">
-                            <label class="radio-label"><input type="radio" name="section" value="#IT-1"> #IT-1</label>
-                            <label class="radio-label"><input type="radio" name="section" value="#IT-2" checked> #IT-2</label>
-                        </div>
-                    </div>
-                    <div id="login-error" class="error-text">ERROR: CREDENTIALS REQUIRED.</div>
-                    <button type="submit" class="btn" style="margin-top: 1.5rem;">Execute Init</button>
-                </form>
-            </div>
+        <div class="field">
+          <label for="student-id">Student ID</label>
+          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT045" autocomplete="off">
         </div>
-
-        <!-- Main Terminal Dashboard Layout -->
-        <div class="app-layout" id="dashboard-screen">
-            <!-- Terminal Sidebar Navigation -->
-            <aside class="sidebar">
-                <div class="sidebar-header">System Directory</div>
-                <div class="nav-tabs" role="tablist">
-                    <button class="nav-tab active" data-target="overview" role="tab">[01] OVERVIEW</button>
-                    <button class="nav-tab" data-target="schedule" role="tab">[02] TIMETABLE</button>
-                    <button class="nav-tab" data-target="chat" role="tab">[03] AI ASSISTANT</button>
-                    <button class="nav-tab" data-target="holidays" role="tab">[04] CALENDAR</button>
-                    <button class="nav-tab" data-target="watch" role="tab">[05] CHRONO</button>
-                    <button class="nav-tab" data-target="notes" role="tab">[06] SCRATCHPAD</button>
-                </div>
-            </aside>
-
-            <!-- Active Content Console Panel -->
-            <section class="content-panel" style="min-height: 550px;">
-                <div class="panel-header">
-                    <div>
-                        <h2 id="welcome-title" class="panel-title">Console Dashboard</h2>
-                        <p id="welcome-subtitle" class="panel-subtitle"></p>
-                    </div>
-                    <div id="section-display-badge" class="user-badge"></div>
-                </div>
-
-                <!-- Mobile Horizontal Tabs -->
-                <div class="mobile-tabs">
-                    <button class="mobile-tab active" data-target="overview">Overview</button>
-                    <button class="mobile-tab" data-target="schedule">Timetable</button>
-                    <button class="mobile-tab" data-target="chat">AI Bot</button>
-                    <button class="mobile-tab" data-target="holidays">Holidays</button>
-                    <button class="mobile-tab" data-target="watch">Clock</button>
-                    <button class="mobile-tab" data-target="notes">Notes</button>
-                </div>
-
-                <!-- OVERVIEW TAB -->
-                <div id="tab-overview" class="tab-content" role="tabpanel">
-                    <div class="overview-grid">
-                        <div class="bento-box">
-                            <div class="bento-label">NEXT SCHEDULED VECTOR</div>
-                            <div id="desk-next-class" style="font-size: 0.95rem; font-weight: 700; margin-top: 0.4rem; color: var(--text-main);">Calculating vector...</div>
-                        </div>
-                        <div class="bento-box">
-                            <div class="bento-label">NEXT SYSTEM RECESS</div>
-                            <div id="desk-next-holiday" style="font-size: 0.95rem; font-weight: 700; margin-top: 0.4rem; color: var(--text-main);">Loading calendar...</div>
-                        </div>
-                        <div class="bento-box" style="grid-column: 1 / -1;">
-                            <div class="bento-label">SYSTEM PROTOCOL NOTICE</div>
-                            <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.4rem;">"Probability & Statistics venue verified at IT 202 / Golakota."</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TIMETABLE TAB -->
-                <div id="tab-schedule" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.2rem;">Timetable Matrix</h3>
-                    <p class="panel-subtitle">Weekly lecture allocations filtered by active section node.</p>
-                    
-                    <div class="day-tabs" id="day-filter-container">
-                        <button class="day-tab active" data-day="All">ALL</button>
-                        <button class="day-tab" data-day="Monday">MON</button>
-                        <button class="day-tab" data-day="Tuesday">TUE</button>
-                        <button class="day-tab" data-day="Wednesday">WED</button>
-                        <button class="day-tab" data-day="Thursday">THU</button>
-                        <button class="day-tab" data-day="Friday">FRI</button>
-                        <button class="day-tab" data-day="Saturday">SAT</button>
-                    </div>
-
-                    <div class="table-container">
-                        <table>
-                            <thead><tr><th>Day</th><th>Time</th><th>Subject & Faculty</th><th>Venue Node</th></tr></thead>
-                            <tbody id="schedule-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- AI ASSISTANT TAB -->
-                <div id="tab-chat" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.2rem;">Terminal AI Assistant</h3>
-                    <p class="panel-subtitle">Query class schedules, venues, faculty, or holiday database.</p>
-
-                    <div class="chat-box">
-                        <div class="chat-messages" id="chat-messages">
-                            <div class="chat-bubble bot">Terminal AI online. Query routine schedules, room nodes like IT 202 / Golakota, or holiday registries.</div>
-                        </div>
-                        <div class="chat-suggestions">
-                            <span class="suggestion-chip" onclick="sendSuggestion('Monday schedule')">Monday Schedule</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Who teaches Data Structures?')">DSA Professor</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Next holiday')">Next Holiday</span>
-                            <span class="suggestion-chip" onclick="sendSuggestion('Venue for Probability')">Prob Venue</span>
-                        </div>
-                        <div class="chat-input-area">
-                            <input type="text" id="chat-input" class="form-control" placeholder="Type query command..." style="padding: 0.6rem 0.9rem; font-size: 0.85rem;">
-                            <button class="btn" id="btn-send-chat" style="width: auto; padding: 0.6rem 1.1rem; margin: 0; font-size: 0.75rem;">Run</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOLIDAYS TAB -->
-                <div id="tab-holidays" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.2rem;">Academic Calendar Registry</h3>
-                    <p class="panel-subtitle">GBPUAT 2026 official recess schedule.</p>
-
-                    <div class="bento-box" style="margin-bottom: 1.25rem; background: rgba(245, 158, 11, 0.05); border-color: var(--accent-yellow);">
-                        <div class="bento-label">Upcoming Recess Countdown</div>
-                        <div id="next-holiday-display" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-yellow);">Calculating...</div>
-                        <div id="next-holiday-countdown" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem;"></div>
-                    </div>
-
-                    <div id="holidays-container" class="holiday-list"></div>
-                </div>
-
-                <!-- CLOCK TAB -->
-                <div id="tab-watch" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.2rem;">Chrono Synchronizer</h3>
-                    <p class="panel-subtitle">Real-time system clock terminal.</p>
-
-                    <div class="bento-box" style="text-align: center; padding: 3rem 1rem;">
-                        <div id="live-clock-display" style="font-size: 3rem; font-weight: 900; color: var(--text-neon); text-shadow: 0 0 15px var(--border-glow);">00:00:00 AM</div>
-                        <div id="live-date-display" style="font-size: 0.9rem; color: var(--text-dim); margin-top: 0.5rem; letter-spacing: 1px;">Syncing telemetry...</div>
-                    </div>
-                </div>
-
-                <!-- NOTES SCRATCHPAD TAB -->
-                <div id="tab-notes" class="tab-content hidden" role="tabpanel">
-                    <h3 class="panel-title" style="font-size: 1.2rem;">Secure Scratchpad</h3>
-                    <p class="panel-subtitle">Store local scratch notes and reminders.</p>
-
-                    <div class="bento-box" style="margin-bottom: 1.25rem;">
-                        <label for="new-note-text" style="display: block; font-size: 0.7rem; font-weight: 700; color: var(--accent-yellow); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px;">New Scratch Entry</label>
-                        <textarea id="new-note-text" class="form-control" placeholder="Enter quick code snippet or reminder..."></textarea>
-                        <div id="note-error" class="error-text">ERROR: EMPTY PAYLOAD.</div>
-                        <button class="btn" id="btn-save-note" style="margin-top: 0.75rem; font-size: 0.8rem;">Commit Note</button>
-                    </div>
-
-                    <div id="notes-container" class="notes-grid"></div>
-                </div>
-            </section>
+        <div class="field">
+          <label>Section</label>
+          <div class="segmented">
+            <label><input type="radio" name="section" value="#IT-1"> #IT-1</label>
+            <label><input type="radio" name="section" value="#IT-2" checked> #IT-2</label>
+          </div>
         </div>
-    </main>
+        <div id="login-error" class="error-text">Enter both your name and student ID to continue.</div>
+        <button type="submit" class="btn btn-block" style="margin-top:1.3rem;">Open almanac</button>
+      </form>
+    </div>
+  </div>
 
-    <div class="toast" id="toast-notification">Notification message</div>
+  <!-- App -->
+  <div class="app" id="dashboard-screen">
+    <aside class="sidebar">
+      <div class="sidebar-eyebrow">Sections</div>
+      <div class="nav-list" role="tablist">
+        <button class="nav-item active" data-target="overview">Overview</button>
+        <button class="nav-item" data-target="schedule">Timetable</button>
+        <button class="nav-item" data-target="chat">Ask the assistant</button>
+        <button class="nav-item" data-target="holidays">Holidays</button>
+        <button class="nav-item" data-target="watch">Clock</button>
+        <button class="nav-item" data-target="notes">Notes</button>
+      </div>
+    </aside>
 
-    <script>
-        const rawSchedule = [
-            { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Monday", time: "03:00 PM - 04:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Tuesday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Tuesday", time: "11:00 AM - 01:00 PM", subject: "Digital Electronics (Tutorial/Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
-            { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1"] },
-            { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-2"] },
-            { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. SHRI PRAKASH DWIVEDI", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-1"] },
-            { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-2"] },
-            { day: "Thursday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Thursday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-2"] },
-            { day: "Friday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Friday", time: "03:00 PM - 05:00 PM", subject: "Digital Electronics (Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
-            { day: "Saturday", time: "09:00 AM - 11:00 AM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-1"] },
-            { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. SHRI PRAKASH DWIVEDI", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-            { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-            { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
-        ];
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 id="welcome-title">Dashboard</h2>
+          <p id="welcome-sub" class="sub"></p>
+        </div>
+        <span id="section-badge" class="badge"></span>
+      </div>
 
-        const holidays2026 = [
-            { date: "2026-01-26", name: "Republic Day", type: "Gazetted Holiday", emoji: "🇮🇳" },
-            { date: "2026-02-15", name: "Mahashivratri", type: "Gazetted Holiday", emoji: "🔱" },
-            { date: "2026-03-03", name: "Holika Dahan", type: "Gazetted Holiday", emoji: "🔥" },
-            { date: "2026-03-04", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
-            { date: "2026-03-19", name: "Chetchand", type: "Gazetted Holiday", emoji: "🌊" },
-            { date: "2026-03-21", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
-            { date: "2026-03-26", name: "Ram Navmi", type: "Gazetted Holiday", emoji: "🏹" },
-            { date: "2026-03-31", name: "Mahavir Jayanti", type: "Gazetted Holiday", emoji: "🕊️" },
-            { date: "2026-04-03", name: "Good Friday", type: "Gazetted Holiday", emoji: "⛪" },
-            { date: "2026-04-13", name: "Approved by B.O.M.", type: "University Holiday", emoji: "🏛️" },
-            { date: "2026-04-14", name: "Dr. Bheemrao Ambedkar B.day", type: "Gazetted Holiday", emoji: "📜" },
-            { date: "2026-05-01", name: "Budh Purnima", type: "Gazetted Holiday", emoji: "☸️" },
-            { date: "2026-05-27", name: "Eid-Ul-Zuha (Bakar-Eld)", type: "Gazetted Holiday", emoji: "🐑" },
-            { date: "2026-06-26", name: "Moharram", type: "Gazetted Holiday", emoji: "🏴" },
-            { date: "2026-07-16", name: "Harela", type: "University Holiday", emoji: "🌿" },
-            { date: "2026-08-15", name: "Independence Day", type: "National Holiday", emoji: "🇮🇳" },
-            { date: "2026-08-26", name: "Eid-E-Milad / Milad-Un-Nabi Barawafat", type: "Gazetted Holiday", emoji: "✨" },
-            { date: "2026-08-28", name: "Rakshabandhan", type: "Gazetted Holiday", emoji: "🧵" },
-            { date: "2026-09-04", name: "Shri Krishna Janmastmi", type: "Gazetted Holiday", emoji: "🪈" },
-            { date: "2026-09-17", name: "Vishwakarma Pooja", type: "Gazetted Holiday", emoji: "⚙️" },
-            { date: "2026-10-02", name: "Mahatma Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
-            { date: "2026-10-20", name: "Dushehra (Vidyadashmi)", type: "Gazetted Holiday", emoji: "🏹" },
-            { date: "2026-10-25", name: "Maharishi Balmiki Jayanti", type: "Gazetted Holiday", emoji: "🪔" },
-            { date: "2026-11-07", name: "Deepawall (Narak Chaturdashi)", type: "Gazetted Holiday", emoji: "🪔" },
-            { date: "2026-11-08", name: "Deepawall", type: "Gazetted Holiday", emoji: "🪔" },
-            { date: "2026-11-10", name: "Deepawall (Govardhan Pooja)", type: "Gazetted Holiday", emoji: "🐄" },
-            { date: "2026-11-11", name: "Bhaijoo", type: "Gazetted Holiday", emoji: "👫" },
-            { date: "2026-11-20", name: "Eigas-Bagwal", type: "University Holiday", emoji: "🪔" },
-            { date: "2026-11-24", name: "Guru Nanak Jayanti / Guru Teghabadur Shahid Diwas", type: "Gazetted Holiday", emoji: "🪯" },
-            { date: "2026-12-25", name: "Christmas Day", type: "Gazetted Holiday", emoji: "🎄" }
-        ];
+      <div class="tab-strip">
+        <button class="tab-pill active" data-target="overview">Overview</button>
+        <button class="tab-pill" data-target="schedule">Timetable</button>
+        <button class="tab-pill" data-target="chat">Assistant</button>
+        <button class="tab-pill" data-target="holidays">Holidays</button>
+        <button class="tab-pill" data-target="watch">Clock</button>
+        <button class="tab-pill" data-target="notes">Notes</button>
+      </div>
 
-        let currentUser = { name: "", id: "", section: "" };
-        let notesByStudent = {};
-        let clockInterval = null;
+      <!-- OVERVIEW -->
+      <div id="tab-overview" class="tab-content">
+        <div class="grid-2">
+          <div class="tile">
+            <div class="tile-label">Today, next up</div>
+            <div class="tile-value" id="desk-next-class">Reading schedule…</div>
+          </div>
+          <div class="tile">
+            <div class="tile-label">Next holiday</div>
+            <div class="tile-value" id="desk-next-holiday">Reading calendar…</div>
+          </div>
+          <div class="tile tile-span">
+            <div class="tile-label">Venue notice</div>
+            <div class="tile-note">Probability & Statistics classes meet at IT 202 / Golakota.</div>
+          </div>
+        </div>
+      </div>
 
-        function showToast(msg) {
-            const t = document.getElementById('toast-notification');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
-        }
+      <!-- SCHEDULE -->
+      <div id="tab-schedule" class="tab-content hidden">
+        <div class="day-filter" id="day-filter">
+          <button class="day-chip active" data-day="All">All days</button>
+          <button class="day-chip" data-day="Monday">Mon</button>
+          <button class="day-chip" data-day="Tuesday">Tue</button>
+          <button class="day-chip" data-day="Wednesday">Wed</button>
+          <button class="day-chip" data-day="Thursday">Thu</button>
+          <button class="day-chip" data-day="Friday">Fri</button>
+          <button class="day-chip" data-day="Saturday">Sat</button>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead><tr><th>Day</th><th>Time</th><th>Subject</th><th>Venue</th></tr></thead>
+            <tbody id="schedule-body"></tbody>
+          </table>
+        </div>
+      </div>
 
-        function loadState() {
-            const u = localStorage.getItem('hub_user');
-            const n = localStorage.getItem('hub_notes');
-            if (u) currentUser = JSON.parse(u);
-            if (n) notesByStudent = JSON.parse(n);
-        }
+      <!-- CHAT -->
+      <div id="tab-chat" class="tab-content hidden">
+        <div class="chat-shell">
+          <div class="chat-log" id="chat-log">
+            <div class="bubble bot">Ask me about your timetable, professors, room numbers, or holidays.</div>
+          </div>
+          <div class="chip-row">
+            <button class="sugg-chip" onclick="sendSuggestion('Monday schedule')">Monday schedule</button>
+            <button class="sugg-chip" onclick="sendSuggestion('Who teaches Data Structures?')">DSA professor</button>
+            <button class="sugg-chip" onclick="sendSuggestion('Next holiday')">Next holiday</button>
+            <button class="sugg-chip" onclick="sendSuggestion('Venue for Probability')">Prob venue</button>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chat-input" class="input" placeholder="Ask anything…">
+            <button class="btn btn-small" id="btn-send-chat">Send</button>
+          </div>
+        </div>
+      </div>
 
-        function saveState() {
-            localStorage.setItem('hub_user', JSON.stringify(currentUser));
-            localStorage.setItem('hub_notes', JSON.stringify(notesByStudent));
-        }
+      <!-- HOLIDAYS -->
+      <div id="tab-holidays" class="tab-content hidden">
+        <div class="countdown-tile">
+          <div class="tile-label">Up next</div>
+          <div class="tile-value" id="next-holiday-name">Calculating…</div>
+          <div class="sub" id="next-holiday-countdown"></div>
+        </div>
+        <div id="holidays-list" class="holiday-list"></div>
+      </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadState();
-            if (currentUser.id) showDashboard(true);
+      <!-- CLOCK -->
+      <div id="tab-watch" class="tab-content hidden">
+        <div class="clock-tile">
+          <div class="clock-time" id="clock-time">00:00:00 AM</div>
+          <div class="clock-date" id="clock-date">Syncing…</div>
+        </div>
+      </div>
 
-            document.getElementById('login-form').addEventListener('submit', handleLogin);
-            document.getElementById('btn-logout').addEventListener('click', logoutSession);
-            document.getElementById('btn-save-note').addEventListener('click', addNote);
-            document.getElementById('btn-send-chat').addEventListener('click', handleUserChat);
-            document.getElementById('chat-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') handleUserChat();
-            });
+      <!-- NOTES -->
+      <div id="tab-notes" class="tab-content hidden">
+        <div class="tile" style="background:var(--tile);">
+          <label for="new-note" style="display:block; font-family: var(--font-mono); font-size:0.68rem; font-weight:700; color: var(--marigold-deep); margin-bottom:0.5rem; text-transform:uppercase;">New note</label>
+          <textarea id="new-note" class="input" placeholder="Jot down a reminder or a formula…"></textarea>
+          <div id="note-error" class="error-text">Write something before saving.</div>
+          <button class="btn btn-small" id="btn-save-note" style="margin-top:0.75rem;">Save note</button>
+        </div>
+        <div id="notes-list" class="notes-grid"></div>
+      </div>
+    </section>
+  </div>
+</main>
 
-            const allTabs = document.querySelectorAll('.nav-tab, .mobile-tab');
-            allTabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    const target = e.target.dataset.target;
-                    switchTab(target);
-                });
-            });
+<div class="toast" id="toast">Notice</div>
 
-            document.querySelectorAll('.day-tab[data-day]').forEach(tab => {
-                tab.addEventListener('click', (e) => filterDay(e.target.dataset.day));
-            });
-        });
+<script>
+  const rawSchedule = [
+    { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Monday", time: "03:00 PM - 04:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Tuesday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Tuesday", time: "11:00 AM - 01:00 PM", subject: "Digital Electronics (Tutorial/Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
+    { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1"] },
+    { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-2"] },
+    { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-1"] },
+    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-2"] },
+    { day: "Thursday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Thursday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Thursday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Thursday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-2"] },
+    { day: "Friday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+    { day: "Friday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Friday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Friday", time: "03:00 PM - 05:00 PM", subject: "Digital Electronics (Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
+    { day: "Saturday", time: "09:00 AM - 11:00 AM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-1"] },
+    { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+    { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+  ];
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const name = document.getElementById('student-name').value.trim();
-            const id = document.getElementById('student-id').value.trim();
-            const section = document.querySelector('input[name="section"]:checked').value;
-            const err = document.getElementById('login-error');
+  const holidays2026 = [
+    { date: "2026-01-26", name: "Republic Day", type: "Gazetted Holiday", emoji: "🇮🇳" },
+    { date: "2026-02-15", name: "Mahashivratri", type: "Gazetted Holiday", emoji: "🔱" },
+    { date: "2026-03-03", name: "Holika Dahan", type: "Gazetted Holiday", emoji: "🔥" },
+    { date: "2026-03-04", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
+    { date: "2026-03-19", name: "Chetchand", type: "Gazetted Holiday", emoji: "🌊" },
+    { date: "2026-03-21", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
+    { date: "2026-03-26", name: "Ram Navmi", type: "Gazetted Holiday", emoji: "🏹" },
+    { date: "2026-03-31", name: "Mahavir Jayanti", type: "Gazetted Holiday", emoji: "🕊️" },
+    { date: "2026-04-03", name: "Good Friday", type: "Gazetted Holiday", emoji: "⛪" },
+    { date: "2026-04-13", name: "Approved by B.O.M.", type: "University Holiday", emoji: "🏛️" },
+    { date: "2026-04-14", name: "Dr. Bheemrao Ambedkar B.day", type: "Gazetted Holiday", emoji: "📜" },
+    { date: "2026-05-01", name: "Budh Purnima", type: "Gazetted Holiday", emoji: "☸️" },
+    { date: "2026-05-27", name: "Eid-Ul-Zuha (Bakar-Eid)", type: "Gazetted Holiday", emoji: "🐑" },
+    { date: "2026-06-26", name: "Moharram", type: "Gazetted Holiday", emoji: "🏴" },
+    { date: "2026-07-16", name: "Harela", type: "University Holiday", emoji: "🌿" },
+    { date: "2026-08-15", name: "Independence Day", type: "National Holiday", emoji: "🇮🇳" },
+    { date: "2026-08-26", name: "Eid-E-Milad / Milad-Un-Nabi Barawafat", type: "Gazetted Holiday", emoji: "✨" },
+    { date: "2026-08-28", name: "Rakshabandhan", type: "Gazetted Holiday", emoji: "🧵" },
+    { date: "2026-09-04", name: "Shri Krishna Janmastmi", type: "Gazetted Holiday", emoji: "🪈" },
+    { date: "2026-09-17", name: "Vishwakarma Pooja", type: "Gazetted Holiday", emoji: "⚙️" },
+    { date: "2026-10-02", name: "Mahatma Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
+    { date: "2026-10-20", name: "Dushehra (Vidyadashmi)", type: "Gazetted Holiday", emoji: "🏹" },
+    { date: "2026-10-25", name: "Maharishi Balmiki Jayanti", type: "Gazetted Holiday", emoji: "🪔" },
+    { date: "2026-11-07", name: "Deepawali (Narak Chaturdashi)", type: "Gazetted Holiday", emoji: "🪔" },
+    { date: "2026-11-08", name: "Deepawali", type: "Gazetted Holiday", emoji: "🪔" },
+    { date: "2026-11-10", name: "Deepawali (Govardhan Pooja)", type: "Gazetted Holiday", emoji: "🐄" },
+    { date: "2026-11-11", name: "Bhaijoo", type: "Gazetted Holiday", emoji: "👫" },
+    { date: "2026-11-20", name: "Eigas-Bagwal", type: "University Holiday", emoji: "🪔" },
+    { date: "2026-11-24", name: "Guru Nanak Jayanti / Guru Teghabadur Shahid Diwas", type: "Gazetted Holiday", emoji: "🪯" },
+    { date: "2026-12-25", name: "Christmas Day", type: "Gazetted Holiday", emoji: "🎄" }
+  ];
 
-            if (!name || !id) { err.style.display = "block"; return; }
-            err.style.display = "none";
+  let currentUser = { name: "", id: "", section: "" };
+  let notesByStudent = {};
+  let currentDayFilter = "All";
+  let clockInterval = null;
 
-            currentUser = { name, id, section };
-            saveState();
-            showDashboard(false);
-        }
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2400);
+  }
 
-        function showDashboard(isAuto) {
-            document.getElementById('auth-screen').style.display = "none";
-            document.getElementById('dashboard-screen').style.display = "grid";
-            document.getElementById('header-user-info').classList.remove('hidden');
+  function loadState(){
+    try {
+      const u = localStorage.getItem('almanac_user');
+      const n = localStorage.getItem('almanac_notes');
+      if (u) currentUser = JSON.parse(u);
+      if (n) notesByStudent = JSON.parse(n);
+    } catch (e) { /* ignore corrupt storage */ }
+  }
 
-            document.getElementById('welcome-title').innerText = `Operator: ${currentUser.name}`;
-            document.getElementById('welcome-subtitle').innerText = `Active Session ID: ${currentUser.id}`;
-            document.getElementById('section-display-badge').innerText = currentUser.section;
+  function saveState(){
+    try {
+      localStorage.setItem('almanac_user', JSON.stringify(currentUser));
+      localStorage.setItem('almanac_notes', JSON.stringify(notesByStudent));
+    } catch (e) { showToast("Couldn't save — storage unavailable."); }
+  }
 
-            switchTab('overview');
-            renderNotes();
-            renderHolidays();
-            updateDeskOverview();
-            startLiveClock();
-            showToast(isAuto ? "Session restored from memory." : "Terminal initialized.");
-        }
+  document.addEventListener("DOMContentLoaded", () => {
+    loadState();
+    document.getElementById('auth-screen').style.display = "block";
+    document.getElementById('dashboard-screen').style.display = "none";
 
-        function logoutSession() {
-            if (clockInterval) clearInterval(clockInterval);
-            currentUser = { name: "", id: "", section: "" };
-            localStorage.removeItem('hub_user');
+    // Prefill the login form with the last-used details, but always
+    // require the person to confirm by submitting before entering.
+    if (currentUser.name) document.getElementById('student-name').value = currentUser.name;
+    if (currentUser.id) document.getElementById('student-id').value = currentUser.id;
+    if (currentUser.section){
+      const sectionInput = document.querySelector(`input[name="section"][value="${currentUser.section}"]`);
+      if (sectionInput) sectionInput.checked = true;
+    }
 
-            document.getElementById('dashboard-screen').style.display = "none";
-            document.getElementById('auth-screen').style.display = "block";
-            document.getElementById('header-user-info').classList.add('hidden');
-            document.getElementById('login-form').reset();
-        }
+    document.getElementById('login-form').addEventListener('submit', handleLogin);
+    document.getElementById('btn-logout').addEventListener('click', logoutSession);
+    document.getElementById('btn-save-note').addEventListener('click', addNote);
+    document.getElementById('btn-send-chat').addEventListener('click', handleUserChat);
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleUserChat();
+    });
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.nav-tab, .mobile-tab').forEach(t => {
-                t.classList.toggle('active', t.dataset.target === tabName);
-            });
-            document.querySelectorAll('.tab-content').forEach(c => {
-                c.classList.add('hidden');
-            });
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-        }
+    document.querySelectorAll('.nav-item, .tab-pill').forEach(tab => {
+      tab.addEventListener('click', (e) => switchTab(e.currentTarget.dataset.target));
+    });
 
-        function updateDeskOverview() {
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const todayName = days[new Date().getDay()];
-            const todaysClasses = rawSchedule.filter(item => item.day === todayName && item.sections.includes(currentUser.section));
-            
-            const nextClassEl = document.getElementById('desk-next-class');
-            if (todaysClasses.length > 0) {
-                nextClassEl.innerText = `${todaysClasses[0].time} — ${todaysClasses[0].subject} (${todaysClasses[0].venue})`;
-            } else {
-                nextClassEl.innerText = "No classes scheduled for today. Free node.";
-            }
+    document.querySelectorAll('.day-chip').forEach(tab => {
+      tab.addEventListener('click', (e) => filterDay(e.currentTarget.dataset.day));
+    });
+  });
 
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            const upcoming = holidays2026.find(h => new Date(h.date) >= today);
-            if (upcoming) {
-                document.getElementById('desk-next-holiday').innerText = `${upcoming.emoji} ${upcoming.name} (${upcoming.date})`;
-            }
-        }
+  function handleLogin(e){
+    e.preventDefault();
+    const name = document.getElementById('student-name').value.trim();
+    const id = document.getElementById('student-id').value.trim();
+    const section = document.querySelector('input[name="section"]:checked').value;
+    const err = document.getElementById('login-error');
 
-        function startLiveClock() {
-            updateClock();
-            if (clockInterval) clearInterval(clockInterval);
-            clockInterval = setInterval(updateClock, 1000);
-        }
+    if (!name || !id) { err.style.display = "block"; return; }
+    err.style.display = "none";
 
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-            const formattedHours = String(hours).padStart(2, '0');
+    currentUser = { name, id, section };
+    saveState();
+    showDashboard(false);
+  }
 
-            const clockEl = document.getElementById("live-clock-display");
-            if (clockEl) clockEl.innerText = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
-            
-            const dateEl = document.getElementById("live-date-display");
-            if (dateEl) dateEl.innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
-        }
+  function showDashboard(isAuto){
+    document.getElementById('auth-screen').style.display = "none";
+    document.getElementById('dashboard-screen').style.display = "grid";
+    document.getElementById('header-user').classList.remove('hidden');
 
-        function sendSuggestion(text) {
-            document.getElementById('chat-input').value = text;
-            handleUserChat();
-        }
+    document.getElementById('welcome-title').textContent = `Welcome, ${currentUser.name}`;
+    document.getElementById('welcome-sub').textContent = `Student ID ${currentUser.id}`;
+    document.getElementById('section-badge').textContent = currentUser.section;
 
-        function appendMessage(sender, text) {
-            const cm = document.getElementById("chat-messages");
-            const b = document.createElement("div");
-            b.className = `chat-bubble ${sender}`;
-            b.textContent = text;
-            cm.appendChild(b);
-            cm.scrollTop = cm.scrollHeight;
-        }
+    switchTab('overview');
+    currentDayFilter = "All";
+    renderSchedule();
+    renderNotes();
+    renderHolidays();
+    updateOverview();
+    startLiveClock();
+    showToast(isAuto ? "Welcome back." : "Almanac ready.");
+  }
 
-        function handleUserChat() {
-            const input = document.getElementById("chat-input");
-            const q = input.value.trim().toLowerCase();
-            if (!q) return;
+  function logoutSession(){
+    if (clockInterval) clearInterval(clockInterval);
+    currentUser = { name: "", id: "", section: "" };
+    try { localStorage.removeItem('almanac_user'); } catch(e) {}
 
-            appendMessage("user", input.value);
-            input.value = "";
+    document.getElementById('dashboard-screen').style.display = "none";
+    document.getElementById('auth-screen').style.display = "block";
+    document.getElementById('header-user').classList.add('hidden');
+    document.getElementById('login-form').reset();
+  }
 
-            setTimeout(() => {
-                let resp = generateBotResponse(q);
-                appendMessage("bot", resp);
-            }, 300);
-        }
+  function switchTab(tabName){
+    document.querySelectorAll('.nav-item, .tab-pill').forEach(t => {
+      t.classList.toggle('active', t.dataset.target === tabName);
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+  }
 
-        function generateBotResponse(q) {
-            const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-            let foundDay = days.find(d => q.includes(d));
-            if (q.includes("today")) {
-                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                foundDay = dayNames[new Date().getDay()].toLowerCase();
-            }
+  function updateOverview(){
+    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const todayName = days[new Date().getDay()];
+    const todaysClasses = rawSchedule.filter(item => item.day === todayName && item.sections.includes(currentUser.section));
 
-            if (foundDay) {
-                const dayCap = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
-                const classes = rawSchedule.filter(item => item.day.toLowerCase() === foundDay && item.sections.includes(currentUser.section));
-                if (classes.length === 0) return `No timetable payload found for ${dayCap} under ${currentUser.section}.`;
-                
-                let reply = `[TIMETABLE // ${dayCap.toUpperCase()} // ${currentUser.section}]\n`;
-                classes.forEach(c => {
-                    reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
-                });
-                return reply.trim();
-            }
+    const nextClassEl = document.getElementById('desk-next-class');
+    nextClassEl.textContent = todaysClasses.length
+      ? `${todaysClasses[0].time} — ${todaysClasses[0].subject} (${todaysClasses[0].venue})`
+      : "No classes scheduled today.";
 
-            if (q.includes("holiday") || q.includes("break") || q.includes("recess")) {
-                const today = new Date();
-                today.setHours(0,0,0,0);
-                const upcoming = holidays2026.find(h => new Date(h.date) >= today);
-                if (upcoming) return `Next Recess: ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} [${upcoming.type}]`;
-                return "No upcoming holidays registered.";
-            }
+    const today = new Date(); today.setHours(0,0,0,0);
+    const upcoming = holidays2026.find(h => new Date(h.date) >= today);
+    document.getElementById('desk-next-holiday').textContent = upcoming
+      ? `${upcoming.emoji} ${upcoming.name} — ${upcoming.date}`
+      : "No holidays on record.";
+  }
 
-            if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches")) {
-                return "FACULTY MANIFEST:\n• Data Structures: Mr. Sanjay Joshi\n• Digital Electronics: Mr. Jalaj Sharma\n• Automata Theory: Dr. Shri Prakash Dwivedi\n• Prob & Stats: Prof. Arun Kumar\n• Tech Communication: Dr. Govind Singh Kushwaha\n• FIT: Dr. Ashok Kumar";
-            }
+  function startLiveClock(){
+    updateClock();
+    if (clockInterval) clearInterval(clockInterval);
+    clockInterval = setInterval(updateClock, 1000);
+  }
 
-            if (q.includes("venue") || q.includes("probability") || q.includes("stats")) {
-                return "Probability & Statistics lectures and tutorials take place at IT 202 / Golakota.";
-            }
+  function updateClock(){
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const hh = String(hours).padStart(2, '0');
 
-            if (q.includes("section")) return `Active Section Node: ${currentUser.section}`;
-            if (q.includes("hello") || q.includes("hi")) return `Terminal active, ${currentUser.name}. Query parameters ready.`;
+    const clockEl = document.getElementById("clock-time");
+    if (clockEl) clockEl.textContent = `${hh}:${minutes}:${seconds} ${ampm}`;
 
-            return "Query unrecognized. Try querying schedules, instructor nodes, or holiday registries.";
-        }
+    const dateEl = document.getElementById("clock-date");
+    if (dateEl) dateEl.textContent = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+  }
 
-        function renderHolidays() {
-            const container = document.getElementById("holidays-container");
-            const nextDisplay = document.getElementById("next-holiday-display");
-            const countdownDisplay = document.getElementById("next-holiday-countdown");
-            container.innerHTML = "";
-            
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            
-            let nextHoliday = null;
-            const fragment = document.createDocumentFragment();
+  function sendSuggestion(text){
+    document.getElementById('chat-input').value = text;
+    handleUserChat();
+  }
 
-            holidays2026.forEach(h => {
-                const hDate = new Date(h.date);
-                hDate.setHours(0,0,0,0);
-                const isPast = hDate < today;
-                
-                if (!isPast && !nextHoliday) nextHoliday = { ...h, dateObj: hDate };
+  function appendMessage(sender, text){
+    const log = document.getElementById("chat-log");
+    const b = document.createElement("div");
+    b.className = `bubble ${sender}`;
+    b.textContent = text;
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
 
-                const item = document.createElement("div");
-                item.className = "holiday-item";
-                if (isPast) item.style.opacity = "0.4";
+  function handleUserChat(){
+    const input = document.getElementById("chat-input");
+    const q = input.value.trim();
+    if (!q) return;
+    appendMessage("user", q);
+    input.value = "";
+    setTimeout(() => appendMessage("bot", generateBotResponse(q.toLowerCase())), 250);
+  }
 
-                const infoDiv = document.createElement("div");
-                infoDiv.className = "holiday-info";
-                
-                const emoji = document.createElement("div");
-                emoji.className = "holiday-emoji";
-                emoji.textContent = h.emoji;
+  function generateBotResponse(q){
+    const days = ["monday","tuesday","wednesday","thursday","friday","saturday"];
+    let foundDay = days.find(d => q.includes(d));
+    if (q.includes("today")){
+      const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      foundDay = dayNames[new Date().getDay()].toLowerCase();
+    }
 
-                const details = document.createElement("div");
-                const titleText = document.createElement("div"); 
-                titleText.style.cssText = `font-weight: 700; font-size: 0.9rem; color: var(--text-primary); ${isPast ? 'text-decoration: line-through;' : ''}`; 
-                titleText.textContent = h.name;
-                
-                const meta = document.createElement("div"); 
-                meta.style.cssText = "font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;";
-                meta.textContent = `${hDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} • ${h.type}`;
-                
-                details.appendChild(titleText);
-                details.appendChild(meta);
-                infoDiv.appendChild(emoji);
-                infoDiv.appendChild(details);
-                item.appendChild(infoDiv);
-                
-                const badge = document.createElement("span");
-                badge.className = "tag tag-subject";
-                badge.textContent = isPast ? "EXPIRED" : "QUEUED";
-                item.appendChild(badge);
+    if (foundDay){
+      const dayCap = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
+      const classes = rawSchedule.filter(item => item.day.toLowerCase() === foundDay && item.sections.includes(currentUser.section));
+      if (classes.length === 0) return `No timetable entries for ${dayCap} under ${currentUser.section}.`;
+      let reply = `${dayCap} · ${currentUser.section}\n`;
+      classes.forEach(c => {
+        reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
+      });
+      return reply.trim();
+    }
 
-                fragment.appendChild(item);
-            });
-            
-            container.appendChild(fragment);
+    if (q.includes("holiday") || q.includes("break") || q.includes("recess")){
+      const today = new Date(); today.setHours(0,0,0,0);
+      const upcoming = holidays2026.find(h => new Date(h.date) >= today);
+      return upcoming
+        ? `Next recess: ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type})`
+        : "No upcoming holidays registered.";
+    }
 
-            if (nextHoliday) {
-                const diffTime = nextHoliday.dateObj - today;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                nextDisplay.textContent = `${nextHoliday.emoji} ${nextHoliday.name} (${nextHoliday.date})`;
-                if (diffDays === 0) {
-                    countdownDisplay.innerHTML = `<span style="color: var(--accent-yellow); font-weight: 700;">Status: ACTIVE TODAY</span>`;
-                } else {
-                    countdownDisplay.textContent = `T-Minus ${diffDays} Day(s) remaining`;
-                }
-            }
-        }
+    if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches")){
+      return "Faculty:\n• Data Structures — Mr. Sanjay Joshi\n• Digital Electronics — Mr. Jalaj Sharma\n• Automata Theory — Dr. Shri Prakash Dwivedi\n• Prob & Stats — Prof. Arun Kumar\n• Tech Communication — Dr. Govind Singh Kushwaha\n• FIT — Dr. Ashok Kumar";
+    }
 
-        function getNotesList() {
-            if (!notesByStudent[currentUser.id]) notesByStudent[currentUser.id] = [];
-            return notesByStudent[currentUser.id];
-        }
+    if (q.includes("venue") || q.includes("probability") || q.includes("stats")){
+      return "Probability & Statistics lectures and tutorials are at IT 202 / Golakota.";
+    }
 
-        function addNote() {
-            const textInput = document.getElementById("new-note-text");
-            if (!textInput.value.trim()) return;
-            getNotesList().unshift({ id: Date.now(), text: textInput.value.trim(), timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() });
-            saveState(); textInput.value = ""; renderNotes(); showToast("Note committed to storage.");
-        }
+    if (q.includes("section")) return `Your section: ${currentUser.section}`;
+    if (q.includes("hello") || q.includes("hi")) return `Hi ${currentUser.name}! Ask me about a day's schedule, a professor, or the next holiday.`;
 
-        function renderNotes() {
-            const container = document.getElementById("notes-container");
-            const notes = getNotesList();
-            container.innerHTML = ""; 
-            if (notes.length === 0) { container.innerHTML = `<p style="color: var(--text-dim); text-align: center; padding: 2rem; font-size: 0.8rem; grid-column: 1 / -1;">No scratch records found.</p>`; return; }
-            const fragment = document.createDocumentFragment();
-            notes.forEach(note => {
-                const card = document.createElement("div"); card.className = "note-card";
-                card.innerHTML = `<div class="note-content">${note.text}</div><div class="note-footer"><span>${note.timestamp}</span><button class="btn-danger" onclick="notesByStudent['${currentUser.id}'] = getNotesList().filter(n => n.id !== ${note.id}); saveState(); renderNotes();">Purge</button></div>`;
-                fragment.appendChild(card);
-            });
-            container.appendChild(fragment);
-        }
+    return "I didn't catch that — try asking for a day's schedule, a professor's name, or the next holiday.";
+  }
 
-        function filterDay(day) {
-            currentDayFilter = day;
-            document.querySelectorAll("#tab-schedule .day-tab").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
-            renderSchedule();
-        }
+  function renderHolidays(){
+    const container = document.getElementById("holidays-list");
+    const nameEl = document.getElementById("next-holiday-name");
+    const countdownEl = document.getElementById("next-holiday-countdown");
+    container.innerHTML = "";
 
-        function renderSchedule() {
-            const tbody = document.getElementById("schedule-table-body");
-            tbody.innerHTML = ""; 
-            const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
-            
-            if (filtered.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-dim);">No schedule payload for selection node.</td></tr>`; 
-                return; 
-            }
-            
-            const fragment = document.createDocumentFragment();
-            filtered.forEach(item => {
-                const tr = document.createElement("tr");
-                const profHTML = item.professor ? `<div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem;">👨‍🏫 ${item.professor}</div>` : '';
-                
-                tr.innerHTML = `
-                    <td style="font-weight: 700;">${item.day}</td>
-                    <td style="color: var(--text-dim);">${item.time}</td>
-                    <td>
-                        <div style="font-weight: 600;">${item.subject}</div>
-                        ${profHTML}
-                    </td>
-                    <td style="color: var(--text-neon); font-weight: 600;">${item.venue}</td>`;
-                fragment.appendChild(tr);
-            });
-            tbody.appendChild(fragment);
-        }
-    </script>
+    const today = new Date(); today.setHours(0,0,0,0);
+    let nextHoliday = null;
+    const fragment = document.createDocumentFragment();
+
+    holidays2026.forEach(h => {
+      const hDate = new Date(h.date); hDate.setHours(0,0,0,0);
+      const isPast = hDate < today;
+      if (!isPast && !nextHoliday) nextHoliday = { ...h, dateObj: hDate };
+
+      const row = document.createElement("div");
+      row.className = "holiday-row";
+      if (isPast) row.style.opacity = "0.45";
+
+      const info = document.createElement("div");
+      info.className = "holiday-info";
+
+      const emoji = document.createElement("div");
+      emoji.className = "holiday-emoji";
+      emoji.textContent = h.emoji;
+
+      const details = document.createElement("div");
+      details.style.minWidth = "0";
+      const title = document.createElement("div");
+      title.className = "holiday-name";
+      title.style.textDecoration = isPast ? "line-through" : "none";
+      title.textContent = h.name;
+      const meta = document.createElement("div");
+      meta.className = "holiday-meta";
+      meta.textContent = `${hDate.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' })} · ${h.type}`;
+
+      details.appendChild(title);
+      details.appendChild(meta);
+      info.appendChild(emoji);
+      info.appendChild(details);
+      row.appendChild(info);
+
+      const badge = document.createElement("span");
+      badge.className = `tag ${isPast ? 'passed' : 'upcoming'}`;
+      badge.textContent = isPast ? "Passed" : "Upcoming";
+      row.appendChild(badge);
+
+      fragment.appendChild(row);
+    });
+
+    container.appendChild(fragment);
+
+    if (nextHoliday){
+      const diffDays = Math.ceil((nextHoliday.dateObj - today) / 86400000);
+      nameEl.textContent = `${nextHoliday.emoji} ${nextHoliday.name} — ${nextHoliday.date}`;
+      countdownEl.textContent = diffDays === 0 ? "Today" : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
+    } else {
+      nameEl.textContent = "No more holidays on record.";
+      countdownEl.textContent = "";
+    }
+  }
+
+  function getNotesList(){
+    if (!notesByStudent[currentUser.id]) notesByStudent[currentUser.id] = [];
+    return notesByStudent[currentUser.id];
+  }
+
+  function addNote(){
+    const textInput = document.getElementById("new-note");
+    const err = document.getElementById("note-error");
+    if (!textInput.value.trim()) { err.style.display = "block"; return; }
+    err.style.display = "none";
+    getNotesList().unshift({ id: Date.now(), text: textInput.value.trim(), timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() });
+    saveState();
+    textInput.value = "";
+    renderNotes();
+    showToast("Note saved.");
+  }
+
+  function deleteNote(id){
+    notesByStudent[currentUser.id] = getNotesList().filter(n => n.id !== id);
+    saveState();
+    renderNotes();
+  }
+
+  function renderNotes(){
+    const container = document.getElementById("notes-list");
+    const notes = getNotesList();
+    container.innerHTML = "";
+    if (notes.length === 0){
+      container.innerHTML = `<p class="empty-note">No notes saved yet.</p>`;
+      return;
+    }
+    const fragment = document.createDocumentFragment();
+    notes.forEach(note => {
+      const card = document.createElement("div");
+      card.className = "note-card";
+
+      const content = document.createElement("div");
+      content.className = "note-content";
+      content.textContent = note.text;
+
+      const foot = document.createElement("div");
+      foot.className = "note-foot";
+      const ts = document.createElement("span");
+      ts.textContent = note.timestamp;
+      const del = document.createElement("button");
+      del.className = "btn-ghost-danger";
+      del.textContent = "Delete";
+      del.addEventListener('click', () => deleteNote(note.id));
+
+      foot.appendChild(ts);
+      foot.appendChild(del);
+      card.appendChild(content);
+      card.appendChild(foot);
+      fragment.appendChild(card);
+    });
+    container.appendChild(fragment);
+  }
+
+  function filterDay(day){
+    currentDayFilter = day;
+    document.querySelectorAll(".day-chip").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
+    renderSchedule();
+  }
+
+  function renderSchedule(){
+    const tbody = document.getElementById("schedule-body");
+    tbody.innerHTML = "";
+    const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
+
+    if (filtered.length === 0){
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--ink-soft); font-family:var(--font-mono);">No classes match this filter.</td></tr>`;
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    filtered.forEach(item => {
+      const tr = document.createElement("tr");
+
+      const dayTd = document.createElement("td");
+      dayTd.className = "cell-day";
+      dayTd.setAttribute("data-label", "Day");
+      dayTd.textContent = item.day;
+
+      const timeTd = document.createElement("td");
+      timeTd.className = "cell-time";
+      timeTd.setAttribute("data-label", "Time");
+      timeTd.textContent = item.time;
+
+      const subjectTd = document.createElement("td");
+      subjectTd.className = "cell-subject";
+      subjectTd.setAttribute("data-label", "Subject");
+      const subjStrong = document.createElement("strong");
+      subjStrong.textContent = item.subject;
+      subjectTd.appendChild(subjStrong);
+      if (item.professor){
+        const prof = document.createElement("div");
+        prof.className = "cell-prof";
+        prof.textContent = item.professor;
+        subjectTd.appendChild(prof);
+      }
+
+      const venueTd = document.createElement("td");
+      venueTd.className = "cell-venue";
+      venueTd.setAttribute("data-label", "Venue");
+      venueTd.textContent = item.venue;
+
+      tr.appendChild(dayTd);
+      tr.appendChild(timeTd);
+      tr.appendChild(subjectTd);
+      tr.appendChild(venueTd);
+      fragment.appendChild(tr);
+    });
+    tbody.appendChild(fragment);
+  }
+</script>
 </body>
 </html>
