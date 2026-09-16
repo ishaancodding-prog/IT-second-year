@@ -9,26 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#1a1712;
-    --paper-raised:#221e17;
-    --tile:#2a251c;
-    --rule:#453e2c;
-    --rule-tint: rgba(69,62,44,0.55);
-    --ink:#f2ead7;
-    --ink-soft:#b6ab8f;
-    --ink-faint:#847a63;
+    --paper:#14120e;
+    --paper-raised:#1d1913;
+    --tile:#262118;
+    --rule:#3d3425;
+    --rule-tint: rgba(61,52,37,0.55);
+    --ink:#f5eee1;
+    --ink-soft:#c2b69b;
+    --ink-faint:#8a7f68;
     --marigold:#e4a13d;
     --marigold-deep:#f2b563;
     --forest:#6fae95;
-    --forest-wash-1: rgba(111,174,149,0.12);
+    --forest-wash-1: rgba(111,174,149,0.14);
     --forest-wash-2: rgba(111,174,149,0.1);
-    --forest-wash-3: rgba(111,174,149,0.16);
+    --forest-wash-3: rgba(111,174,149,0.18);
     --clay:#e2775b;
-    --clay-wash: rgba(226,119,91,0.12);
-    --on-accent:#1a1712;
-    --line-blue:#7488a8;
-    --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 16px 34px -18px rgba(0,0,0,0.65);
-    --radius: 14px;
+    --clay-wash: rgba(226,119,91,0.14);
+    --on-accent:#14120e;
+    --shadow: 0 4px 20px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
+    --radius: 16px;
     --font-display:'Fraunces', Georgia, serif;
     --font-body:'IBM Plex Sans', system-ui, sans-serif;
     --font-mono:'IBM Plex Mono', monospace;
@@ -39,6 +38,7 @@
   body{
     font-family: var(--font-body);
     background:
+      radial-gradient(circle at 50% 0%, rgba(228, 161, 61, 0.04), transparent 50%),
       repeating-linear-gradient(180deg, transparent 0 34px, var(--rule-tint) 34px 35px),
       var(--paper);
     color: var(--ink);
@@ -50,40 +50,41 @@
   ::selection{ background: var(--marigold); color:var(--on-accent); }
   :focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
   button, input, textarea { font-family: inherit; }
-
   a { color: inherit; }
 
   /* ---------- Header ---------- */
   header{
     position: sticky; top:0; z-index: 50;
     background: var(--paper-raised);
-    border-bottom: 2px solid var(--ink);
+    border-bottom: 2px solid var(--rule);
     padding: 0.9rem clamp(1rem, 4vw, 2.2rem);
     display:flex; align-items:center; justify-content:space-between;
     gap: 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   }
-  .brand{ display:flex; align-items:center; gap:0.7rem; }
+  .brand{ display:flex; align-items:center; gap:0.85rem; }
   .brand-mark{
-    width: 40px; height: 40px; flex-shrink:0;
+    width: 42px; height: 42px; flex-shrink:0;
     border: 2px solid var(--ink);
-    border-radius: 8px;
+    border-radius: 10px;
     display:flex; align-items:center; justify-content:center;
-    font-family: var(--font-display); font-weight:700; font-size:1.1rem;
+    font-family: var(--font-display); font-weight:700; font-size:1.15rem;
     background: var(--marigold);
     color: var(--on-accent);
-    transform: rotate(-4deg);
+    box-shadow: 2px 2px 0px var(--rule);
+    transform: rotate(-3deg);
   }
   .brand-text h1{
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
     letter-spacing: -0.01em;
     line-height:1.1;
   }
   .brand-text p{
-    font-size:0.72rem; color: var(--ink-soft);
+    font-size:0.75rem; color: var(--ink-soft);
     font-family: var(--font-mono);
-    margin-top:2px;
+    margin-top:3px;
   }
 
   .btn{
@@ -91,21 +92,22 @@
     border: 2px solid var(--ink);
     background: var(--ink);
     color: var(--paper-raised);
-    padding: 0.7rem 1.1rem;
-    border-radius: 10px;
-    font-weight:600;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 600;
     font-size: 0.9rem;
     cursor:pointer;
-    transition: transform 0.12s ease, background 0.12s ease;
+    box-shadow: 2px 2px 0px var(--rule);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
   }
-  .btn:hover{ transform: translateY(-1px); }
-  .btn:active{ transform: translateY(0); }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 3px 4px 0px var(--rule); }
+  .btn:active{ transform: translateY(0); box-shadow: 1px 1px 0px var(--rule); }
   .btn-block{ width:100%; }
   .btn-outline{
     background: transparent; color: var(--ink);
   }
   .btn-outline:hover{ background: var(--ink); color: var(--paper-raised); }
-  .btn-small{ padding:0.45rem 0.75rem; font-size:0.78rem; border-radius:8px; }
+  .btn-small{ padding:0.45rem 0.85rem; font-size:0.78rem; border-radius:9px; box-shadow: 1px 1px 0px var(--rule); }
   .btn-ghost-danger{
     background:transparent; color:var(--clay); border:2px solid var(--clay);
     padding:0.35rem 0.65rem; font-size:0.72rem; border-radius:8px; font-weight:600; cursor:pointer;
@@ -114,75 +116,86 @@
 
   main{ flex:1; display:flex; justify-content:center; padding: clamp(1rem, 4vw, 2.5rem) clamp(0.75rem, 4vw, 1.5rem); }
 
-  /* ---------- Auth ---------- */
-  .auth-wrap{ width:100%; max-width: 460px; margin-top: clamp(0.5rem, 4vh, 2.5rem); }
-  .card{
+  /* ---------- Improved Professional Auth Screen ---------- */
+  .auth-wrap{ width:100%; max-width: 520px; margin-top: clamp(0.5rem, 3vh, 2rem); }
+  .auth-card{
     background: var(--paper-raised);
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: clamp(1.5rem, 5vw, 2.4rem);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    padding: clamp(1.8rem, 5vw, 2.8rem);
+    position: relative;
+    overflow: hidden;
   }
-  .stamp{
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 6px;
+    background: linear-gradient(90deg, var(--marigold), var(--forest));
+  }
+  .auth-stamp{
     display:inline-block;
-    border: 2px solid var(--clay);
-    color: var(--clay);
+    border: 2px solid var(--marigold);
+    color: var(--marigold-deep);
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    font-weight:600;
-    padding: 0.2rem 0.6rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
     border-radius: 6px;
-    transform: rotate(-3deg);
-    margin-bottom: 1rem;
+    background: rgba(228, 161, 61, 0.08);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
   }
-  .card h2{
+  .auth-card h2{
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4vw, 1.9rem);
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
   }
-  .card .lead{ color: var(--ink-soft); font-size:0.92rem; margin-bottom: 1.6rem; line-height:1.5; }
+  .auth-lead{ color: var(--ink-soft); font-size:0.92rem; margin-bottom: 1.8rem; line-height:1.5; }
 
-  .field{ margin-bottom: 1.15rem; }
+  .field{ margin-bottom: 1.25rem; }
   .field label{
-    display:block; font-size:0.72rem; font-weight:600; color: var(--ink-soft);
-    margin-bottom: 0.4rem; letter-spacing:0.03em;
+    display:block; font-size:0.75rem; font-weight:600; color: var(--ink-soft);
+    margin-bottom: 0.45rem; letter-spacing:0.04em; font-family: var(--font-mono);
+    text-transform: uppercase;
   }
   .input{
     width:100%;
-    padding: 0.8rem 0.9rem;
-    background: #fff;
+    padding: 0.85rem 1rem;
+    background: var(--tile);
     border: 2px solid var(--rule);
     border-radius: 10px;
     font-size: 0.95rem;
     color: var(--ink);
     outline:none;
-    transition: border-color 0.15s ease;
+    transition: all 0.2s ease;
   }
-  .input:focus{ border-color: var(--forest); }
+  .input:focus{ border-color: var(--forest); background: var(--paper-raised); box-shadow: 0 0 0 3px var(--forest-wash-1); }
   textarea.input{ resize:vertical; min-height: 110px; font-family: var(--font-mono); font-size:0.88rem; }
 
-  .segmented{ display:flex; gap:0.6rem; }
+  .segmented{ display:flex; gap:0.75rem; }
   .segmented label{
     flex:1; display:flex; align-items:center; justify-content:center; gap:0.5rem;
     border: 2px solid var(--rule);
     border-radius: 10px;
-    padding: 0.75rem;
-    font-weight:600; font-size:0.85rem;
+    padding: 0.8rem;
+    font-weight: 600; font-size: 0.9rem;
+    background: var(--tile);
     cursor:pointer;
     transition: all 0.15s ease;
   }
-  .segmented input{ accent-color: var(--forest); }
-  .segmented label:has(input:checked){ border-color: var(--forest); background: var(--forest-wash-1); }
+  .segmented input{ accent-color: var(--forest); width: 16px; height: 16px; }
+  .segmented label:has(input:checked){ border-color: var(--forest); background: var(--forest-wash-1); color: var(--ink); }
 
-  .error-text{ color: var(--clay); font-size:0.78rem; font-family: var(--font-mono); font-weight:600; margin-top:0.5rem; display:none; }
+  .error-text{ color: var(--clay); font-size:0.8rem; font-family: var(--font-mono); font-weight:600; margin-top:0.6rem; display:none; }
 
   /* ---------- App shell ---------- */
   .app{ display:none; width:100%; max-width: 1180px; gap: 1.25rem; }
 
   @media (min-width: 860px){
-    .app{ display:grid; grid-template-columns: 220px 1fr; align-items:flex-start; }
+    .app{ display:grid; grid-template-columns: 230px 1fr; align-items:flex-start; }
   }
   @media (max-width: 859px){
     .app{ display:flex; flex-direction:column; }
@@ -192,24 +205,25 @@
   .sidebar{
     display:none;
     background: var(--paper-raised);
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
     border-radius: var(--radius);
-    padding: 1.1rem;
+    padding: 1.25rem;
     position: sticky; top: 5.2rem;
     box-shadow: var(--shadow);
   }
   @media (min-width: 860px){ .sidebar{ display:block; } }
 
   .sidebar-eyebrow{
-    font-family: var(--font-mono); font-size:0.68rem; color: var(--ink-faint);
-    padding-bottom:0.6rem; margin-bottom:0.6rem; border-bottom: 2px dashed var(--rule);
+    font-family: var(--font-mono); font-size:0.7rem; color: var(--ink-faint);
+    padding-bottom:0.6rem; margin-bottom:0.7rem; border-bottom: 2px dashed var(--rule);
+    text-transform: uppercase; letter-spacing: 0.05em;
   }
-  .nav-list{ display:flex; flex-direction:column; gap:0.3rem; }
+  .nav-list{ display:flex; flex-direction:column; gap:0.35rem; }
   .nav-item{
     display:flex; align-items:center; gap:0.65rem;
     background: transparent; border:none; text-align:left;
-    padding: 0.65rem 0.7rem; border-radius: 9px;
-    font-weight:600; font-size:0.87rem; color: var(--ink-soft);
+    padding: 0.7rem 0.8rem; border-radius: 10px;
+    font-weight:600; font-size:0.88rem; color: var(--ink-soft);
     cursor:pointer; transition: all 0.15s ease;
   }
   .nav-item:hover{ background: var(--forest-wash-1); color: var(--ink); }
@@ -218,9 +232,9 @@
   /* Mobile/tablet horizontal tabs */
   .tab-strip{
     display:flex; gap: 0.45rem; overflow-x:auto;
-    padding: 0.4rem; margin-bottom: 1.1rem;
+    padding: 0.45rem; margin-bottom: 1.1rem;
     background: var(--paper-raised);
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
     border-radius: 12px;
     -webkit-overflow-scrolling: touch;
   }
@@ -229,8 +243,8 @@
   .tab-pill{
     flex-shrink:0;
     background: transparent; border:none;
-    padding: 0.5rem 0.85rem; border-radius: 8px;
-    font-weight:600; font-size:0.8rem; color: var(--ink-soft);
+    padding: 0.55rem 0.95rem; border-radius: 9px;
+    font-weight:600; font-size:0.82rem; color: var(--ink-soft);
     cursor:pointer; white-space:nowrap;
   }
   .tab-pill.active{ background: var(--marigold); color:var(--on-accent); }
@@ -238,11 +252,11 @@
   /* Content panel */
   .panel{
     background: var(--paper-raised);
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: clamp(1.1rem, 3.5vw, 1.9rem);
-    min-height: 480px;
+    padding: clamp(1.2rem, 3.5vw, 2rem);
+    min-height: 500px;
   }
 
   .panel-head{
@@ -253,60 +267,60 @@
   }
   .panel-head h2{
     font-family: var(--font-display); font-weight:700;
-    font-size: clamp(1.2rem, 3vw, 1.55rem); letter-spacing:-0.01em;
+    font-size: clamp(1.25rem, 3vw, 1.6rem); letter-spacing:-0.01em;
   }
-  .panel-head .sub{ font-size:0.82rem; color: var(--ink-soft); margin-top:0.3rem; }
+  .panel-head .sub{ font-size:0.84rem; color: var(--ink-soft); margin-top:0.3rem; }
   .badge{
     font-family: var(--font-mono); font-size:0.75rem; font-weight:700;
     background: var(--forest); color:#fff;
-    padding: 0.35rem 0.7rem; border-radius:8px; white-space:nowrap;
+    padding: 0.35rem 0.75rem; border-radius:8px; white-space:nowrap;
   }
 
   /* Overview */
-  .grid-2{ display:grid; grid-template-columns:1fr; gap:0.9rem; }
+  .grid-2{ display:grid; grid-template-columns:1fr; gap:1rem; }
   @media (min-width:600px){ .grid-2{ grid-template-columns: 1fr 1fr; } }
   .tile{
     border: 2px solid var(--rule);
     border-radius: 12px;
-    padding: 1.1rem;
+    padding: 1.25rem;
     background: var(--tile);
   }
   .tile-label{
-    font-family: var(--font-mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em;
+    font-family: var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
     color: var(--marigold-deep); font-weight:700; margin-bottom:0.5rem;
   }
-  .tile-value{ font-size:0.98rem; font-weight:600; line-height:1.4; }
+  .tile-value{ font-size:1.02rem; font-weight:600; line-height:1.4; }
   .tile-span{ grid-column: 1 / -1; }
-  .tile-note{ font-family: var(--font-mono); font-size:0.82rem; color: var(--ink-soft); }
+  .tile-note{ font-family: var(--font-mono); font-size:0.85rem; color: var(--ink-soft); }
 
   /* Day filter */
   .day-filter{
-    display:flex; gap:0.4rem; overflow-x:auto; margin-bottom:1.1rem;
+    display:flex; gap:0.4rem; overflow-x:auto; margin-bottom:1.2rem;
     padding-bottom: 0.2rem;
   }
   .day-chip{
     flex-shrink:0; border: 2px solid var(--rule); background:var(--tile);
-    padding: 0.45rem 0.8rem; border-radius: 20px;
-    font-family: var(--font-mono); font-size:0.72rem; font-weight:600; color: var(--ink-soft);
+    padding: 0.5rem 0.85rem; border-radius: 20px;
+    font-family: var(--font-mono); font-size:0.75rem; font-weight:600; color: var(--ink-soft);
     cursor:pointer; white-space:nowrap; transition: all 0.15s ease;
   }
   .day-chip.active{ background: var(--ink); color: var(--paper-raised); border-color: var(--ink); }
 
-  /* Schedule table -> card list on narrow screens */
+  /* Schedule table */
   .table-shell{ border: 2px solid var(--rule); border-radius: 12px; overflow:hidden; background:var(--tile); }
-  table{ width:100%; border-collapse: collapse; font-size:0.86rem; }
+  table{ width:100%; border-collapse: collapse; font-size:0.88rem; }
   thead th{
-    text-align:left; font-family: var(--font-mono); font-size:0.68rem; text-transform:uppercase;
-    letter-spacing:0.05em; color: var(--ink-soft); padding: 0.8rem 1rem;
+    text-align:left; font-family: var(--font-mono); font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.05em; color: var(--ink-soft); padding: 0.85rem 1.1rem;
     background: var(--forest-wash-2); border-bottom: 2px solid var(--rule);
   }
-  tbody td{ padding: 0.85rem 1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody td{ padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
   tbody tr:last-child td{ border-bottom:none; }
-  tbody tr:hover td{ background: rgba(217,140,34,0.06); }
+  tbody tr:hover td{ background: rgba(228,161,61,0.06); }
   .cell-day{ font-family: var(--font-mono); font-weight:700; white-space:nowrap; }
   .cell-time{ font-family: var(--font-mono); color: var(--ink-soft); white-space:nowrap; }
   .cell-subject strong{ font-weight:600; }
-  .cell-prof{ font-size:0.78rem; color: var(--ink-soft); margin-top:0.2rem; font-family: var(--font-mono); }
+  .cell-prof{ font-size:0.8rem; color: var(--ink-soft); margin-top:0.2rem; font-family: var(--font-mono); }
   .cell-venue{ font-family: var(--font-mono); font-weight:700; color: var(--forest); white-space:nowrap; }
 
   @media (max-width: 640px){
@@ -315,82 +329,82 @@
     thead{ display:none; }
     tbody tr{
       background:var(--tile); border:2px solid var(--rule); border-radius:12px;
-      margin-bottom:0.75rem; padding: 0.9rem 1rem;
+      margin-bottom:0.75rem; padding: 1rem;
     }
-    tbody td{ border:none; padding: 0.15rem 0; }
+    tbody td{ border:none; padding: 0.2rem 0; }
     tbody td::before{
       content: attr(data-label);
-      display:block; font-family: var(--font-mono); font-size:0.62rem;
+      display:block; font-family: var(--font-mono); font-size:0.65rem;
       text-transform:uppercase; letter-spacing:0.05em; color: var(--ink-faint); margin-bottom:0.15rem;
     }
     .cell-day::before{ content:none; }
     .cell-day{
       display:inline-block; background: var(--ink); color: var(--paper-raised);
-      padding: 0.2rem 0.55rem; border-radius:6px; font-size:0.72rem; margin-bottom:0.5rem;
+      padding: 0.25rem 0.6rem; border-radius:6px; font-size:0.75rem; margin-bottom:0.5rem;
     }
   }
 
   /* Chat */
   .chat-shell{
-    display:flex; flex-direction:column; height: 430px;
+    display:flex; flex-direction:column; height: 440px;
     border: 2px solid var(--rule); border-radius:12px; overflow:hidden; background:var(--tile);
   }
-  .chat-log{ flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.75rem; }
-  .bubble{ max-width: 85%; padding:0.7rem 0.95rem; border-radius:12px; line-height:1.45; white-space:pre-wrap; font-size:0.88rem; }
+  .chat-log{ flex:1; overflow-y:auto; padding:1.1rem; display:flex; flex-direction:column; gap:0.85rem; }
+  .bubble{ max-width: 85%; padding:0.75rem 1rem; border-radius:12px; line-height:1.45; white-space:pre-wrap; font-size:0.9rem; }
   .bubble.bot{ align-self:flex-start; background: var(--forest-wash-3); border-left:3px solid var(--forest); border-bottom-left-radius:3px; }
   .bubble.user{ align-self:flex-end; background: var(--marigold); color:var(--on-accent); font-weight:600; border-bottom-right-radius:3px; font-family: var(--font-mono); }
-  .chip-row{ display:flex; gap:0.4rem; overflow-x:auto; padding:0.5rem 0.75rem; border-top: 2px dashed var(--rule); }
+  .chip-row{ display:flex; gap:0.45rem; overflow-x:auto; padding:0.6rem 0.85rem; border-top: 2px dashed var(--rule); }
   .sugg-chip{
     background: transparent; border: 1.5px solid var(--forest); color: var(--forest);
-    padding: 0.28rem 0.65rem; font-size:0.72rem; font-family: var(--font-mono); font-weight:600;
+    padding: 0.3rem 0.75rem; font-size:0.75rem; font-family: var(--font-mono); font-weight:600;
     cursor:pointer; white-space:nowrap; border-radius:20px;
   }
   .sugg-chip:hover{ background: var(--forest); color:#fff; }
-  .chat-input-row{ display:flex; gap:0.5rem; padding:0.7rem; border-top:2px solid var(--rule); background: var(--paper-raised); }
+  .chat-input-row{ display:flex; gap:0.5rem; padding:0.75rem; border-top:2px solid var(--rule); background: var(--paper-raised); }
   .chat-input-row .input{ flex:1; }
 
   /* Holidays */
   .countdown-tile{
     border: 2px solid var(--clay); background: var(--clay-wash);
-    border-radius:12px; padding:1.1rem; margin-bottom:1.2rem;
+    border-radius:12px; padding:1.25rem; margin-bottom:1.3rem;
   }
   .countdown-tile .tile-label{ color: var(--clay); }
-  .countdown-tile .tile-value{ font-size:1.1rem; font-weight:700; color: var(--clay); }
-  .countdown-tile .sub{ font-family: var(--font-mono); font-size:0.8rem; color: var(--ink-soft); margin-top:0.3rem; }
+  .countdown-tile .tile-value{ font-size:1.15rem; font-weight:700; color: var(--clay); }
+  .countdown-tile .sub{ font-family: var(--font-mono); font-size:0.82rem; color: var(--ink-soft); margin-top:0.3rem; }
 
-  .holiday-list{ display:flex; flex-direction:column; gap:0.6rem; }
+  .holiday-list{ display:flex; flex-direction:column; gap:0.65rem; }
   .holiday-row{
-    display:flex; align-items:center; justify-content:space-between; gap:0.9rem;
-    border: 2px solid var(--rule); border-radius:12px; padding:0.85rem 1rem; background:var(--tile);
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    border: 2px solid var(--rule); border-radius:12px; padding:0.9rem 1.1rem; background:var(--tile);
   }
-  .holiday-info{ display:flex; align-items:center; gap:0.85rem; min-width:0; }
-  .holiday-emoji{ font-size:1.35rem; flex-shrink:0; }
-  .holiday-name{ font-weight:600; font-size:0.9rem; }
-  .holiday-meta{ font-size:0.74rem; font-family: var(--font-mono); color: var(--ink-soft); margin-top:0.15rem; }
+  .holiday-info{ display:flex; align-items:center; gap:0.95rem; min-width:0; }
+  .holiday-emoji{ font-size:1.4rem; flex-shrink:0; }
+  .holiday-name{ font-weight:600; font-size:0.92rem; }
+  .holiday-meta{ font-size:0.76rem; font-family: var(--font-mono); color: var(--ink-soft); margin-top:0.15rem; }
   .tag{
-    flex-shrink:0; padding:0.25rem 0.55rem; border-radius:7px; font-weight:700; font-size:0.65rem;
+    flex-shrink:0; padding:0.25rem 0.6rem; border-radius:7px; font-weight:700; font-size:0.68rem;
     font-family: var(--font-mono);
   }
   .tag.upcoming{ background: var(--forest); color:#fff; }
   .tag.passed{ background: var(--ink-faint); color:#fff; }
 
   /* Clock */
-  .clock-tile{ text-align:center; padding: clamp(2rem,8vw,3.2rem) 1rem; border:2px dashed var(--rule); border-radius:12px; }
-  .clock-time{ font-family: var(--font-mono); font-weight:700; color: var(--forest); font-size: clamp(2.1rem, 8vw, 3.2rem); letter-spacing:-0.01em; }
-  .clock-date{ font-family: var(--font-mono); font-size:0.9rem; color: var(--ink-soft); margin-top:0.6rem; }
+  .clock-tile{ text-align:center; padding: clamp(2.5rem,8vw,3.5rem) 1rem; border:2px dashed var(--rule); border-radius:12px; }
+  .clock-time{ font-family: var(--font-mono); font-weight:700; color: var(--forest); font-size: clamp(2.3rem, 8vw, 3.4rem); letter-spacing:-0.01em; }
+  .clock-date{ font-family: var(--font-mono); font-size:0.95rem; color: var(--ink-soft); margin-top:0.6rem; }
 
   /* Notes */
-  .notes-grid{ display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1.1rem; }
+  .notes-grid{ display:grid; grid-template-columns:1fr; gap:1.1rem; margin-top:1.2rem; }
   @media (min-width:600px){ .notes-grid{ grid-template-columns: 1fr 1fr; } }
   .note-card{
-    background:var(--tile); border:2px solid var(--rule); border-radius:12px; padding:1.1rem;
+    background:var(--tile); border:2px solid var(--rule); border-radius:12px; padding:1.2rem;
     display:flex; flex-direction:column; justify-content:space-between;
   }
-  .note-content{ font-family: var(--font-mono); font-size:0.87rem; line-height:1.55; white-space:pre-wrap; margin-bottom:1rem; }
+  .note-content{ font-family: var(--font-mono); font-size:0.88rem; line-height:1.55; white-space:pre-wrap; margin-bottom:1rem; }
   .note-foot{
     display:flex; justify-content:space-between; align-items:center;
-    font-size:0.68rem; font-family: var(--font-mono); color: var(--ink-soft);
-    border-top:1px dashed var(--rule); padding-top:0.65rem;
+    font-size:0.7rem; font-family: var(--font-mono); color: var(--ink-soft);
+    border-top:1px dashed var(--rule); padding-top:0.7rem;
   }
   .empty-note{ color: var(--ink-soft); text-align:center; padding:2rem 1rem; font-size:0.85rem; font-family: var(--font-mono); grid-column: 1/-1; }
 
@@ -400,7 +414,7 @@
     position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 80px);
     background: var(--ink); color: var(--paper-raised);
     padding: 0.75rem 1.2rem; font-size:0.85rem; font-family: var(--font-mono);
-    border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     opacity:0; transition: all 0.3s cubic-bezier(.16,1,.3,1);
     z-index: 1000; max-width: 90vw;
   }
@@ -427,39 +441,39 @@
 </header>
 
 <main>
-  <!-- Auth -->
+  <!-- Improved Auth Screen -->
   <div class="auth-wrap" id="auth-screen">
-    <div class="card">
-      <span class="stamp">Student Access</span>
-      <h2>Open your almanac</h2>
-      <p class="lead">Sign in with your name and student ID to see your section's timetable, holidays and notes.</p>
+    <div class="auth-card">
+      <span class="auth-stamp">SECURE ALMANAC REGISTRATION</span>
+      <h2>Identify Yourself</h2>
+      <p class="auth-lead">Enter your credentials to load your personalized section timetable, notes, and academic calendar.</p>
 
       <form id="login-form">
         <div class="field">
-          <label for="student-name">Your name</label>
-          <input type="text" id="student-name" class="input" placeholder="e.g. Aditi Sharma" autocomplete="name">
+          <label for="student-name">Full Name</label>
+          <input type="text" id="student-name" class="input" placeholder="e.g. Ishaan Thusoo" autocomplete="name">
         </div>
         <div class="field">
-          <label for="student-id">Student ID</label>
-          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT045" autocomplete="off">
+          <label for="student-id">Student ID / UID</label>
+          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT052" autocomplete="off">
         </div>
         <div class="field">
-          <label>Section</label>
+          <label>Assigned Section Node</label>
           <div class="segmented">
             <label><input type="radio" name="section" value="#IT-1"> #IT-1</label>
             <label><input type="radio" name="section" value="#IT-2" checked> #IT-2</label>
           </div>
         </div>
-        <div id="login-error" class="error-text">Enter both your name and student ID to continue.</div>
-        <button type="submit" class="btn btn-block" style="margin-top:1.3rem;">Open almanac</button>
+        <div id="login-error" class="error-text">ERROR: Full Name and Student ID are required parameters.</div>
+        <button type="submit" class="btn btn-block" style="margin-top:1.5rem;">Initialize Session</button>
       </form>
     </div>
   </div>
 
-  <!-- App -->
+  <!-- App Dashboard -->
   <div class="app" id="dashboard-screen">
     <aside class="sidebar">
-      <div class="sidebar-eyebrow">Sections</div>
+      <div class="sidebar-eyebrow">Navigation</div>
       <div class="nav-list" role="tablist">
         <button class="nav-item active" data-target="overview">Overview</button>
         <button class="nav-item" data-target="schedule">Timetable</button>
@@ -529,7 +543,7 @@
       <div id="tab-chat" class="tab-content hidden">
         <div class="chat-shell">
           <div class="chat-log" id="chat-log">
-            <div class="bubble bot">Ask me about your timetable, professors, room numbers, or holidays.</div>
+            <div class="bubble bot">AI Assistant online. Ask me about your timetable, professors, venues, or university holidays.</div>
           </div>
           <div class="chip-row">
             <button class="sugg-chip" onclick="sendSuggestion('Monday schedule')">Monday schedule</button>
@@ -538,7 +552,7 @@
             <button class="sugg-chip" onclick="sendSuggestion('Venue for Probability')">Prob venue</button>
           </div>
           <div class="chat-input-row">
-            <input type="text" id="chat-input" class="input" placeholder="Ask anything…">
+            <input type="text" id="chat-input" class="input" placeholder="Ask anything about classes or holidays…">
             <button class="btn btn-small" id="btn-send-chat">Send</button>
           </div>
         </div>
@@ -565,8 +579,8 @@
       <!-- NOTES -->
       <div id="tab-notes" class="tab-content hidden">
         <div class="tile" style="background:var(--tile);">
-          <label for="new-note" style="display:block; font-family: var(--font-mono); font-size:0.68rem; font-weight:700; color: var(--marigold-deep); margin-bottom:0.5rem; text-transform:uppercase;">New note</label>
-          <textarea id="new-note" class="input" placeholder="Jot down a reminder or a formula…"></textarea>
+          <label for="new-note" style="display:block; font-family: var(--font-mono); font-size:0.7rem; font-weight:700; color: var(--marigold-deep); margin-bottom:0.5rem; text-transform:uppercase;">New note</label>
+          <textarea id="new-note" class="input" placeholder="Jot down a reminder or formula…"></textarea>
           <div id="note-error" class="error-text">Write something before saving.</div>
           <button class="btn btn-small" id="btn-save-note" style="margin-top:0.75rem;">Save note</button>
         </div>
@@ -658,7 +672,7 @@
       const n = localStorage.getItem('almanac_notes');
       if (u) currentUser = JSON.parse(u);
       if (n) notesByStudent = JSON.parse(n);
-    } catch (e) { /* ignore corrupt storage */ }
+    } catch (e) { }
   }
 
   function saveState(){
@@ -673,8 +687,6 @@
     document.getElementById('auth-screen').style.display = "block";
     document.getElementById('dashboard-screen').style.display = "none";
 
-    // Prefill the login form with the last-used details, but always
-    // require the person to confirm by submitting before entering.
     if (currentUser.name) document.getElementById('student-name').value = currentUser.name;
     if (currentUser.id) document.getElementById('student-id').value = currentUser.id;
     if (currentUser.section){
@@ -811,48 +823,75 @@
     if (!q) return;
     appendMessage("user", q);
     input.value = "";
-    setTimeout(() => appendMessage("bot", generateBotResponse(q.toLowerCase())), 250);
+    setTimeout(() => appendMessage("bot", generateBotResponse(q)), 250);
   }
 
-  function generateBotResponse(q){
-    const days = ["monday","tuesday","wednesday","thursday","friday","saturday"];
-    let foundDay = days.find(d => q.includes(d));
+  // Robust, accurate chatbot response generator
+  function generateBotResponse(rawQuery){
+    const q = rawQuery.toLowerCase();
+    
+    // Check for specific days or "today"
+    const days = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
+    let targetDay = days.find(d => q.includes(d));
     if (q.includes("today")){
       const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-      foundDay = dayNames[new Date().getDay()].toLowerCase();
+      targetDay = dayNames[new Date().getDay()].toLowerCase();
     }
 
-    if (foundDay){
-      const dayCap = foundDay.charAt(0).toUpperCase() + foundDay.slice(1);
-      const classes = rawSchedule.filter(item => item.day.toLowerCase() === foundDay && item.sections.includes(currentUser.section));
-      if (classes.length === 0) return `No timetable entries for ${dayCap} under ${currentUser.section}.`;
-      let reply = `${dayCap} · ${currentUser.section}\n`;
+    if (targetDay){
+      const dayCap = targetDay.charAt(0).toUpperCase() + targetDay.slice(1);
+      if (targetDay === "sunday") {
+        return `Sunday is a weekend! No classes scheduled for ${currentUser.section}. Enjoy your day off!`;
+      }
+      const classes = rawSchedule.filter(item => item.day.toLowerCase() === targetDay && item.sections.includes(currentUser.section));
+      if (classes.length === 0) return `No classes scheduled for ${dayCap} under ${currentUser.section}.`;
+      
+      let reply = `Timetable for ${dayCap} (${currentUser.section}):\n`;
       classes.forEach(c => {
         reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
       });
       return reply.trim();
     }
 
-    if (q.includes("holiday") || q.includes("break") || q.includes("recess")){
+    // Check for holidays / break / recess
+    if (q.includes("holiday") || q.includes("break") || q.includes("recess") || q.includes("vacation")){
       const today = new Date(); today.setHours(0,0,0,0);
       const upcoming = holidays2026.find(h => new Date(h.date) >= today);
-      return upcoming
-        ? `Next recess: ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type})`
-        : "No upcoming holidays registered.";
+      if (!upcoming) return "No upcoming holidays registered for the rest of 2026.";
+      const hDate = new Date(upcoming.date);
+      hDate.setHours(0,0,0,0);
+      const diffDays = Math.ceil((hDate - today) / 86400000);
+      return `Next holiday is ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type}) — ${diffDays === 0 ? "It's today!" : diffDays + ' day(s) away'}.`;
     }
 
-    if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches")){
-      return "Faculty:\n• Data Structures — Mr. Sanjay Joshi\n• Digital Electronics — Mr. Jalaj Sharma\n• Automata Theory — Dr. Shri Prakash Dwivedi\n• Prob & Stats — Prof. Arun Kumar\n• Tech Communication — Dr. Govind Singh Kushwaha\n• FIT — Dr. Ashok Kumar";
+    // Check for professors / teachers
+    if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches") || q.includes("faculty") || q.includes("instructor")){
+      if (q.includes("data structure") || q.includes("dsa")) return "Data Structures and Algorithms is taught by Mr. Sanjay Joshi.";
+      if (q.includes("digital electronics") || q.includes("de")) return "Digital Electronics is taught by Mr. Jalaj Sharma.";
+      if (q.includes("automata") || q.includes("formal language") || q.includes("flat")) return "Formal Languages & Automata Theory is taught by Dr. Shri Prakash Dwivedi.";
+      if (q.includes("probability") || q.includes("statistics") || q.includes("stats")) return "Probability and Statistics is taught by Prof. Arun Kumar.";
+      if (q.includes("communication") || q.includes("tc")) return "Effective Technical Communication is taught by Dr. Govind Singh Kushwaha.";
+      if (q.includes("fit") || q.includes("foundations of information technology")) return "Foundations of Information Technology is taught by Dr. Ashok Kumar.";
+      
+      return "Faculty roster:\n• Data Structures: Mr. Sanjay Joshi\n• Digital Electronics: Mr. Jalaj Sharma\n• Automata Theory: Dr. Shri Prakash Dwivedi\n• Prob & Stats: Prof. Arun Kumar\n• Tech Communication: Dr. Govind Singh Kushwaha\n• FIT: Dr. Ashok Kumar";
     }
 
-    if (q.includes("venue") || q.includes("probability") || q.includes("stats")){
-      return "Probability & Statistics lectures and tutorials are at IT 202 / Golakota.";
+    // Check for venue / room / location queries
+    if (q.includes("venue") || q.includes("room") || q.includes("where") || q.includes("class location")){
+      if (q.includes("probability") || q.includes("stats")) return "Probability and Statistics classes are held at IT 202 / Golakota.";
+      if (q.includes("data structure") || q.includes("dsa")) return "DSA theory classes are in IT-202 (Practicals in IT-203 for #IT-1 / IT-203 for #IT-2).";
+      return "Most theory classes are held in room IT-202. Check your specific timetable tab for lab venues like IT-203, IT-204, or the Computer Engineering Department.";
     }
 
-    if (q.includes("section")) return `Your section: ${currentUser.section}`;
-    if (q.includes("hello") || q.includes("hi")) return `Hi ${currentUser.name}! Ask me about a day's schedule, a professor, or the next holiday.`;
+    // Check for section
+    if (q.includes("section")) return `You are currently logged in under section node: ${currentUser.section}.`;
 
-    return "I didn't catch that — try asking for a day's schedule, a professor's name, or the next holiday.";
+    // Greetings
+    if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+      return `Hello ${currentUser.name}! I am your Almanac assistant. You can ask me about your schedule for any day, professor names, room venues, or upcoming university holidays.`;
+    }
+
+    return "I can look up your daily schedule, faculty members, room venues, or holiday countdowns. Try asking: 'What is my schedule for Wednesday?' or 'Who teaches Data Structures?'";
   }
 
   function renderHolidays(){
