@@ -2,481 +2,449 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>IT · 2nd Year — Class Almanac</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>IT · 2nd Year — NextGen Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#14120e;
-    --paper-raised:#1d1913;
-    --tile:#262118;
-    --rule:#3d3425;
-    --rule-tint: rgba(61,52,37,0.55);
-    --ink:#f5eee1;
-    --ink-soft:#c2b69b;
-    --ink-faint:#8a7f68;
-    --marigold:#e4a13d;
-    --marigold-deep:#f2b563;
-    --forest:#6fae95;
-    --forest-wash-1: rgba(111,174,149,0.14);
-    --forest-wash-2: rgba(111,174,149,0.1);
-    --forest-wash-3: rgba(111,174,149,0.18);
-    --clay:#e2775b;
-    --clay-wash: rgba(226,119,91,0.14);
-    --on-accent:#14120e;
-    --shadow: 0 4px 20px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
-    --radius: 16px;
-    --font-display:'Fraunces', Georgia, serif;
-    --font-body:'IBM Plex Sans', system-ui, sans-serif;
-    --font-mono:'IBM Plex Mono', monospace;
+  :root {
+    --bg-base: #000000;
+    --bg-surface: #0a0a0a;
+    --bg-surface-elevated: #111111;
+    --bg-glass: rgba(17, 17, 17, 0.6);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #52525b;
+    --accent-primary: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    --danger: #ef4444;
+    --danger-bg: rgba(239, 68, 68, 0.1);
+    --success: #10b981;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{-webkit-text-size-adjust:100%;}
-  body{
-    font-family: var(--font-body);
-    background:
-      radial-gradient(circle at 50% 0%, rgba(228, 161, 61, 0.04), transparent 50%),
-      repeating-linear-gradient(180deg, transparent 0 34px, var(--rule-tint) 34px 35px),
-      var(--paper);
-    color: var(--ink);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
   }
 
-  ::selection{ background: var(--marigold); color:var(--on-accent); }
-  :focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
+  /* Ambient Background Glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%; left: -10%; width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    z-index: -1; pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%; right: -10%; width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+    z-index: -1; pointer-events: none;
+  }
+
+  ::selection { background: var(--accent-primary); color: #fff; }
   button, input, textarea { font-family: inherit; }
-  a { color: inherit; }
 
   /* ---------- Header ---------- */
-  header{
-    position: sticky; top:0; z-index: 50;
-    background: var(--paper-raised);
-    border-bottom: 2px solid var(--rule);
-    padding: 0.9rem clamp(1rem, 4vw, 2.2rem);
-    display:flex; align-items:center; justify-content:space-between;
-    gap: 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem clamp(1rem, 5vw, 2rem);
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .brand{ display:flex; align-items:center; gap:0.85rem; }
-  .brand-mark{
-    width: 42px; height: 42px; flex-shrink:0;
-    border: 2px solid var(--ink);
-    border-radius: 10px;
-    display:flex; align-items:center; justify-content:center;
-    font-family: var(--font-display); font-weight:700; font-size:1.15rem;
-    background: var(--marigold);
-    color: var(--on-accent);
-    box-shadow: 2px 2px 0px var(--rule);
+  
+  .brand { display: flex; align-items: center; gap: 0.75rem; }
+  .brand-icon {
+    width: 32px; height: 32px;
+    background: var(--accent-gradient);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
+    box-shadow: 0 0 15px var(--accent-glow);
   }
-  .brand-text h1{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
-    letter-spacing: -0.01em;
-    line-height:1.1;
-  }
-  .brand-text p{
-    font-size:0.75rem; color: var(--ink-soft);
-    font-family: var(--font-mono);
-    margin-top:3px;
+  .brand-text h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+  .brand-badge {
+    font-size: 0.65rem; font-family: var(--font-mono);
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1); color: var(--text-secondary);
+    margin-left: 0.5rem;
   }
 
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:0.4rem;
-    border: 2px solid var(--ink);
-    background: var(--ink);
-    color: var(--paper-raised);
-    padding: 0.75rem 1.25rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor:pointer;
-    box-shadow: 2px 2px 0px var(--rule);
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--text-primary); color: var(--bg-base);
+    border: none; padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: var(--transition);
   }
-  .btn-block{ width:100%; }
-  .btn-outline{
-    background: transparent; color: var(--ink);
-  }
-  .btn-small{ padding:0.45rem 0.85rem; font-size:0.78rem; border-radius:9px; box-shadow: 1px 1px 0px var(--rule); }
-  .btn-ghost-danger{
-    background:transparent; color:var(--clay); border:2px solid var(--clay);
-    padding:0.35rem 0.65rem; font-size:0.72rem; border-radius:8px; font-weight:600; cursor:pointer;
-  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); }
+  .btn:active { transform: translateY(0); }
+  .btn-block { width: 100%; }
+  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-strong); }
+  .btn-outline:hover { background: var(--border-subtle); box-shadow: none; }
+  .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
+  .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
+  .btn-danger:hover { background: rgba(239, 68, 68, 0.2); box-shadow: none; }
 
-  main{ flex:1; display:flex; justify-content:center; padding: clamp(1rem, 4vw, 2.5rem) clamp(0.75rem, 4vw, 1.5rem); }
+  main { flex: 1; display: flex; justify-content: center; padding: clamp(1rem, 4vw, 2rem); }
 
-  /* ---------- Glassmorphism Auth Screen (No Animations) ---------- */
-  .auth-wrap{ width:100%; max-width: 520px; margin-top: clamp(0.5rem, 3vh, 2rem); }
-  .auth-card{
-    background: rgba(29, 25, 19, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(245, 238, 225, 0.15);
-    border-radius: var(--radius);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    padding: clamp(1.8rem, 5vw, 2.8rem);
-    position: relative;
-    overflow: hidden;
+  /* ---------- Glassmorphism Auth Screen ---------- */
+  .auth-wrap { width: 100%; max-width: 420px; margin: auto; }
+  .auth-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 5vw, 2.5rem);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
-  .auth-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 5px;
-    background: linear-gradient(90deg, var(--marigold), var(--forest));
-  }
-  .auth-stamp{
-    display:inline-block;
-    border: 1px solid var(--marigold);
-    color: var(--marigold-deep);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.25rem 0.65rem;
-    border-radius: 6px;
-    background: rgba(228, 161, 61, 0.1);
-    margin-bottom: 1.2rem;
-    letter-spacing: 0.05em;
-  }
-  .auth-card h2{
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 4vw, 2.1rem);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+  .auth-card h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+  .auth-lead { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; }
+
+  .field { margin-bottom: 1.25rem; }
+  .field label {
+    display: block; font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);
     margin-bottom: 0.5rem;
   }
-  .auth-lead{ color: var(--ink-soft); font-size:0.92rem; margin-bottom: 1.8rem; line-height:1.5; }
-
-  .field{ margin-bottom: 1.25rem; }
-  .field label{
-    display:block; font-size:0.75rem; font-weight:600; color: var(--ink-soft);
-    margin-bottom: 0.45rem; letter-spacing:0.04em; font-family: var(--font-mono);
-    text-transform: uppercase;
+  .input {
+    width: 100%; padding: 0.85rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem; color: var(--text-primary);
+    transition: var(--transition);
   }
-  .input{
-    width:100%;
-    padding: 0.85rem 1rem;
-    background: rgba(20, 18, 14, 0.7);
-    border: 1px solid rgba(245, 238, 225, 0.2);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    color: var(--ink);
-    outline:none;
+  .input:focus { border-color: var(--accent-primary); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+  textarea.input { resize: vertical; min-height: 100px; font-family: var(--font-sans); }
+
+  .segmented { display: flex; gap: 0.5rem; background: rgba(0, 0, 0, 0.3); padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+  .segmented label {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 0.6rem; border-radius: var(--radius-sm);
+    font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);
+    cursor: pointer; transition: var(--transition);
   }
-  .input:focus{ border-color: var(--forest); background: rgba(20, 18, 14, 0.9); }
-  textarea.input{ resize:vertical; min-height: 110px; font-family: var(--font-mono); font-size:0.88rem; }
+  .segmented input { display: none; }
+  .segmented label:has(input:checked) { background: var(--border-strong); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 
-  .segmented{ display:flex; gap:0.75rem; }
-  .segmented label{
-    flex:1; display:flex; align-items:center; justify-content:center; gap:0.5rem;
-    border: 1px solid rgba(245, 238, 225, 0.2);
-    border-radius: 10px;
-    padding: 0.8rem;
-    font-weight: 600; font-size: 0.9rem;
-    background: rgba(20, 18, 14, 0.5);
-    cursor:pointer;
-  }
-  .segmented input{ accent-color: var(--forest); width: 16px; height: 16px; }
-  .segmented label:has(input:checked){ border-color: var(--forest); background: var(--forest-wash-1); color: var(--ink); }
+  .error-text { color: var(--danger); font-size: 0.8rem; font-weight: 500; margin-top: 0.5rem; display: none; }
 
-  .error-text{ color: var(--clay); font-size:0.8rem; font-family: var(--font-mono); font-weight:600; margin-top:0.6rem; display:none; }
-
-  /* ---------- App shell ---------- */
-  .app{ display:none; width:100%; max-width: 1180px; gap: 1.25rem; }
-
-  @media (min-width: 860px){
-    .app{ display:grid; grid-template-columns: 230px 1fr; align-items:flex-start; }
-  }
-  @media (max-width: 859px){
-    .app{ display:flex; flex-direction:column; }
+  /* ---------- App Layout ---------- */
+  .app { display: none; width: 100%; max-width: 1200px; gap: 2rem; margin: 0 auto; }
+  
+  @media (min-width: 860px) {
+    .app { display: grid; grid-template-columns: 240px 1fr; align-items: flex-start; }
   }
 
-  /* Sidebar (tablet/desktop) */
-  .sidebar{
-    display:none;
-    background: var(--paper-raised);
-    border: 2px solid var(--rule);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    position: sticky; top: 5.2rem;
-    box-shadow: var(--shadow);
+  /* Desktop Sidebar */
+  .sidebar {
+    display: none;
+    position: sticky; top: 6rem;
   }
-  @media (min-width: 860px){ .sidebar{ display:block; } }
+  @media (min-width: 860px) { .sidebar { display: block; } }
 
-  .sidebar-eyebrow{
-    font-family: var(--font-mono); font-size:0.7rem; color: var(--ink-faint);
-    padding-bottom:0.6rem; margin-bottom:0.7rem; border-bottom: 2px dashed var(--rule);
-    text-transform: uppercase; letter-spacing: 0.05em;
+  .nav-list { display: flex; flex-direction: column; gap: 0.25rem; }
+  .nav-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: transparent; border: none; text-align: left;
+    padding: 0.75rem 1rem; border-radius: var(--radius-md);
+    font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);
+    cursor: pointer; transition: var(--transition);
   }
-  .nav-list{ display:flex; flex-direction:column; gap:0.35rem; }
-  .nav-item{
-    display:flex; align-items:center; gap:0.65rem;
-    background: transparent; border:none; text-align:left;
-    padding: 0.7rem 0.8rem; border-radius: 10px;
-    font-weight:600; font-size:0.88rem; color: var(--ink-soft);
-    cursor:pointer;
-  }
-  .nav-item:hover{ background: var(--forest-wash-1); color: var(--ink); }
-  .nav-item.active{ background: var(--ink); color: var(--paper-raised); }
+  .nav-item:hover { background: var(--border-subtle); color: var(--text-primary); }
+  .nav-item.active { background: var(--text-primary); color: var(--bg-base); font-weight: 600; }
 
-  /* Mobile/tablet horizontal tabs */
-  .tab-strip{
-    display:flex; gap: 0.45rem; overflow-x:auto;
-    padding: 0.45rem; margin-bottom: 1.1rem;
-    background: var(--paper-raised);
-    border: 2px solid var(--rule);
-    border-radius: 12px;
+  /* Mobile Bottom Tab Bar */
+  .bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.75rem 1rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 100; justify-content: space-around;
+  }
+  @media (max-width: 859px) { .bottom-nav { display: flex; } body { padding-bottom: 5rem; } }
+  
+  .tab-icon-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    background: transparent; border: none; color: var(--text-tertiary);
+    font-size: 0.65rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+  }
+  .tab-icon-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tab-icon-btn.active { color: var(--text-primary); }
+
+  /* Content Area */
+  .panel {
+    background: transparent;
+    min-height: 500px;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .panel-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .panel-head h2 { font-size: 1.8rem; font-weight: 600; letter-spacing: -0.03em; }
+  .panel-head .sub { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem; }
+  .badge {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    background: rgba(59, 130, 246, 0.15); color: var(--accent-primary);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.35rem 0.75rem; border-radius: 20px;
+  }
+
+  /* Bento Grid */
+  .grid-bento { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 640px) { .grid-bento { grid-template-columns: 1fr 1fr; } }
+  .bento-card {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+  }
+  .bento-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .bento-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .bento-value { font-size: 1.1rem; font-weight: 500; line-height: 1.4; color: var(--text-primary); }
+  .bento-span { grid-column: 1 / -1; }
+  .bento-note { font-size: 0.9rem; color: var(--text-secondary); }
+
+  /* Day Filter (Pills) */
+  .day-filter {
+    display: flex; gap: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; padding-bottom: 0.5rem;
     -webkit-overflow-scrolling: touch;
   }
-  @media (min-width: 860px){ .tab-strip{ display:none; } }
-  .tab-strip::-webkit-scrollbar{ height:0; }
-  .tab-pill{
-    flex-shrink:0;
-    background: transparent; border:none;
-    padding: 0.55rem 0.95rem; border-radius: 9px;
-    font-weight:600; font-size:0.82rem; color: var(--ink-soft);
-    cursor:pointer; white-space:nowrap;
+  .day-filter::-webkit-scrollbar { display: none; }
+  .day-chip {
+    flex-shrink: 0; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+    padding: 0.5rem 1rem; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: var(--transition);
   }
-  .tab-pill.active{ background: var(--marigold); color:var(--on-accent); }
+  .day-chip:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .day-chip.active { background: var(--text-primary); color: var(--bg-base); border-color: var(--text-primary); font-weight: 600; }
 
-  /* Content panel */
-  .panel{
-    background: var(--paper-raised);
-    border: 2px solid var(--rule);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: clamp(1.2rem, 3.5vw, 2rem);
-    min-height: 500px;
+  /* Modern Table */
+  .table-shell {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
   }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  thead th {
+    text-align: left; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-secondary); padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-subtle);
+  }
+  tbody td { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255,255,255,0.02); }
+  .cell-day { font-weight: 600; }
+  .cell-time { color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.85rem; }
+  .cell-subject strong { font-weight: 500; color: var(--text-primary); display: block; }
+  .cell-prof { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
+  .cell-venue { font-family: var(--font-mono); font-weight: 600; color: var(--accent-primary); font-size: 0.85rem; }
 
-  .panel-head{
-    display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
-    padding-bottom: 1rem; margin-bottom: 1.3rem;
-    border-bottom: 2px dashed var(--rule);
-    flex-wrap: wrap;
-  }
-  .panel-head h2{
-    font-family: var(--font-display); font-weight:700;
-    font-size: clamp(1.25rem, 3vw, 1.6rem); letter-spacing:-0.01em;
-  }
-  .panel-head .sub{ font-size:0.84rem; color: var(--ink-soft); margin-top:0.3rem; }
-  .badge{
-    font-family: var(--font-mono); font-size:0.75rem; font-weight:700;
-    background: var(--forest); color:#fff;
-    padding: 0.35rem 0.75rem; border-radius:8px; white-space:nowrap;
-  }
-
-  /* Overview */
-  .grid-2{ display:grid; grid-template-columns:1fr; gap:1rem; }
-  @media (min-width:600px){ .grid-2{ grid-template-columns: 1fr 1fr; } }
-  .tile{
-    border: 2px solid var(--rule);
-    border-radius: 12px;
-    padding: 1.25rem;
-    background: var(--tile);
-  }
-  .tile-label{
-    font-family: var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
-    color: var(--marigold-deep); font-weight:700; margin-bottom:0.5rem;
-  }
-  .tile-value{ font-size:1.02rem; font-weight:600; line-height:1.4; }
-  .tile-span{ grid-column: 1 / -1; }
-  .tile-note{ font-family: var(--font-mono); font-size:0.85rem; color: var(--ink-soft); }
-
-  /* Day filter */
-  .day-filter{
-    display:flex; gap:0.4rem; overflow-x:auto; margin-bottom:1.2rem;
-    padding-bottom: 0.2rem;
-  }
-  .day-chip{
-    flex-shrink:0; border: 2px solid var(--rule); background:var(--tile);
-    padding: 0.5rem 0.85rem; border-radius: 20px;
-    font-family: var(--font-mono); font-size:0.75rem; font-weight:600; color: var(--ink-soft);
-    cursor:pointer; white-space:nowrap;
-  }
-  .day-chip.active{ background: var(--ink); color: var(--paper-raised); border-color: var(--ink); }
-
-  /* Schedule table */
-  .table-shell{ border: 2px solid var(--rule); border-radius: 12px; overflow:hidden; background:var(--tile); }
-  table{ width:100%; border-collapse: collapse; font-size:0.88rem; }
-  thead th{
-    text-align:left; font-family: var(--font-mono); font-size:0.7rem; text-transform:uppercase;
-    letter-spacing:0.05em; color: var(--ink-soft); padding: 0.85rem 1.1rem;
-    background: var(--forest-wash-2); border-bottom: 2px solid var(--rule);
-  }
-  tbody td{ padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  tbody tr:last-child td{ border-bottom:none; }
-  tbody tr:hover td{ background: rgba(228,161,61,0.06); }
-  .cell-day{ font-family: var(--font-mono); font-weight:700; white-space:nowrap; }
-  .cell-time{ font-family: var(--font-mono); color: var(--ink-soft); white-space:nowrap; }
-  .cell-subject strong{ font-weight:600; }
-  .cell-prof{ font-size:0.8rem; color: var(--ink-soft); margin-top:0.2rem; font-family: var(--font-mono); }
-  .cell-venue{ font-family: var(--font-mono); font-weight:700; color: var(--forest); white-space:nowrap; }
-
-  @media (max-width: 640px){
-    .table-shell{ border:none; background:transparent; overflow:visible; }
-    table, thead, tbody, tr, td{ display:block; width:100%; }
-    thead{ display:none; }
-    tbody tr{
-      background:var(--tile); border:2px solid var(--rule); border-radius:12px;
-      margin-bottom:0.75rem; padding: 1rem;
-    }
-    tbody td{ border:none; padding: 0.2rem 0; }
-    tbody td::before{
-      content: attr(data-label);
-      display:block; font-family: var(--font-mono); font-size:0.65rem;
-      text-transform:uppercase; letter-spacing:0.05em; color: var(--ink-faint); margin-bottom:0.15rem;
-    }
-    .cell-day::before{ content:none; }
-    .cell-day{
-      display:inline-block; background: var(--ink); color: var(--paper-raised);
-      padding: 0.25rem 0.6rem; border-radius:6px; font-size:0.75rem; margin-bottom:0.5rem;
-    }
+  @media (max-width: 640px) {
+    .table-shell { background: transparent; border: none; }
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tbody tr { background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); margin-bottom: 1rem; padding: 1rem; }
+    tbody td { border: none; padding: 0.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; }
+    tbody td::before { content: attr(data-label); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--text-tertiary); }
+    .cell-day::before { content: none; }
+    .cell-day { font-size: 1.1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
   }
 
-  /* Chat */
-  .chat-shell{
-    display:flex; flex-direction:column; height: 440px;
-    border: 2px solid var(--rule); border-radius:12px; overflow:hidden; background:var(--tile);
+  /* Chat UI */
+  .chat-shell {
+    display: flex; flex-direction: column; height: 500px;
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden;
   }
-  .chat-log{ flex:1; overflow-y:auto; padding:1.1rem; display:flex; flex-direction:column; gap:0.85rem; }
-  .bubble{ max-width: 85%; padding:0.75rem 1rem; border-radius:12px; line-height:1.45; white-space:pre-wrap; font-size:0.9rem; }
-  .bubble.bot{ align-self:flex-start; background: var(--forest-wash-3); border-left:3px solid var(--forest); border-bottom-left-radius:3px; }
-  .bubble.user{ align-self:flex-end; background: var(--marigold); color:var(--on-accent); font-weight:600; border-bottom-right-radius:3px; font-family: var(--font-mono); }
-  .chip-row{ display:flex; gap:0.45rem; overflow-x:auto; padding:0.6rem 0.85rem; border-top: 2px dashed var(--rule); }
-  .sugg-chip{
-    background: transparent; border: 1.5px solid var(--forest); color: var(--forest);
-    padding: 0.3rem 0.75rem; font-size:0.75rem; font-family: var(--font-mono); font-weight:600;
-    cursor:pointer; white-space:nowrap; border-radius:20px;
+  .chat-log { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; scroll-behavior: smooth; }
+  .bubble { max-width: 85%; padding: 0.85rem 1.1rem; border-radius: var(--radius-md); line-height: 1.5; font-size: 0.95rem; }
+  .bubble.bot { align-self: flex-start; background: rgba(255,255,255,0.05); border-bottom-left-radius: 4px; color: var(--text-primary); }
+  .bubble.user { align-self: flex-end; background: var(--accent-gradient); color: #fff; font-weight: 500; border-bottom-right-radius: 4px; }
+  .chip-row { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .sugg-chip {
+    background: transparent; border: 1px solid var(--border-strong); color: var(--text-secondary);
+    padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: var(--transition);
   }
-  .sugg-chip:hover{ background: var(--forest); color:#fff; }
-  .chat-input-row{ display:flex; gap:0.5rem; padding:0.75rem; border-top:2px solid var(--rule); background: var(--paper-raised); }
-  .chat-input-row .input{ flex:1; }
-
+  .sugg-chip:hover { background: var(--border-subtle); color: var(--text-primary); }
+  .chat-input-row { display: flex; gap: 0.5rem; padding: 1rem; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); }
+  
   /* Holidays */
-  .countdown-tile{
-    border: 2px solid var(--clay); background: var(--clay-wash);
-    border-radius:12px; padding:1.25rem; margin-bottom:1.3rem;
+  .holiday-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 0.75rem;
+    transition: var(--transition);
   }
-  .countdown-tile .tile-label{ color: var(--clay); }
-  .countdown-tile .tile-value{ font-size:1.15rem; font-weight:700; color: var(--clay); }
-  .countdown-tile .sub{ font-family: var(--font-mono); font-size:0.82rem; color: var(--ink-soft); margin-top:0.3rem; }
-
-  .holiday-list{ display:flex; flex-direction:column; gap:0.65rem; }
-  .holiday-row{
-    display:flex; align-items:center; justify-content:space-between; gap:1rem;
-    border: 2px solid var(--rule); border-radius:12px; padding:0.9rem 1.1rem; background:var(--tile);
-  }
-  .holiday-info{ display:flex; align-items:center; gap:0.95rem; min-width:0; }
-  .holiday-emoji{ font-size:1.4rem; flex-shrink:0; }
-  .holiday-name{ font-weight:600; font-size:0.92rem; }
-  .holiday-meta{ font-size:0.76rem; font-family: var(--font-mono); color: var(--ink-soft); margin-top:0.15rem; }
-  .tag{
-    flex-shrink:0; padding:0.25rem 0.6rem; border-radius:7px; font-weight:700; font-size:0.68rem;
-    font-family: var(--font-mono);
-  }
-  .tag.upcoming{ background: var(--forest); color:#fff; }
-  .tag.passed{ background: var(--ink-faint); color:#fff; }
+  .holiday-row:hover { border-color: var(--border-strong); }
+  .holiday-info { display: flex; align-items: center; gap: 1rem; }
+  .holiday-emoji { font-size: 1.5rem; }
+  .holiday-name { font-weight: 500; font-size: 1rem; }
+  .holiday-meta { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
+  .tag { padding: 0.25rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag.upcoming { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+  .tag.passed { background: rgba(255, 255, 255, 0.05); color: var(--text-tertiary); }
 
   /* Clock */
-  .clock-tile{ text-align:center; padding: clamp(2.5rem,8vw,3.5rem) 1rem; border:2px dashed var(--rule); border-radius:12px; }
-  .clock-time{ font-family: var(--font-mono); font-weight:700; color: var(--forest); font-size: clamp(2.3rem, 8vw, 3.4rem); letter-spacing:-0.01em; }
-  .clock-date{ font-family: var(--font-mono); font-size:0.95rem; color: var(--ink-soft); margin-top:0.6rem; }
+  .clock-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 40vh; }
+  .clock-time { font-family: var(--font-mono); font-weight: 700; font-size: clamp(3rem, 10vw, 5rem); letter-spacing: -0.02em; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .clock-date { font-size: 1.2rem; color: var(--text-secondary); margin-top: 0.5rem; font-weight: 500; }
 
   /* Notes */
-  .notes-grid{ display:grid; grid-template-columns:1fr; gap:1.1rem; margin-top:1.2rem; }
-  @media (min-width:600px){ .notes-grid{ grid-template-columns: 1fr 1fr; } }
-  .note-card{
-    background:var(--tile); border:2px solid var(--rule); border-radius:12px; padding:1.2rem;
-    display:flex; flex-direction:column; justify-content:space-between;
+  .notes-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+  @media (min-width: 600px) { .notes-grid { grid-template-columns: 1fr 1fr; } }
+  .note-card {
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 1.25rem;
+    display: flex; flex-direction: column; justify-content: space-between;
   }
-  .note-content{ font-family: var(--font-mono); font-size:0.88rem; line-height:1.55; white-space:pre-wrap; margin-bottom:1rem; }
-  .note-foot{
-    display:flex; justify-content:space-between; align-items:center;
-    font-size:0.7rem; font-family: var(--font-mono); color: var(--ink-soft);
-    border-top:1px dashed var(--rule); padding-top:0.7rem;
-  }
-  .empty-note{ color: var(--ink-soft); text-align:center; padding:2rem 1rem; font-size:0.85rem; font-family: var(--font-mono); grid-column: 1/-1; }
+  .note-content { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; margin-bottom: 1.5rem; color: var(--text-primary); }
+  .note-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
+  .note-time { font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-mono); }
 
-  .hidden{ display:none !important; }
+  .hidden { display: none !important; }
 
-  .toast{
-    position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 80px);
-    background: var(--ink); color: var(--paper-raised);
-    padding: 0.75rem 1.2rem; font-size:0.85rem; font-family: var(--font-mono);
-    border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    opacity:0; transition: all 0.3s cubic-bezier(.16,1,.3,1);
-    z-index: 1000; max-width: 90vw;
+  /* Toast Notification */
+  .toast {
+    position: fixed; top: 24px; left: 50%; transform: translate(-50%, -100px);
+    background: var(--bg-surface-elevated); color: var(--text-primary);
+    padding: 0.8rem 1.25rem; font-size: 0.9rem; font-weight: 500;
+    border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid var(--border-strong);
+    opacity: 0; transition: var(--transition); z-index: 1000;
   }
-  .toast.show{ transform: translate(-50%, 0); opacity:1; }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-  }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="brand">
-    <div class="brand-mark">IT</div>
+    <div class="brand-icon">IT</div>
     <div class="brand-text">
-      <h1>Class Almanac</h1>
-      <p>IT · Second Year</p>
+      <h1>NextGen Hub <span class="brand-badge">2ND YR</span></h1>
     </div>
   </div>
   <div id="header-user" class="hidden">
-    <button class="btn btn-outline btn-small" id="btn-logout">Sign out</button>
+    <button class="btn btn-outline btn-small" id="btn-logout">Sign Out</button>
   </div>
 </header>
 
 <main>
-  <!-- Glassmorphism Auth Screen (No Animations) -->
+  <!-- Modern Glass Auth Screen -->
   <div class="auth-wrap" id="auth-screen">
     <div class="auth-card">
-      <span class="auth-stamp">SECURE ALMANAC REGISTRATION</span>
-      <h2>Identify Yourself</h2>
-      <p class="auth-lead">Enter your credentials to load your personalized section timetable, notes, and academic calendar.</p>
+      <h2>Welcome back</h2>
+      <p class="auth-lead">Sign in to your academic workspace.</p>
 
       <form id="login-form">
         <div class="field">
           <label for="student-name">Full Name</label>
-          <input type="text" id="student-name" class="input" placeholder="e.g. Ishaan Thusoo" autocomplete="name">
+          <input type="text" id="student-name" class="input" placeholder="e.g. Aditi Sharma" autocomplete="name">
         </div>
         <div class="field">
-          <label for="student-id">Student ID / UID</label>
-          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT052" autocomplete="off">
+          <label for="student-id">Student ID</label>
+          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT045" autocomplete="off">
         </div>
         <div class="field">
-          <label>Assigned Section Node</label>
+          <label>Section Group</label>
           <div class="segmented">
-            <label><input type="radio" name="section" value="#IT-1"> #IT-1</label>
-            <label><input type="radio" name="section" value="#IT-2" checked> #IT-2</label>
+            <label><input type="radio" name="section" value="#IT-1"> IT-1</label>
+            <label><input type="radio" name="section" value="#IT-2" checked> IT-2</label>
           </div>
         </div>
-        <div id="login-error" class="error-text">ERROR: Full Name and Student ID are required parameters.</div>
-        <button type="submit" class="btn btn-block" style="margin-top:1.5rem;">Initialize Session</button>
+        <div id="login-error" class="error-text">Please provide valid credentials.</div>
+        <button type="submit" class="btn btn-block" style="margin-top: 1.5rem;">Initialize Session</button>
       </form>
     </div>
   </div>
 
   <!-- App Dashboard -->
   <div class="app" id="dashboard-screen">
+    
+    <!-- Desktop Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-eyebrow">Navigation</div>
       <div class="nav-list" role="tablist">
-        <button class="nav-item active" data-target="overview">Overview</button>
-        <button class="nav-item" data-target="schedule">Timetable</button>
-        <button class="nav-item" data-target="chat">Ask the assistant</button>
-        <button class="nav-item" data-target="holidays">Holidays</button>
-        <button class="nav-item" data-target="watch">Clock</button>
-        <button class="nav-item" data-target="notes">Notes</button>
+        <button class="nav-item active" data-target="overview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Overview
+        </button>
+        <button class="nav-item" data-target="schedule">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          Timetable
+        </button>
+        <button class="nav-item" data-target="chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          AI Assistant
+        </button>
+        <button class="nav-item" data-target="holidays">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Holidays
+        </button>
+        <button class="nav-item" data-target="watch">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Clock
+        </button>
+        <button class="nav-item" data-target="notes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Notes
+        </button>
       </div>
     </aside>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="tab-icon-btn active" data-target="overview">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Home
+      </button>
+      <button class="tab-icon-btn" data-target="schedule">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Schedule
+      </button>
+      <button class="tab-icon-btn" data-target="chat">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Chat
+      </button>
+      <button class="tab-icon-btn" data-target="holidays">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Breaks
+      </button>
+      <button class="tab-icon-btn" data-target="notes">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        Notes
+      </button>
+    </nav>
 
     <section class="panel">
       <div class="panel-head">
@@ -487,29 +455,20 @@
         <span id="section-badge" class="badge"></span>
       </div>
 
-      <div class="tab-strip">
-        <button class="tab-pill active" data-target="overview">Overview</button>
-        <button class="tab-pill" data-target="schedule">Timetable</button>
-        <button class="tab-pill" data-target="chat">Assistant</button>
-        <button class="tab-pill" data-target="holidays">Holidays</button>
-        <button class="tab-pill" data-target="watch">Clock</button>
-        <button class="tab-pill" data-target="notes">Notes</button>
-      </div>
-
       <!-- OVERVIEW -->
       <div id="tab-overview" class="tab-content">
-        <div class="grid-2">
-          <div class="tile">
-            <div class="tile-label">Today, next up</div>
-            <div class="tile-value" id="desk-next-class">Reading schedule…</div>
+        <div class="grid-bento">
+          <div class="bento-card">
+            <div class="bento-label">Current / Next Class</div>
+            <div class="bento-value" id="desk-next-class">Reading schedule…</div>
           </div>
-          <div class="tile">
-            <div class="tile-label">Next holiday</div>
-            <div class="tile-value" id="desk-next-holiday">Reading calendar…</div>
+          <div class="bento-card">
+            <div class="bento-label">Next Academic Break</div>
+            <div class="bento-value" id="desk-next-holiday">Reading calendar…</div>
           </div>
-          <div class="tile tile-span">
-            <div class="tile-label">Venue notice</div>
-            <div class="tile-note">Probability & Statistics classes meet at IT 202 / Golakota.</div>
+          <div class="bento-card bento-span">
+            <div class="bento-label">System Notice</div>
+            <div class="bento-note">Probability & Statistics lectures are conducted at IT 202 / Golakota.</div>
           </div>
         </div>
       </div>
@@ -517,13 +476,13 @@
       <!-- SCHEDULE -->
       <div id="tab-schedule" class="tab-content hidden">
         <div class="day-filter" id="day-filter">
-          <button class="day-chip active" data-day="All">All days</button>
-          <button class="day-chip" data-day="Monday">Mon</button>
-          <button class="day-chip" data-day="Tuesday">Tue</button>
-          <button class="day-chip" data-day="Wednesday">Wed</button>
-          <button class="day-chip" data-day="Thursday">Thu</button>
-          <button class="day-chip" data-day="Friday">Fri</button>
-          <button class="day-chip" data-day="Saturday">Sat</button>
+          <button class="day-chip active" data-day="All">All Week</button>
+          <button class="day-chip" data-day="Monday">Monday</button>
+          <button class="day-chip" data-day="Tuesday">Tuesday</button>
+          <button class="day-chip" data-day="Wednesday">Wednesday</button>
+          <button class="day-chip" data-day="Thursday">Thursday</button>
+          <button class="day-chip" data-day="Friday">Friday</button>
+          <button class="day-chip" data-day="Saturday">Saturday</button>
         </div>
         <div class="table-shell">
           <table>
@@ -537,7 +496,7 @@
       <div id="tab-chat" class="tab-content hidden">
         <div class="chat-shell">
           <div class="chat-log" id="chat-log">
-            <div class="bubble bot">AI Assistant online. Ask me about your timetable, professors, venues, or university holidays.</div>
+            <div class="bubble bot">AI Systems initialized. I can answer questions about your schedule, professors, room venues, or university holidays.</div>
           </div>
           <div class="chip-row">
             <button class="sugg-chip" onclick="sendSuggestion('Monday schedule')">Monday schedule</button>
@@ -546,7 +505,7 @@
             <button class="sugg-chip" onclick="sendSuggestion('Venue for Probability')">Prob venue</button>
           </div>
           <div class="chat-input-row">
-            <input type="text" id="chat-input" class="input" placeholder="Ask anything about classes or holidays…">
+            <input type="text" id="chat-input" class="input" placeholder="Message Assistant...">
             <button class="btn btn-small" id="btn-send-chat">Send</button>
           </div>
         </div>
@@ -554,17 +513,17 @@
 
       <!-- HOLIDAYS -->
       <div id="tab-holidays" class="tab-content hidden">
-        <div class="countdown-tile">
-          <div class="tile-label">Up next</div>
-          <div class="tile-value" id="next-holiday-name">Calculating…</div>
-          <div class="sub" id="next-holiday-countdown"></div>
+        <div class="bento-card" style="margin-bottom: 1.5rem; background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.2);">
+          <div class="bento-label" style="color: var(--accent-primary);">Next Holiday</div>
+          <div class="bento-value" id="next-holiday-name" style="font-size: 1.5rem;">Calculating…</div>
+          <div class="bento-note" id="next-holiday-countdown" style="margin-top: 0.25rem;"></div>
         </div>
-        <div id="holidays-list" class="holiday-list"></div>
+        <div id="holidays-list"></div>
       </div>
 
       <!-- CLOCK -->
       <div id="tab-watch" class="tab-content hidden">
-        <div class="clock-tile">
+        <div class="clock-wrap">
           <div class="clock-time" id="clock-time">00:00:00 AM</div>
           <div class="clock-date" id="clock-date">Syncing…</div>
         </div>
@@ -572,11 +531,13 @@
 
       <!-- NOTES -->
       <div id="tab-notes" class="tab-content hidden">
-        <div class="tile" style="background:var(--tile);">
-          <label for="new-note" style="display:block; font-family: var(--font-mono); font-size:0.7rem; font-weight:700; color: var(--marigold-deep); margin-bottom:0.5rem; text-transform:uppercase;">New note</label>
-          <textarea id="new-note" class="input" placeholder="Jot down a reminder or formula…"></textarea>
-          <div id="note-error" class="error-text">Write something before saving.</div>
-          <button class="btn btn-small" id="btn-save-note" style="margin-top:0.75rem;">Save note</button>
+        <div class="bento-card">
+          <label for="new-note" style="display:block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom:0.75rem; text-transform:uppercase;">Create Note</label>
+          <textarea id="new-note" class="input" placeholder="Type a reminder, formula, or thought..."></textarea>
+          <div id="note-error" class="error-text">Note cannot be empty.</div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+            <button class="btn btn-small" id="btn-save-note">Save to cloud</button>
+          </div>
         </div>
         <div id="notes-list" class="notes-grid"></div>
       </div>
@@ -673,7 +634,7 @@
     try {
       localStorage.setItem('almanac_user', JSON.stringify(currentUser));
       localStorage.setItem('almanac_notes', JSON.stringify(notesByStudent));
-    } catch (e) { showToast("Couldn't save — storage unavailable."); }
+    } catch (e) {}
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -696,7 +657,7 @@
       if (e.key === 'Enter') handleUserChat();
     });
 
-    document.querySelectorAll('.nav-item, .tab-pill').forEach(tab => {
+    document.querySelectorAll('.nav-item, .tab-icon-btn').forEach(tab => {
       tab.addEventListener('click', (e) => switchTab(e.currentTarget.dataset.target));
     });
 
@@ -725,8 +686,8 @@
     document.getElementById('dashboard-screen').style.display = "grid";
     document.getElementById('header-user').classList.remove('hidden');
 
-    document.getElementById('welcome-title').textContent = `Welcome, ${currentUser.name}`;
-    document.getElementById('welcome-sub').textContent = `Student ID ${currentUser.id}`;
+    document.getElementById('welcome-title').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+    document.getElementById('welcome-sub').textContent = `Student ID: ${currentUser.id}`;
     document.getElementById('section-badge').textContent = currentUser.section;
 
     switchTab('overview');
@@ -736,7 +697,7 @@
     renderHolidays();
     updateOverview();
     startLiveClock();
-    showToast(isAuto ? "Welcome back." : "Almanac ready.");
+    showToast(isAuto ? "Session Restored" : "Login Successful");
   }
 
   function logoutSession(){
@@ -751,11 +712,18 @@
   }
 
   function switchTab(tabName){
-    document.querySelectorAll('.nav-item, .tab-pill').forEach(t => {
+    document.querySelectorAll('.nav-item, .tab-icon-btn').forEach(t => {
       t.classList.toggle('active', t.dataset.target === tabName);
     });
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+    
+    // Fallback for mobile clock routing
+    if (tabName === 'watch') {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById(`tab-watch`).classList.remove('hidden');
+    } else {
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+    }
   }
 
   function updateOverview(){
@@ -794,7 +762,7 @@
     if (clockEl) clockEl.textContent = `${hh}:${minutes}:${seconds} ${ampm}`;
 
     const dateEl = document.getElementById("clock-date");
-    if (dateEl) dateEl.textContent = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+    if (dateEl) dateEl.textContent = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   }
 
   function sendSuggestion(text){
@@ -820,7 +788,6 @@
     setTimeout(() => appendMessage("bot", generateBotResponse(q)), 250);
   }
 
-  // Fully accurate and robust assistant engine matching all timetable & faculty criteria
   function generateBotResponse(rawQuery){
     const q = rawQuery.toLowerCase();
     
@@ -839,7 +806,7 @@
       const classes = rawSchedule.filter(item => item.day.toLowerCase() === targetDay && item.sections.includes(currentUser.section));
       if (classes.length === 0) return `No classes scheduled for ${dayCap} under ${currentUser.section}.`;
       
-      let reply = `Timetable for ${dayCap} (${currentUser.section}):\n`;
+      let reply = `Timetable for ${dayCap} (${currentUser.section}):\n\n`;
       classes.forEach(c => {
         reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
       });
@@ -876,7 +843,7 @@
     if (q.includes("section")) return `You are currently logged in under section node: ${currentUser.section}.`;
 
     if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-      return `Hello ${currentUser.name}! I am your Almanac assistant. You can ask me about your schedule for any day, professor names, room venues, or upcoming university holidays.`;
+      return `Hello ${currentUser.name.split(' ')[0]}! I am your AI assistant. You can ask me about your schedule for any day, professor names, room venues, or upcoming university holidays.`;
     }
 
     return "I can look up your daily schedule, faculty members, room venues, or holiday countdowns. Try asking: 'What is my schedule for Wednesday?' or 'Who teaches Data Structures?'";
@@ -899,7 +866,7 @@
 
       const row = document.createElement("div");
       row.className = "holiday-row";
-      if (isPast) row.style.opacity = "0.45";
+      if (isPast) row.style.opacity = "0.5";
 
       const info = document.createElement("div");
       info.className = "holiday-info";
@@ -916,7 +883,7 @@
       title.textContent = h.name;
       const meta = document.createElement("div");
       meta.className = "holiday-meta";
-      meta.textContent = `${hDate.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' })} · ${h.type}`;
+      meta.textContent = `${hDate.toLocaleDateString(undefined, { month:'long', day:'numeric', year:'numeric' })} · ${h.type}`;
 
       details.appendChild(title);
       details.appendChild(meta);
@@ -936,8 +903,8 @@
 
     if (nextHoliday){
       const diffDays = Math.ceil((nextHoliday.dateObj - today) / 86400000);
-      nameEl.textContent = `${nextHoliday.emoji} ${nextHoliday.name} — ${nextHoliday.date}`;
-      countdownEl.textContent = diffDays === 0 ? "Today" : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
+      nameEl.textContent = `${nextHoliday.emoji} ${nextHoliday.name}`;
+      countdownEl.textContent = diffDays === 0 ? "Today" : `${diffDays} day${diffDays === 1 ? '' : 's'} remaining`;
     } else {
       nameEl.textContent = "No more holidays on record.";
       countdownEl.textContent = "";
@@ -958,7 +925,7 @@
     saveState();
     textInput.value = "";
     renderNotes();
-    showToast("Note saved.");
+    showToast("Note saved to cloud.");
   }
 
   function deleteNote(id){
@@ -972,7 +939,7 @@
     const notes = getNotesList();
     container.innerHTML = "";
     if (notes.length === 0){
-      container.innerHTML = `<p class="empty-note">No notes saved yet.</p>`;
+      container.innerHTML = `<p style="color: var(--text-tertiary); text-align: center; padding: 3rem 1rem; font-size: 0.9rem; grid-column: 1/-1;">Your scratchpad is currently empty.</p>`;
       return;
     }
     const fragment = document.createDocumentFragment();
@@ -987,9 +954,11 @@
       const foot = document.createElement("div");
       foot.className = "note-foot";
       const ts = document.createElement("span");
+      ts.className = "note-time";
       ts.textContent = note.timestamp;
+      
       const del = document.createElement("button");
-      del.className = "btn-ghost-danger";
+      del.className = "btn-danger";
       del.textContent = "Delete";
       del.addEventListener('click', () => deleteNote(note.id));
 
@@ -1014,7 +983,7 @@
     const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
 
     if (filtered.length === 0){
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--ink-soft); font-family:var(--font-mono);">No classes match this filter.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:3rem; color:var(--text-tertiary);">No classes scheduled for the selected filter.</td></tr>`;
       return;
     }
 
