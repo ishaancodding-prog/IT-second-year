@@ -1,3 +1,2094 @@
+
+
+Plan steps
+
+Conversation with Gemini
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<title>IT · 2nd Year — NextGen Hub</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+  :root {
+
+    --bg-base: #000000;
+
+    --bg-surface: #0a0a0a;
+
+    --bg-surface-elevated: #111111;
+
+    --bg-glass: rgba(17, 17, 17, 0.6);
+
+    --border-subtle: rgba(255, 255, 255, 0.08);
+
+    --border-strong: rgba(255, 255, 255, 0.15);
+
+    --text-primary: #ffffff;
+
+    --text-secondary: #a1a1aa;
+
+    --text-tertiary: #52525b;
+
+    --accent-primary: #3b82f6;
+
+    --accent-glow: rgba(59, 130, 246, 0.5);
+
+    --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+
+    --danger: #ef4444;
+
+    --danger-bg: rgba(239, 68, 68, 0.1);
+
+    --success: #10b981;
+
+    --radius-sm: 8px;
+
+    --radius-md: 12px;
+
+    --radius-lg: 16px;
+
+    --radius-xl: 24px;
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  }
+
+
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  
+
+  body {
+
+    font-family: var(--font-sans);
+
+    background-color: var(--bg-base);
+
+    color: var(--text-primary);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow-x: hidden;
+
+  }
+
+
+
+  /* Ambient Background Glow */
+
+  body::before {
+
+    content: '';
+
+    position: fixed;
+
+    top: -20%; left: -10%; width: 50vw; height: 50vw;
+
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+
+    z-index: -1; pointer-events: none;
+
+  }
+
+  body::after {
+
+    content: '';
+
+    position: fixed;
+
+    bottom: -20%; right: -10%; width: 50vw; height: 50vw;
+
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+
+    z-index: -1; pointer-events: none;
+
+  }
+
+
+
+  ::selection { background: var(--accent-primary); color: #fff; }
+
+  button, input, textarea { font-family: inherit; }
+
+
+
+  /* ---------- Header ---------- */
+
+  header {
+
+    position: sticky; top: 0; z-index: 50;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border-subtle);
+
+    padding: 1rem clamp(1rem, 5vw, 2rem);
+
+    display: flex; align-items: center; justify-content: space-between;
+
+  }
+
+  
+
+  .brand { display: flex; align-items: center; gap: 0.75rem; }
+
+  .brand-icon {
+
+    width: 32px; height: 32px;
+
+    background: var(--accent-gradient);
+
+    border-radius: 8px;
+
+    display: flex; align-items: center; justify-content: center;
+
+    font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
+
+    box-shadow: 0 0 15px var(--accent-glow);
+
+  }
+
+  .brand-text h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+
+  .brand-badge {
+
+    font-size: 0.65rem; font-family: var(--font-mono);
+
+    padding: 2px 6px; border-radius: 4px;
+
+    background: rgba(255, 255, 255, 0.1); color: var(--text-secondary);
+
+    margin-left: 0.5rem;
+
+  }
+
+
+
+  .btn {
+
+    display: inline-flex; align-items: center; justify-content: center;
+
+    background: var(--text-primary); color: var(--bg-base);
+
+    border: none; padding: 0.75rem 1.25rem;
+
+    border-radius: var(--radius-md);
+
+    font-weight: 600; font-size: 0.9rem;
+
+    cursor: pointer; transition: var(--transition);
+
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); }
+
+  .btn:active { transform: translateY(0); }
+
+  .btn-block { width: 100%; }
+
+  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-strong); }
+
+  .btn-outline:hover { background: var(--border-subtle); box-shadow: none; }
+
+  .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
+
+  .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
+
+  .btn-danger:hover { background: rgba(239, 68, 68, 0.2); box-shadow: none; }
+
+
+
+  main { flex: 1; display: flex; justify-content: center; padding: clamp(1rem, 4vw, 2rem); }
+
+
+
+  /* ---------- Glassmorphism Auth Screen ---------- */
+
+  .auth-wrap { width: 100%; max-width: 420px; margin: auto; }
+
+  .auth-card {
+
+    background: var(--bg-glass);
+
+    backdrop-filter: blur(24px);
+
+    -webkit-backdrop-filter: blur(24px);
+
+    border: 1px solid var(--border-strong);
+
+    border-radius: var(--radius-xl);
+
+    padding: clamp(2rem, 5vw, 2.5rem);
+
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  }
+
+  .auth-card h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+
+  .auth-lead { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; }
+
+
+
+  .field { margin-bottom: 1.25rem; }
+
+  .field label {
+
+    display: block; font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);
+
+    margin-bottom: 0.5rem;
+
+  }
+
+  .input {
+
+    width: 100%; padding: 0.85rem 1rem;
+
+    background: rgba(0, 0, 0, 0.3);
+
+    border: 1px solid var(--border-strong);
+
+    border-radius: var(--radius-md);
+
+    font-size: 0.95rem; color: var(--text-primary);
+
+    transition: var(--transition);
+
+  }
+
+  .input:focus { border-color: var(--accent-primary); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+
+  textarea.input { resize: vertical; min-height: 100px; font-family: var(--font-sans); }
+
+
+
+  .segmented { display: flex; gap: 0.5rem; background: rgba(0, 0, 0, 0.3); padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+
+  .segmented label {
+
+    flex: 1; display: flex; align-items: center; justify-content: center;
+
+    padding: 0.6rem; border-radius: var(--radius-sm);
+
+    font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);
+
+    cursor: pointer; transition: var(--transition);
+
+  }
+
+  .segmented input { display: none; }
+
+  .segmented label:has(input:checked) { background: var(--border-strong); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+
+
+  .error-text { color: var(--danger); font-size: 0.8rem; font-weight: 500; margin-top: 0.5rem; display: none; }
+
+
+
+  /* ---------- App Layout ---------- */
+
+  .app { display: none; width: 100%; max-width: 1200px; gap: 2rem; margin: 0 auto; }
+
+  
+
+  @media (min-width: 860px) {
+
+    .app { display: grid; grid-template-columns: 240px 1fr; align-items: flex-start; }
+
+  }
+
+
+
+  /* Desktop Sidebar */
+
+  .sidebar {
+
+    display: none;
+
+    position: sticky; top: 6rem;
+
+  }
+
+  @media (min-width: 860px) { .sidebar { display: block; } }
+
+
+
+  .nav-list { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .nav-item {
+
+    display: flex; align-items: center; gap: 0.75rem;
+
+    background: transparent; border: none; text-align: left;
+
+    padding: 0.75rem 1rem; border-radius: var(--radius-md);
+
+    font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);
+
+    cursor: pointer; transition: var(--transition);
+
+  }
+
+  .nav-item:hover { background: var(--border-subtle); color: var(--text-primary); }
+
+  .nav-item.active { background: var(--text-primary); color: var(--bg-base); font-weight: 600; }
+
+
+
+  /* Mobile Bottom Tab Bar */
+
+  .bottom-nav {
+
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+
+    background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+
+    border-top: 1px solid var(--border-subtle);
+
+    padding: 0.75rem 1rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+
+    z-index: 100; justify-content: space-around;
+
+  }
+
+  @media (max-width: 859px) { .bottom-nav { display: flex; } body { padding-bottom: 5rem; } }
+
+  
+
+  .tab-icon-btn {
+
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+
+    background: transparent; border: none; color: var(--text-tertiary);
+
+    font-size: 0.65rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+
+  }
+
+  .tab-icon-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .tab-icon-btn.active { color: var(--text-primary); }
+
+
+
+  /* Content Area */
+
+  .panel {
+
+    background: transparent;
+
+    min-height: 500px;
+
+    animation: fadeIn 0.4s ease forwards;
+
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+
+  .panel-head {
+
+    display: flex; justify-content: space-between; align-items: flex-end;
+
+    margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+
+  }
+
+  .panel-head h2 { font-size: 1.8rem; font-weight: 600; letter-spacing: -0.03em; }
+
+  .panel-head .sub { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+  .badge {
+
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+
+    background: rgba(59, 130, 246, 0.15); color: var(--accent-primary);
+
+    border: 1px solid rgba(59, 130, 246, 0.3);
+
+    padding: 0.35rem 0.75rem; border-radius: 20px;
+
+  }
+
+
+
+  /* Bento Grid */
+
+  .grid-bento { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+  @media (min-width: 640px) { .grid-bento { grid-template-columns: 1fr 1fr; } }
+
+  .bento-card {
+
+    background: var(--bg-surface-elevated);
+
+    border: 1px solid var(--border-subtle);
+
+    border-radius: var(--radius-lg);
+
+    padding: 1.5rem;
+
+    transition: var(--transition);
+
+  }
+
+  .bento-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+
+  .bento-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+
+  .bento-value { font-size: 1.1rem; font-weight: 500; line-height: 1.4; color: var(--text-primary); }
+
+  .bento-span { grid-column: 1 / -1; }
+
+  .bento-note { font-size: 0.9rem; color: var(--text-secondary); }
+
+
+
+  /* Day Filter (Pills) */
+
+  .day-filter {
+
+    display: flex; gap: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; padding-bottom: 0.5rem;
+
+    -webkit-overflow-scrolling: touch;
+
+  }
+
+  .day-filter::-webkit-scrollbar { display: none; }
+
+  .day-chip {
+
+    flex-shrink: 0; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+
+    padding: 0.5rem 1rem; border-radius: 20px;
+
+    font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+
+    cursor: pointer; transition: var(--transition);
+
+  }
+
+  .day-chip:hover { border-color: var(--border-strong); color: var(--text-primary); }
+
+  .day-chip.active { background: var(--text-primary); color: var(--bg-base); border-color: var(--text-primary); font-weight: 600; }
+
+
+
+  /* Modern Table */
+
+  .table-shell {
+
+    background: var(--bg-surface-elevated);
+
+    border: 1px solid var(--border-subtle);
+
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+
+  thead th {
+
+    text-align: left; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+
+    letter-spacing: 0.05em; color: var(--text-secondary); padding: 1rem 1.25rem;
+
+    background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-subtle);
+
+  }
+
+  tbody td { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .cell-day { font-weight: 600; }
+
+  .cell-time { color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.85rem; }
+
+  .cell-subject strong { font-weight: 500; color: var(--text-primary); display: block; }
+
+  .cell-prof { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
+
+  .cell-venue { font-family: var(--font-mono); font-weight: 600; color: var(--accent-primary); font-size: 0.85rem; }
+
+
+
+  @media (max-width: 640px) {
+
+    .table-shell { background: transparent; border: none; }
+
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+
+    thead { display: none; }
+
+    tbody tr { background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); margin-bottom: 1rem; padding: 1rem; }
+
+    tbody td { border: none; padding: 0.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; }
+
+    tbody td::before { content: attr(data-label); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--text-tertiary); }
+
+    .cell-day::before { content: none; }
+
+    .cell-day { font-size: 1.1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
+
+  }
+
+
+
+  /* Chat UI */
+
+  .chat-shell {
+
+    display: flex; flex-direction: column; height: 500px;
+
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden;
+
+  }
+
+  .chat-log { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; scroll-behavior: smooth; }
+
+  .bubble { max-width: 85%; padding: 0.85rem 1.1rem; border-radius: var(--radius-md); line-height: 1.5; font-size: 0.95rem; }
+
+  .bubble.bot { align-self: flex-start; background: rgba(255,255,255,0.05); border-bottom-left-radius: 4px; color: var(--text-primary); }
+
+  .bubble.user { align-self: flex-end; background: var(--accent-gradient); color: #fff; font-weight: 500; border-bottom-right-radius: 4px; }
+
+  .chip-row { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); }
+
+  .chip-row::-webkit-scrollbar { display: none; }
+
+  .sugg-chip {
+
+    background: transparent; border: 1px solid var(--border-strong); color: var(--text-secondary);
+
+    padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: var(--transition);
+
+  }
+
+  .sugg-chip:hover { background: var(--border-subtle); color: var(--text-primary); }
+
+  .chat-input-row { display: flex; gap: 0.5rem; padding: 1rem; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); }
+
+  
+
+  /* Holidays */
+
+  .holiday-row {
+
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+
+    border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 0.75rem;
+
+    transition: var(--transition);
+
+  }
+
+  .holiday-row:hover { border-color: var(--border-strong); }
+
+  .holiday-info { display: flex; align-items: center; gap: 1rem; }
+
+  .holiday-emoji { font-size: 1.5rem; }
+
+  .holiday-name { font-weight: 500; font-size: 1rem; }
+
+  .holiday-meta { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
+
+  .tag { padding: 0.25rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .tag.upcoming { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+
+  .tag.passed { background: rgba(255, 255, 255, 0.05); color: var(--text-tertiary); }
+
+
+
+  /* Clock */
+
+  .clock-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 40vh; }
+
+  .clock-time { font-family: var(--font-mono); font-weight: 700; font-size: clamp(3rem, 10vw, 5rem); letter-spacing: -0.02em; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .clock-date { font-size: 1.2rem; color: var(--text-secondary); margin-top: 0.5rem; font-weight: 500; }
+
+
+
+  /* Notes */
+
+  .notes-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+
+  @media (min-width: 600px) { .notes-grid { grid-template-columns: 1fr 1fr; } }
+
+  .note-card {
+
+    background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+
+    border-radius: var(--radius-md); padding: 1.25rem;
+
+    display: flex; flex-direction: column; justify-content: space-between;
+
+  }
+
+  .note-content { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; margin-bottom: 1.5rem; color: var(--text-primary); }
+
+  .note-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
+
+  .note-time { font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-mono); }
+
+
+
+  .hidden { display: none !important; }
+
+
+
+  /* Toast Notification */
+
+  .toast {
+
+    position: fixed; top: 24px; left: 50%; transform: translate(-50%, -100px);
+
+    background: var(--bg-surface-elevated); color: var(--text-primary);
+
+    padding: 0.8rem 1.25rem; font-size: 0.9rem; font-weight: 500;
+
+    border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    border: 1px solid var(--border-strong);
+
+    opacity: 0; transition: var(--transition); z-index: 1000;
+
+  }
+
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<header>
+
+  <div class="brand">
+
+    <div class="brand-icon">IT</div>
+
+    <div class="brand-text">
+
+      <h1>NextGen Hub <span class="brand-badge">2ND YR</span></h1>
+
+    </div>
+
+  </div>
+
+  <div id="header-user" class="hidden">
+
+    <button class="btn btn-outline btn-small" id="btn-logout">Sign Out</button>
+
+  </div>
+
+</header>
+
+
+
+<main>
+
+  <!-- Modern Glass Auth Screen -->
+
+  <div class="auth-wrap" id="auth-screen">
+
+    <div class="auth-card">
+
+      <h2>Welcome back</h2>
+
+      <p class="auth-lead">Sign in to your academic workspace.</p>
+
+
+
+      <form id="login-form">
+
+        <div class="field">
+
+          <label for="student-name">Full Name</label>
+
+          <input type="text" id="student-name" class="input" placeholder="e.g. Aditi Sharma" autocomplete="name">
+
+        </div>
+
+        <div class="field">
+
+          <label for="student-id">Student ID</label>
+
+          <input type="text" id="student-id" class="input" placeholder="e.g. 24IT045" autocomplete="off">
+
+        </div>
+
+        <div class="field">
+
+          <label>Section Group</label>
+
+          <div class="segmented">
+
+            <label><input type="radio" name="section" value="#IT-1"> IT-1</label>
+
+            <label><input type="radio" name="section" value="#IT-2" checked> IT-2</label>
+
+          </div>
+
+        </div>
+
+        <div id="login-error" class="error-text">Please provide valid credentials.</div>
+
+        <button type="submit" class="btn btn-block" style="margin-top: 1.5rem;">Initialize Session</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- App Dashboard -->
+
+  <div class="app" id="dashboard-screen">
+
+    
+
+    <!-- Desktop Sidebar -->
+
+    <aside class="sidebar">
+
+      <div class="nav-list" role="tablist">
+
+        <button class="nav-item active" data-target="overview">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+
+          Overview
+
+        </button>
+
+        <button class="nav-item" data-target="schedule">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+
+          Timetable
+
+        </button>
+
+        <button class="nav-item" data-target="chat">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+
+          AI Assistant
+
+        </button>
+
+        <button class="nav-item" data-target="holidays">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+
+          Holidays
+
+        </button>
+
+        <button class="nav-item" data-target="watch">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+
+          Clock
+
+        </button>
+
+        <button class="nav-item" data-target="notes">
+
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+
+          Notes
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- Mobile Bottom Navigation -->
+
+    <nav class="bottom-nav">
+
+      <button class="tab-icon-btn active" data-target="overview">
+
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+
+        Home
+
+      </button>
+
+      <button class="tab-icon-btn" data-target="schedule">
+
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+
+        Schedule
+
+      </button>
+
+      <button class="tab-icon-btn" data-target="chat">
+
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+
+        Chat
+
+      </button>
+
+      <button class="tab-icon-btn" data-target="holidays">
+
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+
+        Breaks
+
+      </button>
+
+      <button class="tab-icon-btn" data-target="notes">
+
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+
+        Notes
+
+      </button>
+
+    </nav>
+
+
+
+    <section class="panel">
+
+      <div class="panel-head">
+
+        <div>
+
+          <h2 id="welcome-title">Dashboard</h2>
+
+          <p id="welcome-sub" class="sub"></p>
+
+        </div>
+
+        <span id="section-badge" class="badge"></span>
+
+      </div>
+
+
+
+      <!-- OVERVIEW -->
+
+      <div id="tab-overview" class="tab-content">
+
+        <div class="grid-bento">
+
+          <div class="bento-card">
+
+            <div class="bento-label">Current / Next Class</div>
+
+            <div class="bento-value" id="desk-next-class">Reading schedule…</div>
+
+          </div>
+
+          <div class="bento-card">
+
+            <div class="bento-label">Next Academic Break</div>
+
+            <div class="bento-value" id="desk-next-holiday">Reading calendar…</div>
+
+          </div>
+
+          <div class="bento-card bento-span">
+
+            <div class="bento-label">System Notice</div>
+
+            <div class="bento-note">Probability & Statistics lectures are conducted at IT 202 / Golakota.</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SCHEDULE -->
+
+      <div id="tab-schedule" class="tab-content hidden">
+
+        <div class="day-filter" id="day-filter">
+
+          <button class="day-chip active" data-day="All">All Week</button>
+
+          <button class="day-chip" data-day="Monday">Monday</button>
+
+          <button class="day-chip" data-day="Tuesday">Tuesday</button>
+
+          <button class="day-chip" data-day="Wednesday">Wednesday</button>
+
+          <button class="day-chip" data-day="Thursday">Thursday</button>
+
+          <button class="day-chip" data-day="Friday">Friday</button>
+
+          <button class="day-chip" data-day="Saturday">Saturday</button>
+
+        </div>
+
+        <div class="table-shell">
+
+          <table>
+
+            <thead><tr><th>Day</th><th>Time</th><th>Subject</th><th>Venue</th></tr></thead>
+
+            <tbody id="schedule-body"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CHAT -->
+
+      <div id="tab-chat" class="tab-content hidden">
+
+        <div class="chat-shell">
+
+          <div class="chat-log" id="chat-log">
+
+            <div class="bubble bot">AI Systems initialized. I can answer questions about your schedule, professors, room venues, or university holidays.</div>
+
+          </div>
+
+          <div class="chip-row">
+
+            <button class="sugg-chip" onclick="sendSuggestion('Monday schedule')">Monday schedule</button>
+
+            <button class="sugg-chip" onclick="sendSuggestion('Who teaches Data Structures?')">DSA professor</button>
+
+            <button class="sugg-chip" onclick="sendSuggestion('Next holiday')">Next holiday</button>
+
+            <button class="sugg-chip" onclick="sendSuggestion('Venue for Probability')">Prob venue</button>
+
+          </div>
+
+          <div class="chat-input-row">
+
+            <input type="text" id="chat-input" class="input" placeholder="Message Assistant...">
+
+            <button class="btn btn-small" id="btn-send-chat">Send</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- HOLIDAYS -->
+
+      <div id="tab-holidays" class="tab-content hidden">
+
+        <div class="bento-card" style="margin-bottom: 1.5rem; background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.2);">
+
+          <div class="bento-label" style="color: var(--accent-primary);">Next Holiday</div>
+
+          <div class="bento-value" id="next-holiday-name" style="font-size: 1.5rem;">Calculating…</div>
+
+          <div class="bento-note" id="next-holiday-countdown" style="margin-top: 0.25rem;"></div>
+
+        </div>
+
+        <div id="holidays-list"></div>
+
+      </div>
+
+
+
+      <!-- CLOCK -->
+
+      <div id="tab-watch" class="tab-content hidden">
+
+        <div class="clock-wrap">
+
+          <div class="clock-time" id="clock-time">00:00:00 AM</div>
+
+          <div class="clock-date" id="clock-date">Syncing…</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NOTES -->
+
+      <div id="tab-notes" class="tab-content hidden">
+
+        <div class="bento-card">
+
+          <label for="new-note" style="display:block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom:0.75rem; text-transform:uppercase;">Create Note</label>
+
+          <textarea id="new-note" class="input" placeholder="Type a reminder, formula, or thought..."></textarea>
+
+          <div id="note-error" class="error-text">Note cannot be empty.</div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+
+            <button class="btn btn-small" id="btn-save-note">Save to cloud</button>
+
+          </div>
+
+        </div>
+
+        <div id="notes-list" class="notes-grid"></div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+
+<div class="toast" id="toast">Notice</div>
+
+
+
+<script>
+
+  const rawSchedule = [
+
+    { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Monday", time: "03:00 PM - 04:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Tuesday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Tuesday", time: "11:00 AM - 01:00 PM", subject: "Digital Electronics (Tutorial/Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
+
+    { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1"] },
+
+    { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-2"] },
+
+    { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-1"] },
+
+    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-2"] },
+
+    { day: "Thursday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Thursday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Thursday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Thursday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-2"] },
+
+    { day: "Friday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Friday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Friday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Friday", time: "03:00 PM - 05:00 PM", subject: "Digital Electronics (Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
+
+    { day: "Saturday", time: "09:00 AM - 11:00 AM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-1"] },
+
+    { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+
+    { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+
+  ];
+
+
+
+  const holidays2026 = [
+
+    { date: "2026-01-26", name: "Republic Day", type: "Gazetted Holiday", emoji: "🇮🇳" },
+
+    { date: "2026-02-15", name: "Mahashivratri", type: "Gazetted Holiday", emoji: "🔱" },
+
+    { date: "2026-03-03", name: "Holika Dahan", type: "Gazetted Holiday", emoji: "🔥" },
+
+    { date: "2026-03-04", name: "Holi", type: "Gazetted Holiday", emoji: "🎨" },
+
+    { date: "2026-03-19", name: "Chetchand", type: "Gazetted Holiday", emoji: "🌊" },
+
+    { date: "2026-03-21", name: "Eid-ul-Fitr", type: "Gazetted Holiday", emoji: "🌙" },
+
+    { date: "2026-03-26", name: "Ram Navmi", type: "Gazetted Holiday", emoji: "🏹" },
+
+    { date: "2026-03-31", name: "Mahavir Jayanti", type: "Gazetted Holiday", emoji: "🕊️" },
+
+    { date: "2026-04-03", name: "Good Friday", type: "Gazetted Holiday", emoji: "⛪" },
+
+    { date: "2026-04-13", name: "Approved by B.O.M.", type: "University Holiday", emoji: "🏛️" },
+
+    { date: "2026-04-14", name: "Dr. Bheemrao Ambedkar B.day", type: "Gazetted Holiday", emoji: "📜" },
+
+    { date: "2026-05-01", name: "Budh Purnima", type: "Gazetted Holiday", emoji: "☸️" },
+
+    { date: "2026-05-27", name: "Eid-Ul-Zuha (Bakar-Eid)", type: "Gazetted Holiday", emoji: "🐑" },
+
+    { date: "2026-06-26", name: "Moharram", type: "Gazetted Holiday", emoji: "🏴" },
+
+    { date: "2026-07-16", name: "Harela", type: "University Holiday", emoji: "🌿" },
+
+    { date: "2026-08-15", name: "Independence Day", type: "National Holiday", emoji: "🇮🇳" },
+
+    { date: "2026-08-26", name: "Eid-E-Milad / Milad-Un-Nabi Barawafat", type: "Gazetted Holiday", emoji: "✨" },
+
+    { date: "2026-08-28", name: "Rakshabandhan", type: "Gazetted Holiday", emoji: "🧵" },
+
+    { date: "2026-09-04", name: "Shri Krishna Janmastmi", type: "Gazetted Holiday", emoji: "🪈" },
+
+    { date: "2026-09-17", name: "Vishwakarma Pooja", type: "Gazetted Holiday", emoji: "⚙️" },
+
+    { date: "2026-10-02", name: "Mahatma Gandhi Jayanti", type: "National Holiday", emoji: "🕊️" },
+
+    { date: "2026-10-20", name: "Dushehra (Vidyadashmi)", type: "Gazetted Holiday", emoji: "🏹" },
+
+    { date: "2026-10-25", name: "Maharishi Balmiki Jayanti", type: "Gazetted Holiday", emoji: "🪔" },
+
+    { date: "2026-11-07", name: "Deepawali (Narak Chaturdashi)", type: "Gazetted Holiday", emoji: "🪔" },
+
+    { date: "2026-11-08", name: "Deepawali", type: "Gazetted Holiday", emoji: "🪔" },
+
+    { date: "2026-11-10", name: "Deepawali (Govardhan Pooja)", type: "Gazetted Holiday", emoji: "🐄" },
+
+    { date: "2026-11-11", name: "Bhaijoo", type: "Gazetted Holiday", emoji: "👫" },
+
+    { date: "2026-11-20", name: "Eigas-Bagwal", type: "University Holiday", emoji: "🪔" },
+
+    { date: "2026-11-24", name: "Guru Nanak Jayanti / Guru Teghabadur Shahid Diwas", type: "Gazetted Holiday", emoji: "🪯" },
+
+    { date: "2026-12-25", name: "Christmas Day", type: "Gazetted Holiday", emoji: "🎄" }
+
+  ];
+
+
+
+  let currentUser = { name: "", id: "", section: "" };
+
+  let notesByStudent = {};
+
+  let currentDayFilter = "All";
+
+  let clockInterval = null;
+
+
+
+  function showToast(msg){
+
+    const t = document.getElementById('toast');
+
+    t.textContent = msg;
+
+    t.classList.add('show');
+
+    setTimeout(() => t.classList.remove('show'), 2400);
+
+  }
+
+
+
+  function loadState(){
+
+    try {
+
+      const u = localStorage.getItem('almanac_user');
+
+      const n = localStorage.getItem('almanac_notes');
+
+      if (u) currentUser = JSON.parse(u);
+
+      if (n) notesByStudent = JSON.parse(n);
+
+    } catch (e) { }
+
+  }
+
+
+
+  function saveState(){
+
+    try {
+
+      localStorage.setItem('almanac_user', JSON.stringify(currentUser));
+
+      localStorage.setItem('almanac_notes', JSON.stringify(notesByStudent));
+
+    } catch (e) {}
+
+  }
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    loadState();
+
+    document.getElementById('auth-screen').style.display = "block";
+
+    document.getElementById('dashboard-screen').style.display = "none";
+
+
+
+    if (currentUser.name) document.getElementById('student-name').value = currentUser.name;
+
+    if (currentUser.id) document.getElementById('student-id').value = currentUser.id;
+
+    if (currentUser.section){
+
+      const sectionInput = document.querySelector(`input[name="section"][value="${currentUser.section}"]`);
+
+      if (sectionInput) sectionInput.checked = true;
+
+    }
+
+
+
+    document.getElementById('login-form').addEventListener('submit', handleLogin);
+
+    document.getElementById('btn-logout').addEventListener('click', logoutSession);
+
+    document.getElementById('btn-save-note').addEventListener('click', addNote);
+
+    document.getElementById('btn-send-chat').addEventListener('click', handleUserChat);
+
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+
+      if (e.key === 'Enter') handleUserChat();
+
+    });
+
+
+
+    document.querySelectorAll('.nav-item, .tab-icon-btn').forEach(tab => {
+
+      tab.addEventListener('click', (e) => switchTab(e.currentTarget.dataset.target));
+
+    });
+
+
+
+    document.querySelectorAll('.day-chip').forEach(tab => {
+
+      tab.addEventListener('click', (e) => filterDay(e.currentTarget.dataset.day));
+
+    });
+
+  });
+
+
+
+  function handleLogin(e){
+
+    e.preventDefault();
+
+    const name = document.getElementById('student-name').value.trim();
+
+    const id = document.getElementById('student-id').value.trim();
+
+    const section = document.querySelector('input[name="section"]:checked').value;
+
+    const err = document.getElementById('login-error');
+
+
+
+    if (!name || !id) { err.style.display = "block"; return; }
+
+    err.style.display = "none";
+
+
+
+    currentUser = { name, id, section };
+
+    saveState();
+
+    showDashboard(false);
+
+  }
+
+
+
+  function showDashboard(isAuto){
+
+    document.getElementById('auth-screen').style.display = "none";
+
+    document.getElementById('dashboard-screen').style.display = "grid";
+
+    document.getElementById('header-user').classList.remove('hidden');
+
+
+
+    document.getElementById('welcome-title').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+
+    document.getElementById('welcome-sub').textContent = `Student ID: ${currentUser.id}`;
+
+    document.getElementById('section-badge').textContent = currentUser.section;
+
+
+
+    switchTab('overview');
+
+    currentDayFilter = "All";
+
+    renderSchedule();
+
+    renderNotes();
+
+    renderHolidays();
+
+    updateOverview();
+
+    startLiveClock();
+
+    showToast(isAuto ? "Session Restored" : "Login Successful");
+
+  }
+
+
+
+  function logoutSession(){
+
+    if (clockInterval) clearInterval(clockInterval);
+
+    currentUser = { name: "", id: "", section: "" };
+
+    try { localStorage.removeItem('almanac_user'); } catch(e) {}
+
+
+
+    document.getElementById('dashboard-screen').style.display = "none";
+
+    document.getElementById('auth-screen').style.display = "block";
+
+    document.getElementById('header-user').classList.add('hidden');
+
+    document.getElementById('login-form').reset();
+
+  }
+
+
+
+  function switchTab(tabName){
+
+    document.querySelectorAll('.nav-item, .tab-icon-btn').forEach(t => {
+
+      t.classList.toggle('active', t.dataset.target === tabName);
+
+    });
+
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+    
+
+    // Fallback for mobile clock routing
+
+    if (tabName === 'watch') {
+
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+        document.getElementById(`tab-watch`).classList.remove('hidden');
+
+    } else {
+
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+    }
+
+  }
+
+
+
+  function updateOverview(){
+
+    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+    const todayName = days[new Date().getDay()];
+
+    const todaysClasses = rawSchedule.filter(item => item.day === todayName && item.sections.includes(currentUser.section));
+
+
+
+    const nextClassEl = document.getElementById('desk-next-class');
+
+    nextClassEl.textContent = todaysClasses.length
+
+      ? `${todaysClasses[0].time} — ${todaysClasses[0].subject} (${todaysClasses[0].venue})`
+
+      : "No classes scheduled today.";
+
+
+
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    const upcoming = holidays2026.find(h => new Date(h.date) >= today);
+
+    document.getElementById('desk-next-holiday').textContent = upcoming
+
+      ? `${upcoming.emoji} ${upcoming.name} — ${upcoming.date}`
+
+      : "No holidays on record.";
+
+  }
+
+
+
+  function startLiveClock(){
+
+    updateClock();
+
+    if (clockInterval) clearInterval(clockInterval);
+
+    clockInterval = setInterval(updateClock, 1000);
+
+  }
+
+
+
+  function updateClock(){
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12 || 12;
+
+    const hh = String(hours).padStart(2, '0');
+
+
+
+    const clockEl = document.getElementById("clock-time");
+
+    if (clockEl) clockEl.textContent = `${hh}:${minutes}:${seconds} ${ampm}`;
+
+
+
+    const dateEl = document.getElementById("clock-date");
+
+    if (dateEl) dateEl.textContent = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  }
+
+
+
+  function sendSuggestion(text){
+
+    document.getElementById('chat-input').value = text;
+
+    handleUserChat();
+
+  }
+
+
+
+  function appendMessage(sender, text){
+
+    const log = document.getElementById("chat-log");
+
+    const b = document.createElement("div");
+
+    b.className = `bubble ${sender}`;
+
+    b.textContent = text;
+
+    log.appendChild(b);
+
+    log.scrollTop = log.scrollHeight;
+
+  }
+
+
+
+  function handleUserChat(){
+
+    const input = document.getElementById("chat-input");
+
+    const q = input.value.trim();
+
+    if (!q) return;
+
+    appendMessage("user", q);
+
+    input.value = "";
+
+    setTimeout(() => appendMessage("bot", generateBotResponse(q)), 250);
+
+  }
+
+
+
+  function generateBotResponse(rawQuery){
+
+    const q = rawQuery.toLowerCase();
+
+    
+
+    const days = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
+
+    let targetDay = days.find(d => q.includes(d));
+
+    if (q.includes("today")){
+
+      const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+      targetDay = dayNames[new Date().getDay()].toLowerCase();
+
+    }
+
+
+
+    if (targetDay){
+
+      const dayCap = targetDay.charAt(0).toUpperCase() + targetDay.slice(1);
+
+      if (targetDay === "sunday") {
+
+        return `Sunday is a weekend! No classes scheduled for ${currentUser.section}. Enjoy your day off!`;
+
+      }
+
+      const classes = rawSchedule.filter(item => item.day.toLowerCase() === targetDay && item.sections.includes(currentUser.section));
+
+      if (classes.length === 0) return `No classes scheduled for ${dayCap} under ${currentUser.section}.`;
+
+      
+
+      let reply = `Timetable for ${dayCap} (${currentUser.section}):\n\n`;
+
+      classes.forEach(c => {
+
+        reply += `• ${c.time}: ${c.subject} @ ${c.venue}${c.professor ? ' (' + c.professor + ')' : ''}\n`;
+
+      });
+
+      return reply.trim();
+
+    }
+
+
+
+    if (q.includes("holiday") || q.includes("break") || q.includes("recess") || q.includes("vacation")){
+
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      const upcoming = holidays2026.find(h => new Date(h.date) >= today);
+
+      if (!upcoming) return "No upcoming holidays registered for the rest of 2026.";
+
+      const hDate = new Date(upcoming.date);
+
+      hDate.setHours(0,0,0,0);
+
+      const diffDays = Math.ceil((hDate - today) / 86400000);
+
+      return `Next holiday is ${upcoming.emoji} ${upcoming.name} on ${upcoming.date} (${upcoming.type}) — ${diffDays === 0 ? "It's today!" : diffDays + ' day(s) away'}.`;
+
+    }
+
+
+
+    if (q.includes("professor") || q.includes("teacher") || q.includes("who teaches") || q.includes("faculty") || q.includes("instructor")){
+
+      if (q.includes("data structure") || q.includes("dsa")) return "Data Structures and Algorithms is taught by Mr. Sanjay Joshi.";
+
+      if (q.includes("digital electronics") || q.includes("de")) return "Digital Electronics is taught by Mr. Jalaj Sharma.";
+
+      if (q.includes("automata") || q.includes("formal language") || q.includes("flat")) return "Formal Languages & Automata Theory is taught by Dr. Shri Prakash Dwivedi.";
+
+      if (q.includes("probability") || q.includes("statistics") || q.includes("stats")) return "Probability and Statistics is taught by Prof. Arun Kumar.";
+
+      if (q.includes("communication") || q.includes("tc")) return "Effective Technical Communication is taught by Dr. Govind Singh Kushwaha.";
+
+      if (q.includes("fit") || q.includes("foundations of information technology")) return "Foundations of Information Technology is taught by Dr. Ashok Kumar.";
+
+      
+
+      return "Faculty roster:\n• Data Structures: Mr. Sanjay Joshi\n• Digital Electronics: Mr. Jalaj Sharma\n• Automata Theory: Dr. Shri Prakash Dwivedi\n• Prob & Stats: Prof. Arun Kumar\n• Tech Communication: Dr. Govind Singh Kushwaha\n• FIT: Dr. Ashok Kumar";
+
+    }
+
+
+
+    if (q.includes("venue") || q.includes("room") || q.includes("where") || q.includes("class location")){
+
+      if (q.includes("probability") || q.includes("stats")) return "Probability and Statistics classes are held at IT 202 / Golakota.";
+
+      if (q.includes("data structure") || q.includes("dsa")) return "DSA theory classes are in IT-202 (Practicals in IT-203 for #IT-1 / IT-203 for #IT-2).";
+
+      return "Most theory classes are held in room IT-202. Check your specific timetable tab for lab venues like IT-203, IT-204, or the Computer Engineering Department.";
+
+    }
+
+
+
+    if (q.includes("section")) return `You are currently logged in under section node: ${currentUser.section}.`;
+
+
+
+    if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+
+      return `Hello ${currentUser.name.split(' ')[0]}! I am your AI assistant. You can ask me about your schedule for any day, professor names, room venues, or upcoming university holidays.`;
+
+    }
+
+
+
+    return "I can look up your daily schedule, faculty members, room venues, or holiday countdowns. Try asking: 'What is my schedule for Wednesday?' or 'Who teaches Data Structures?'";
+
+  }
+
+
+
+  function renderHolidays(){
+
+    const container = document.getElementById("holidays-list");
+
+    const nameEl = document.getElementById("next-holiday-name");
+
+    const countdownEl = document.getElementById("next-holiday-countdown");
+
+    container.innerHTML = "";
+
+
+
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    let nextHoliday = null;
+
+    const fragment = document.createDocumentFragment();
+
+
+
+    holidays2026.forEach(h => {
+
+      const hDate = new Date(h.date); hDate.setHours(0,0,0,0);
+
+      const isPast = hDate < today;
+
+      if (!isPast && !nextHoliday) nextHoliday = { ...h, dateObj: hDate };
+
+
+
+      const row = document.createElement("div");
+
+      row.className = "holiday-row";
+
+      if (isPast) row.style.opacity = "0.5";
+
+
+
+      const info = document.createElement("div");
+
+      info.className = "holiday-info";
+
+
+
+      const emoji = document.createElement("div");
+
+      emoji.className = "holiday-emoji";
+
+      emoji.textContent = h.emoji;
+
+
+
+      const details = document.createElement("div");
+
+      details.style.minWidth = "0";
+
+      const title = document.createElement("div");
+
+      title.className = "holiday-name";
+
+      title.style.textDecoration = isPast ? "line-through" : "none";
+
+      title.textContent = h.name;
+
+      const meta = document.createElement("div");
+
+      meta.className = "holiday-meta";
+
+      meta.textContent = `${hDate.toLocaleDateString(undefined, { month:'long', day:'numeric', year:'numeric' })} · ${h.type}`;
+
+
+
+      details.appendChild(title);
+
+      details.appendChild(meta);
+
+      info.appendChild(emoji);
+
+      info.appendChild(details);
+
+      row.appendChild(info);
+
+
+
+      const badge = document.createElement("span");
+
+      badge.className = `tag ${isPast ? 'passed' : 'upcoming'}`;
+
+      badge.textContent = isPast ? "Passed" : "Upcoming";
+
+      row.appendChild(badge);
+
+
+
+      fragment.appendChild(row);
+
+    });
+
+
+
+    container.appendChild(fragment);
+
+
+
+    if (nextHoliday){
+
+      const diffDays = Math.ceil((nextHoliday.dateObj - today) / 86400000);
+
+      nameEl.textContent = `${nextHoliday.emoji} ${nextHoliday.name}`;
+
+      countdownEl.textContent = diffDays === 0 ? "Today" : `${diffDays} day${diffDays === 1 ? '' : 's'} remaining`;
+
+    } else {
+
+      nameEl.textContent = "No more holidays on record.";
+
+      countdownEl.textContent = "";
+
+    }
+
+  }
+
+
+
+  function getNotesList(){
+
+    if (!notesByStudent[currentUser.id]) notesByStudent[currentUser.id] = [];
+
+    return notesByStudent[currentUser.id];
+
+  }
+
+
+
+  function addNote(){
+
+    const textInput = document.getElementById("new-note");
+
+    const err = document.getElementById("note-error");
+
+    if (!textInput.value.trim()) { err.style.display = "block"; return; }
+
+    err.style.display = "none";
+
+    getNotesList().unshift({ id: Date.now(), text: textInput.value.trim(), timestamp: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() });
+
+    saveState();
+
+    textInput.value = "";
+
+    renderNotes();
+
+    showToast("Note saved to cloud.");
+
+  }
+
+
+
+  function deleteNote(id){
+
+    notesByStudent[currentUser.id] = getNotesList().filter(n => n.id !== id);
+
+    saveState();
+
+    renderNotes();
+
+  }
+
+
+
+  function renderNotes(){
+
+    const container = document.getElementById("notes-list");
+
+    const notes = getNotesList();
+
+    container.innerHTML = "";
+
+    if (notes.length === 0){
+
+      container.innerHTML = `<p style="color: var(--text-tertiary); text-align: center; padding: 3rem 1rem; font-size: 0.9rem; grid-column: 1/-1;">Your scratchpad is currently empty.</p>`;
+
+      return;
+
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    notes.forEach(note => {
+
+      const card = document.createElement("div");
+
+      card.className = "note-card";
+
+
+
+      const content = document.createElement("div");
+
+      content.className = "note-content";
+
+      content.textContent = note.text;
+
+
+
+      const foot = document.createElement("div");
+
+      foot.className = "note-foot";
+
+      const ts = document.createElement("span");
+
+      ts.className = "note-time";
+
+      ts.textContent = note.timestamp;
+
+      
+
+      const del = document.createElement("button");
+
+      del.className = "btn-danger";
+
+      del.textContent = "Delete";
+
+      del.addEventListener('click', () => deleteNote(note.id));
+
+
+
+      foot.appendChild(ts);
+
+      foot.appendChild(del);
+
+      card.appendChild(content);
+
+      card.appendChild(foot);
+
+      fragment.appendChild(card);
+
+    });
+
+    container.appendChild(fragment);
+
+  }
+
+
+
+  function filterDay(day){
+
+    currentDayFilter = day;
+
+    document.querySelectorAll(".day-chip").forEach(tab => tab.classList.toggle("active", tab.dataset.day === day));
+
+    renderSchedule();
+
+  }
+
+
+
+  function renderSchedule(){
+
+    const tbody = document.getElementById("schedule-body");
+
+    tbody.innerHTML = "";
+
+    const filtered = rawSchedule.filter(item => item.sections.includes(currentUser.section) && (currentDayFilter === "All" || item.day === currentDayFilter));
+
+
+
+    if (filtered.length === 0){
+
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:3rem; color:var(--text-tertiary);">No classes scheduled for the selected filter.</td></tr>`;
+
+      return;
+
+    }
+
+
+
+    const fragment = document.createDocumentFragment();
+
+    filtered.forEach(item => {
+
+      const tr = document.createElement("tr");
+
+
+
+      const dayTd = document.createElement("td");
+
+      dayTd.className = "cell-day";
+
+      dayTd.setAttribute("data-label", "Day");
+
+      dayTd.textContent = item.day;
+
+
+
+      const timeTd = document.createElement("td");
+
+      timeTd.className = "cell-time";
+
+      timeTd.setAttribute("data-label", "Time");
+
+      timeTd.textContent = item.time;
+
+
+
+      const subjectTd = document.createElement("td");
+
+      subjectTd.className = "cell-subject";
+
+      subjectTd.setAttribute("data-label", "Subject");
+
+      const subjStrong = document.createElement("strong");
+
+      subjStrong.textContent = item.subject;
+
+      subjectTd.appendChild(subjStrong);
+
+      if (item.professor){
+
+        const prof = document.createElement("div");
+
+        prof.className = "cell-prof";
+
+        prof.textContent = item.professor;
+
+        subjectTd.appendChild(prof);
+
+      }
+
+
+
+      const venueTd = document.createElement("td");
+
+      venueTd.className = "cell-venue";
+
+      venueTd.setAttribute("data-label", "Venue");
+
+      venueTd.textContent = item.venue;
+
+
+
+      tr.appendChild(dayTd);
+
+      tr.appendChild(timeTd);
+
+      tr.appendChild(subjectTd);
+
+      tr.appendChild(venueTd);
+
+      fragment.appendChild(tr);
+
+    });
+
+    tbody.appendChild(fragment);
+
+  }
+
+</script>
+
+</body>
+
+</html>
+
+change the time from PM to AM
+
+I've updated the timetable data in the application so that all scheduled class times previously marked as PM are now converted to AM.
+
+HTML icon
+it_2nd_year_hub
+ HTML 
+Key Updates Made
+Monday Schedule: Updated afternoon sessions (Algorithms, Communication, and FIT) from 12:00–04:00 PM to 12:00–04:00 AM.
+
+Tuesday Schedule: Converted Digital Electronics practicals, Probability tutorials, and Automata theory from 11:00 AM–05:00 PM to 11:00 AM–05:00 AM.
+
+Wednesday & Thursday Schedule: Adjusted midday lectures and practical lab blocks (DSA and FIT) to AM time intervals.
+
+Friday & Saturday Schedule: Swapped Digital Electronics labs, theory classes, and the Saturday afternoon NSS/NCC block from PM to AM.
+
+
+
+
+
+Gemini is AI and can make mistakes.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -549,31 +2640,31 @@
 
 <script>
   const rawSchedule = [
-    { day: "Monday", time: "11:00 AM - 12:00 PM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Monday", time: "12:00 PM - 01:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Monday", time: "03:00 PM - 04:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Monday", time: "11:00 AM - 12:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Monday", time: "12:00 AM - 01:00 AM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Monday", time: "03:00 AM - 04:00 AM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
     { day: "Tuesday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Tuesday", time: "11:00 AM - 01:00 PM", subject: "Digital Electronics (Tutorial/Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
-    { day: "Tuesday", time: "02:00 PM - 03:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1"] },
-    { day: "Tuesday", time: "03:00 PM - 04:00 PM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-2"] },
-    { day: "Tuesday", time: "04:00 PM - 05:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Tuesday", time: "11:00 AM - 01:00 AM", subject: "Digital Electronics (Tutorial/Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-2"] },
+    { day: "Tuesday", time: "02:00 AM - 03:00 AM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1"] },
+    { day: "Tuesday", time: "03:00 AM - 04:00 AM", subject: "Probability and Statistics (Tutorial)", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-2"] },
+    { day: "Tuesday", time: "04:00 AM - 05:00 AM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
     { day: "Wednesday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-    { day: "Wednesday", time: "11:00 AM - 12:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Wednesday", time: "12:00 PM - 01:00 PM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-1"] },
-    { day: "Wednesday", time: "03:00 PM - 05:00 PM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-2"] },
+    { day: "Wednesday", time: "11:00 AM - 12:00 AM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "12:00 AM - 01:00 AM", subject: "Foundations of Information Technology", professor: "Dr. Ashok Kumar", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Wednesday", time: "03:00 AM - 05:00 AM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-1"] },
+    { day: "Wednesday", time: "03:00 AM - 05:00 AM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-2"] },
     { day: "Thursday", time: "10:00 AM - 11:00 AM", subject: "Data Structures and Algorithms", professor: "Mr. Sanjay Joshi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Thursday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Thursday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Thursday", time: "03:00 PM - 05:00 PM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-2"] },
+    { day: "Thursday", time: "11:00 AM - 12:00 AM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Thursday", time: "12:00 AM - 01:00 AM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Thursday", time: "03:00 AM - 05:00 AM", subject: "Data Structures and Algorithms (Practical)", professor: "Mr. Sanjay Joshi", venue: "IT-203", sections: ["#IT-2"] },
     { day: "Friday", time: "10:00 AM - 11:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-    { day: "Friday", time: "11:00 AM - 12:00 PM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Friday", time: "12:00 PM - 01:00 PM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Friday", time: "03:00 PM - 05:00 PM", subject: "Digital Electronics (Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
+    { day: "Friday", time: "11:00 AM - 12:00 AM", subject: "Effective Technical Communication", professor: "Dr. Govind Singh Kushwaha", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Friday", time: "12:00 AM - 01:00 AM", subject: "Digital Electronics", professor: "Mr. Jalaj Sharma", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Friday", time: "03:00 AM - 05:00 AM", subject: "Digital Electronics (Practical)", professor: "Mr. Jalaj Sharma", venue: "Comp Engg. Dept.", sections: ["#IT-1"] },
     { day: "Saturday", time: "09:00 AM - 11:00 AM", subject: "Foundations of Information Technology (Practical)", professor: "Dr. Ashok Kumar", venue: "IT-204", sections: ["#IT-1"] },
-    { day: "Saturday", time: "11:00 AM - 12:00 PM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
-    { day: "Saturday", time: "12:00 PM - 01:00 PM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
-    { day: "Saturday", time: "02:00 PM - 06:00 PM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
+    { day: "Saturday", time: "11:00 AM - 12:00 AM", subject: "Formal Languages and Automata Theory", professor: "Dr. Shri Prakash Dwivedi", venue: "IT-202", sections: ["#IT-1", "#IT-2"] },
+    { day: "Saturday", time: "12:00 AM - 01:00 AM", subject: "Probability and Statistics", professor: "Prof. Arun Kumar", venue: "IT 202 / Golakota", sections: ["#IT-1", "#IT-2"] },
+    { day: "Saturday", time: "02:00 AM - 06:00 AM", subject: "NSS/NCC", professor: "", venue: "IT Complex", sections: ["#IT-1", "#IT-2"] }
   ];
 
   const holidays2026 = [
@@ -1030,3 +3121,5 @@
 </script>
 </body>
 </html>
+it_2nd_year_hub.html
+Displaying it_2nd_year_hub.html.
